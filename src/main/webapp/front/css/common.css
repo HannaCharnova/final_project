@@ -1,0 +1,106 @@
+#locale {
+    padding-top: 6px;
+    padding-right: 15px;
+}
+
+input#lang_ru{
+    background-image: url("/front/image/russia.png");
+}
+
+input#lang_en{
+    background-image: url("/front/image/english.png");
+}
+
+input#lang_en,input#lang_ru{
+    background-size: cover;
+    border: none;
+    box-shadow: none;
+    height: 30px;
+    width: 30px;
+    max-width: 30px;
+    max-width: 30px;
+    float: right;
+    background-position: center;
+    font-size: 0px;
+}
+
+.navbar-my {
+    background-color: #000000;
+    border-color: #000000;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.btn{
+    position: relative;
+    color:#fff;
+    border-radius:30px;
+    text-transform: uppercase;
+    transform: scale(1.1,1.1);
+    transition:all 0.3s ease-out 0s;
+}
+.btn:hover{
+    transform: scale(1,1);
+    color:#fff;
+}
+.btn i{
+    margin-right:15px;
+    color:#fff;
+}
+.btn:before {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left:0px;
+    width:100%;
+    height: 10px;
+    filter: blur(20px);
+    border-radius: 30px;
+    display: inline-block;
+    z-index: -1;
+    transition: all 0.3s ease-out 0s;
+}
+.btn:hover:before{
+    bottom:0;
+    filter: blur(10px);
+}
+.btn.blue{
+    background: linear-gradient(to left, #7474bf , #348ac7);
+}
+.btn.blue:before{
+    background: linear-gradient(to right,#7474bf,#348ac7);
+}
+.btn.green{
+    background: linear-gradient(to left, #414d0b , #727a17);
+}
+.btn.green:before{
+    background: linear-gradient(to right,#414d0b,#727a17);
+}
+
+.btn.orange{
+    background: linear-gradient(to left, #fe8c00 , #f83600);
+}
+.btn.orange:before{
+    background: linear-gradient(to right,#fe8c00,#f83600);
+}
+.btn.purple{
+    background: linear-gradient(to left, #c04848 , #480048);
+}
+.btn.purple:before{
+    background: linear-gradient(to right,#c04848,#480048);
+}
+@media only screen and (max-width: 767px){
+    .btn{
+        margin-bottom:15px;
+    }
+}
+/* отступ */
+.pad-15{
+    padding: 15px 0;
+}
+
+.cd-section {
+    top: 60px;
+    left: 13px;
+    position: fixed;
+    z-index: 1;
+}

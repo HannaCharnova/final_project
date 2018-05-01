@@ -1,0 +1,397 @@
+
+/* Form Style */
+.form-horizontal-log {
+    padding-bottom: 40px;
+}
+
+.form-horizontal {
+    background: #fff;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.form-horizontal-reg {
+    padding-bottom: 90px;
+}
+
+
+.form-horizontal .heading {
+    display: block;
+    font-size: 35px;
+    font-weight: 700;
+    padding: 35px 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 30px;
+}
+
+.form-horizontal .form-group {
+    padding: 0 40px;
+    margin: 0 0 25px 0;
+    position: relative;
+}
+
+.form-horizontal .form-control {
+    background: #f0f0f0;
+    border: none;
+    border-radius: 20px;
+    box-shadow: none;
+    padding: 0 20px 0 45px;
+    height: 40px;
+    transition: all 0.3s ease 0s;
+    margin-bottom: 20px;
+}
+
+.form-horizontal .form-control:focus {
+    background: #e0e0e0;
+    box-shadow: none;
+    outline: 0 none;
+}
+
+.form-horizontal .form-group i {
+    position: absolute;
+    top: 12px;
+    left: 60px;
+    font-size: 17px;
+    color: #c8c8c8;
+    transition: all 0.5s ease 0s;
+}
+
+.form-horizontal .form-control:focus + i {
+    color: #00b4ef;
+}
+
+.form-horizontal .fa-question-circle {
+    display: inline-block;
+    position: absolute;
+    top: 12px;
+    right: 60px;
+    font-size: 20px;
+    color: #808080;
+    transition: all 0.5s ease 0s;
+}
+
+.form-horizontal .fa-question-circle:hover {
+    color: #000;
+}
+
+.form-horizontal .main-checkbox {
+    float: left;
+    width: 20px;
+    height: 20px;
+    background: #11a3fc;
+    border-radius: 50%;
+    position: relative;
+    margin: 5px 0 0 5px;
+    border: 1px solid #11a3fc;
+}
+
+.form-horizontal .main-checkbox label {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.form-horizontal .main-checkbox label:after {
+    content: "";
+    width: 10px;
+    height: 5px;
+    position: absolute;
+    top: 5px;
+    left: 4px;
+    border: 3px solid #fff;
+    border-top: none;
+    border-right: none;
+    background: transparent;
+    opacity: 0;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.form-horizontal .main-checkbox input[type=checkbox] {
+    visibility: hidden;
+}
+
+.form-horizontal .main-checkbox input[type=checkbox]:checked + label:after {
+    opacity: 1;
+}
+
+.form-horizontal .text {
+    float: left;
+    margin-left: 7px;
+    line-height: 20px;
+    padding-top: 5px;
+    text-transform: capitalize;
+}
+
+.form-horizontal-log .btn {
+    float: right;
+    font-size: 14px;
+    color: #fff;
+    background: #00b4ef;
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: none;
+    text-transform: capitalize;
+    transition: all 0.5s ease 0s;
+}
+
+.form-horizontal-reg .btn {
+    float: right;
+    font-size: 14px;
+    color: #fff;
+    background: #00b4ef;
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: none;
+    margin-right: 47px;
+    margin-top: 10px;
+    text-transform: capitalize;
+    transition: all 0.5s ease 0s;
+}
+
+@media only screen and (max-width: 479px) {
+    .form-horizontal .form-group {
+        padding: 0 25px;
+    }
+
+    .form-horizontal .form-group i {
+        left: 45px;
+    }
+
+    .form-horizontal .btn {
+        padding: 10px 20px;
+    }
+}
+
+
+.cd-user-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(52, 54, 66, 0.9);
+    z-index: 3;
+    overflow-y: auto;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+}
+
+button.close{
+    padding-right: 20px;
+    padding-top: 20px;
+}
+
+.form-horizontal input.has-border {
+    border: 1px solid #d2d8d8;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+.form-horizontal input.has-border:focus {
+    border-color: #343642;
+    box-shadow: 0 0 5px rgba(52, 54, 66, 0.1);
+    outline: none;
+}
+.cd-form input.has-error {
+    border: 1px solid #d76666;
+}
+
+.form-horizontal .hide-password {
+    display: inline-block;
+    position: absolute;
+    color: rgba(255, 0, 107, 0);
+    background-image: url(/front/image/visible.png);
+    background-size: cover;
+    right: 0;
+    top: 0;
+    padding: 6px 15px;
+    border-left: 1px solid #d2d8d8;
+    top: 50%;
+    bottom: auto;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 0.875rem;
+}
+
+.form-horizontal .cd-error-message {
+    display: inline-block;
+    position: absolute;
+    left: -5px;
+    bottom: -35px;
+    background: rgba(215, 102, 102, 0.9);
+    padding: .8em;
+    z-index: 2;
+    width: 87%;
+    color: #FFF;
+    font-size: 13px;
+    font-size: 0.8125rem;
+    border-radius: 0.25em;
+    /* предотвращения кликов и прикосновения */
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+a {
+    color: #2f889a;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+input, textarea {
+    font-family: "PT Sans", sans-serif;
+    font-size: 16px;
+    font-size: 1rem;
+}
+
+input::-ms-clear, textarea::-ms-clear {
+    display: none;
+}
+
+/* —----------------------------—
+xsigin/signup popup
+------------------------------— */
+.cd-user-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(52, 54, 66, 0.9);
+    z-index: 3;
+    overflow-y: auto;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.cd-user-modal.is-visible-login {
+    visibility: visible;
+    opacity: 1;
+}
+
+.cd-user-modal.is-visible-password{
+    visibility: visible;
+    opacity: 1;
+}
+
+.cd-user-modal.is-visible .cd-user-modal-container {
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.cd-user-modal-container {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    background: #FFF;
+    margin: 3em auto 4em;
+    cursor: auto;
+    border-radius: 0.25em;
+    -webkit-transform: translateY(-30px);
+    -moz-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -o-transform: translateY(-30px);
+    transform: translateY(-30px);
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+
+
+.cd-user-modal-container .cd-switcher li {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.form-horizontal input.has-border {
+    border: 1px solid #d2d8d8;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+}
+
+.form-horizontal input.has-border:focus {
+    border-color: #343642;
+    box-shadow: 0 0 5px rgba(52, 54, 66, 0.1);
+    outline: none;
+}
+.form-horizontal input.has-error {
+    border: 1px solid #d76666;
+}
+
+.form-horizontal .cd-error-message {
+    display: inline-block;
+    position: absolute;
+    left: -5px;
+    bottom: -35px;
+    background: rgba(215, 102, 102, 0.9);
+    padding: .8em;
+    z-index: 2;
+    color: #FFF;
+    font-size: 13px;
+    font-size: 0.8125rem;
+    border-radius: 0.25em;
+    /* предотвращения кликов и прикосновения */
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
+
+
+.form-horizontal .cd-error-message::after {
+    /* уголок сообщения об ошибке */
+    content: '';
+    position: absolute;
+    left: 22px;
+    bottom: 100%;
+    height: 0;
+    width: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid rgba(215, 102, 102, 0.9);
+}
+
+.form-horizontal .cd-error-message.is-visible {
+    opacity: 1;
+    visibility: visible;
+    margin-bottom: 19px;
+    margin-left: 45px;
+    height: 35px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
