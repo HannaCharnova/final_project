@@ -20,28 +20,40 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client signIn(String login, String password) {
         LOGGER.log(Level.DEBUG, "Client Service: start SignIn");
+        Client client = null;
         try {
-            Validator.isNull(login, password);
-            Validator.isEmptyString(login, password);
-            Validator.matchLogin(login);
-            Validator.matchPassword(password);
+            if (Validator.isNull(login, password) && Validator.isEmptyString(login, password) && Validator.matchLogin(login) && Validator.matchPassword(password)) {
+                client = daoFactory.getClientDao().signIn(login, password);
+            }
             LOGGER.log(Level.DEBUG, "Client Service: end SignIn");
-            return daoFactory.getClientDao().signIn(login, password);
-        } catch (DaoException |ValidatorException e) {
+            return client;
+        } catch (DaoException | ValidatorException e) {
             return null;
         }
     }
 
     @Override
-    public boolean signUp(String login, String password, String name, String surname, String email) {
-        ClientDao clientDao = daoFactory.getClientDao();
-        boolean result = false;
+    public Client signUp(String login, String password, String name, String surname, String email) {
+        LOGGER.log(Level.DEBUG, "Client Service: Sign up started");
+        Client client;
         try {
-            result = clientDao.addClient(login, password, name, surname, email);
-        } catch (DaoException e) {
-            LOGGER.log(Level.ERROR, "");
+            if(Validator.isNull(name, login, password, name, surname, email)&&Validator.isEmptyString(name, login, password, name, surname, email)&&)
+            Validator.isNull(name, login, password, name, surname, email);
+            Validator.isEmptyString(name, login, password, name, surname, email);
+            Validator.matchProperName(name, surname);
+            Validator.matchLogin(login);
+            Validator.matchPassword(password);
+            Validator.matchEmail(email);
+            password = Hasher.hashBySha1(password);
+            if (!daoFactory.getAdminDao().findAdminByLogin(login)) {
+                client = new Client(name, surname, login, password, email, "active", 0.0);
+                return daoFactory.getClientDao().addClient(client);
+            }
+        } catch (ValidatorException | NumberFormatException | DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        return result;
+        LOGGER.log(Level.DEBUG, "Client Service: finish SignUp");
+        return null;
     }
 
     @Override

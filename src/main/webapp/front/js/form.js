@@ -119,16 +119,6 @@ $(document).ready(function ($) {
             }
         }
 
-        if (repassword == password && repassword.length >= 4) {
-            $('input#re-password').css('border-color', 'green');
-            $('input#re-password').removeClass('has-error').next('span').removeClass('is-visible');
-            $numberCorrectField++;
-        } else {
-            if (repassword.length != 0) {
-                $('input#re-password').css('border-color', 'red');
-                $('input#re-password').addClass('has-error').next('span').addClass('is-visible');
-            }
-        }
 
         if (email.length > 7 && email != '' && emailReg.test(email)) {
             $('input#email').css('border-color', 'green');

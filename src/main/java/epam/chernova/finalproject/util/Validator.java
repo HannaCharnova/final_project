@@ -1,53 +1,81 @@
 package epam.chernova.finalproject.util;
 
-import epam.chernova.finalproject.exception.ValidatorException;
-import javafx.animation.PathTransition;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
     private static final String REGEX_FOR_LOGIN = "^[a-zA-Z](.[a-zA-Z0-9_-]*)$";
     private static final String REGEX_FOR_PASSWORD = "\\w{6,}";
+    private static final String REGEX_FOR_NAME = "([A-Z][a-z]+)|([А-Я][а-я]+)";
+    private static final String REGEX_FOR_EMAIL = "[0-9a-z\\_\\-\\.]+@[0-9a-z_-]+\\.[a-z]{2,5}";
 
-    public final static void isNull(Object... objects) throws ValidatorException {
+
+    public final static boolean isNull(Object... objects){
         for (Object ob : objects) {
             if (ob == null) {
-                throw new ValidatorException("Input error (string is null)");
+                return false;
             }
         }
+        return true;
     }
 
 
-    public final static void isEmptyString(String... strings) throws ValidatorException {
+    public final static boolean isEmptyString(String... strings) {
         for (String s : strings) {
             if (s.isEmpty()) {
-                throw new ValidatorException("Input error (string is empty)");
+                return false;
             }
         }
+        return true;
     }
 
-    public final static void matchLogin(String... strings) throws ValidatorException {
+    public final static boolean matchLogin(String... strings){
         Pattern pattern = Pattern.compile(REGEX_FOR_LOGIN);
         Matcher matcher;
         for (String s : strings) {
             matcher = pattern.matcher(s);
             if (!matcher.matches()) {
-                throw new ValidatorException("Login format error");
+                return false;
             }
         }
+        return true;
     }
 
 
-    public final static void matchPassword(String... strings) throws ValidatorException {
+    public final static boolean matchPassword(String... strings){
         Pattern pattern = Pattern.compile(REGEX_FOR_PASSWORD);
         Matcher matcher;
         for (String s : strings) {
             matcher = pattern.matcher(s);
             if (!matcher.matches()) {
-                throw new ValidatorException("Password format error");
+                return false;
             }
         }
+        return true;
+    }
+
+    public final static boolean matchProperName(String... strings){
+        Pattern pattern = Pattern.compile(REGEX_FOR_NAME);
+        Matcher matcher;
+        for (String s : strings) {
+            matcher = pattern.matcher(s);
+            if (!matcher.matches()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public final static boolean matchEmail(String... strings){
+        Pattern pattern = Pattern.compile(REGEX_FOR_EMAIL);
+        Matcher matcher;
+        for (String s : strings) {
+            matcher = pattern.matcher(s);
+            if (!matcher.matches()) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

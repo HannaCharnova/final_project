@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="war" name="final_project:war">
-    <output-path>D:/Tomcat8.5/webapps/finalproject</output-path>
+    <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="final_project.war">
       <element id="artifact" artifact-name="final_project:war exploded" />
     </root>

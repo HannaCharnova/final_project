@@ -120,13 +120,6 @@
 
                             </div>
 
-                            <div class="form-group help">
-                                <input type="password" class="form-control has-border" id="re-password"
-                                       placeholder=${re_password} name="re_password_up">
-                                <span class="cd-error-message" id="re-password-up-span">${password_mistake}</span>
-
-                            </div>
-
                             <button type="submit" id="signup-button"  class="btn btn-default">${registrate}</button>
                         </form>
                     </div>
