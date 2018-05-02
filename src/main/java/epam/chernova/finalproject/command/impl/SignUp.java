@@ -27,10 +27,11 @@ public class SignUp implements ICommand{
         String email = request.getParameter("email");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
+        System.out.println(name+ surname+ login+ password+ email);
         try{
-        Client client = clientService.signUp(name, surname, login, password, email);
+        Client client = clientService.signUp(login, password, name,surname,email);
         if (client == null) {
-            if(clientService.findClientByLogin(login)) {
+            if(clientService.findClientByLogin(login)!=null) {
                 diagnoseCommonLogin(request);
             }else{
                 diagnoseCommonEmail(request);
@@ -40,6 +41,7 @@ public class SignUp implements ICommand{
         }
         response.sendRedirect(PageNameRedirect.INDEX.getPath());
     } catch (Exception e) {
+            e.printStackTrace();
         LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
         pageName = pageName.ERROR;
     }
@@ -49,19 +51,19 @@ public class SignUp implements ICommand{
 
 
     private void diagnoseCommonLogin(HttpServletRequest request) {
-        if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Пользовател с таким логином уже сужествует");
+        if (request.getSession().getAttribute("locale").equals("ru")) {
+            request.getSession().setAttribute("error_data", "Пользователь с таким логином уже сужествует.");
         } else {
-            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "User with such login already exists");
+            request.getSession().setAttribute("error_data", "User with such login is already exists.");
         }
     }
 
 
     private void diagnoseCommonEmail(HttpServletRequest request) {
-        if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Пользовател с такой почтой уже существует");
+        if (request.getSession().getAttribute("locale").equals("ru")) {
+            request.getSession().setAttribute("error_data", "Пользователь с таким адресом электронной почты уже сужествует.");
         } else {
-            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "User with such mail already exists");
+            request.getSession().setAttribute("error_data", "User with such email is already exists.");
         }
     }
 

@@ -29,7 +29,7 @@ public class AdministratorServiceImpl implements AdministratorService {
             Validator.matchPassword(password);
             LOGGER.log(Level.DEBUG, "Administrator Service: end SignIn");
             return daoFactory.getAdministratorDao().signIn(login, password);
-        } catch (DaoException |ValidatorException e) {
+        } catch (DaoException  e) {
             return null;
         }
     }

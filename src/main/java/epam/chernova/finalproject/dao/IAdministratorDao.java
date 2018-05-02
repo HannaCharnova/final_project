@@ -6,5 +6,5 @@ import epam.chernova.finalproject.exception.DaoException;
 
 public interface IAdministratorDao extends AbstractDao{
     Administrator signIn(String login, String password) throws DaoException;
-
+    boolean findAdministratorByLogin(String login) throws DaoException;
 }

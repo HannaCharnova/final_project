@@ -68,7 +68,6 @@ $(document).ready(function ($) {
         var name = $('input#name').val();
         var surname = $('input#surname').val();
         var email = $('input#email').val();
-        var repassword = $('input#re-password').val();
 
         var $numberCorrectField = 0;
 
@@ -131,7 +130,7 @@ $(document).ready(function ($) {
             }
         }
 
-        if ($numberCorrectField != 6) {
+        if ($numberCorrectField != 5) {
             e.preventDefault();
         }
     });

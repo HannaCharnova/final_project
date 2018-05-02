@@ -3,6 +3,7 @@ package epam.chernova.finalproject.command.impl;
 import epam.chernova.finalproject.command.ICommand;
 import epam.chernova.finalproject.entity.ext.Administrator;
 import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.webenum.PageName;
 import epam.chernova.finalproject.webenum.PageNameRedirect;
@@ -25,13 +26,11 @@ public class SignIn implements ICommand {
         String login = request.getParameter("login_in");
         String password = request.getParameter("password_in");
         boolean role;
-        if ((request.getParameter("check").equals("on"))) {
+        if (request.getParameter("check")!=null) {
             role = true;
         } else {
             role = false;
         }
-//        System.out.println(request.getParameter("check"));
-//        boolean role = Boolean.parseBoolean(request.getParameter("check"));
         System.out.println(login + password + role);
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             diagnoseIncorrectSignIn(request);
@@ -64,7 +63,7 @@ public class SignIn implements ICommand {
                     return pageName.getPath();
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             pageName = pageName.ERROR;
         }

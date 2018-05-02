@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 public class Validator {
     private static final String REGEX_FOR_LOGIN = "^[a-zA-Z](.[a-zA-Z0-9_-]*)$";
     private static final String REGEX_FOR_PASSWORD = "\\w{6,}";
-    private static final String REGEX_FOR_NAME = "([A-Z][a-z]+)|([А-Я][а-я]+)";
+    private static final String REGEX_FOR_NAME = "([A-Z]{1}[a-z]+)|([А-Я]{1}[а-я]+)";
     private static final String REGEX_FOR_EMAIL = "[0-9a-z\\_\\-\\.]+@[0-9a-z_-]+\\.[a-z]{2,5}";
 
 

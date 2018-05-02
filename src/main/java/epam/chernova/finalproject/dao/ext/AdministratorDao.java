@@ -5,13 +5,15 @@ import epam.chernova.finalproject.dao.IAdministratorDao;
 import epam.chernova.finalproject.entity.ext.Administrator;
 import epam.chernova.finalproject.exception.DaoException;
 import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
 
 public class AdministratorDao implements IAdministratorDao {
-    private static final Logger LOGGER = Logger.getLogger(AdministratorDao.class);
+    private final static Logger LOGGER = LogManager.getLogger(AdministratorDao.class);
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 1";
+    private static final String FIND_BY_LOGIN = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -42,6 +44,28 @@ public class AdministratorDao implements IAdministratorDao {
         }
         LOGGER.log(Level.DEBUG, "Administrator Dao: finish SignIn");
         return administrator;
+    }
+
+    @Override
+    public boolean findAdministratorByLogin(String login) throws DaoException {
+        LOGGER.log(Level.DEBUG, "AdministratorDao: start findAdministratorByLogin");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(FIND_BY_LOGIN);
+            statement.setString(1, login);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing adm SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "AdministratorDao: finish findAdministratorByLogin");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return false;
     }
 
 

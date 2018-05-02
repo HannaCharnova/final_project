@@ -4,9 +4,11 @@ package epam.chernova.finalproject.service.impl;
 import epam.chernova.finalproject.dao.ext.ClientDao;
 import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
+import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.exception.ValidatorException;
 import epam.chernova.finalproject.factory.DaoFactory;
 import epam.chernova.finalproject.service.ClientService;
+import epam.chernova.finalproject.util.Hasher;
 import epam.chernova.finalproject.util.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -18,54 +20,51 @@ public class ClientServiceImpl implements ClientService {
     private static DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public Client signIn(String login, String password) {
+    public Client signIn(String login, String password) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Client Service: start SignIn");
         Client client = null;
         try {
             if (Validator.isNull(login, password) && Validator.isEmptyString(login, password) && Validator.matchLogin(login) && Validator.matchPassword(password)) {
                 client = daoFactory.getClientDao().signIn(login, password);
             }
-            LOGGER.log(Level.DEBUG, "Client Service: end SignIn");
-            return client;
-        } catch (DaoException | ValidatorException e) {
-            return null;
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+        LOGGER.log(Level.DEBUG, "Client Service: end SignIn");
+        return client;
     }
 
     @Override
-    public Client signUp(String login, String password, String name, String surname, String email) {
+    public Client signUp(String login, String password, String name, String surname, String email) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Client Service: Sign up started");
-        Client client;
+        Client client = null;
         try {
-            if(Validator.isNull(name, login, password, name, surname, email)&&Validator.isEmptyString(name, login, password, name, surname, email)&&)
-            Validator.isNull(name, login, password, name, surname, email);
-            Validator.isEmptyString(name, login, password, name, surname, email);
-            Validator.matchProperName(name, surname);
-            Validator.matchLogin(login);
-            Validator.matchPassword(password);
-            Validator.matchEmail(email);
-            password = Hasher.hashBySha1(password);
-            if (!daoFactory.getAdminDao().findAdminByLogin(login)) {
-                client = new Client(name, surname, login, password, email, "active", 0.0);
-                return daoFactory.getClientDao().addClient(client);
+            if(Validator.isNull(login, password, name, surname, email)&&Validator.isEmptyString(login, password, name, surname, email)&&Validator.matchProperName(name, surname)&&Validator.matchLogin(login)&&Validator.matchPassword(password)&&Validator.matchEmail(email)) {
+//            password = Hasher.sha1Hash(password);
+                System.out.println("ghbd");
+                if (!daoFactory.getAdministratorDao().findAdministratorByLogin(login)) {
+                    if (daoFactory.getClientDao().addUser(login, password)) {
+                        client = daoFactory.getClientDao().addClient(login, name, surname, email);
+                    }
+                }
             }
-        } catch (ValidatorException | NumberFormatException | DaoException e) {
+        } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
         LOGGER.log(Level.DEBUG, "Client Service: finish SignUp");
-        return null;
+        return client;
     }
 
     @Override
-    public boolean findClientByLogin(String login) {
+    public Client findClientByLogin(String login) {
         ClientDao clientDao = daoFactory.getClientDao();
-        boolean result = false;
+        Client client=null;
         try {
-            result = clientDao.findClientByLogin(login);
+            client = clientDao.findClientByLogin(login);
         } catch (DaoException e) {
             LOGGER.log(Level.ERROR, "");
         }
-        return result;
+        return client;
     }
 
     @Override

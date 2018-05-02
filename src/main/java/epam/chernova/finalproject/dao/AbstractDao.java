@@ -5,5 +5,4 @@ import java.sql.Statement;
 
 public interface AbstractDao  {
     void close(ResultSet resultSet, Statement statement);
-
 }

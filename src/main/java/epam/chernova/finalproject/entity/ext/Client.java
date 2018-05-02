@@ -34,6 +34,12 @@ public class Client extends User implements Serializable, Cloneable {
         this.ban = ban;
     }
 
+    public Client(String login, String password, String name, String surname, String email, boolean role) {
+        super(login, password, role);
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
 
     public String getName() {
         return name;
