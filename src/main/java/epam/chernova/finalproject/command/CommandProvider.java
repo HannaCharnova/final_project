@@ -1,10 +1,7 @@
 package epam.chernova.finalproject.command;
 
 
-import epam.chernova.finalproject.command.impl.ChangeLocale;
-import epam.chernova.finalproject.command.impl.Index;
-import epam.chernova.finalproject.command.impl.SignIn;
-import epam.chernova.finalproject.command.impl.SignUp;
+import epam.chernova.finalproject.command.impl.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.EnumMap;
@@ -21,8 +18,7 @@ public class CommandProvider {
         commands.put(CommandName.SIGN_UP,new SignUp());
         commands.put(CommandName.INDEX,new Index());
         commands.put(CommandName.CHANGE_LOCALE,new ChangeLocale());
-
-
+        commands.put(CommandName.PRODUCT_LIST,new ProductList());
     }
 
     public static CommandProvider getInstance() {

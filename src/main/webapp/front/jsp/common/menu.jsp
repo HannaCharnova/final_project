@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale scope="session" value="${locale}"/>
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
-<fmt:message bundle="${loc}" key="local.word.sign_in" var="sign_in"/>
+<fmt:message bundle="${loc}" key="local.word.menu" var="menu"/>
 
 
 <html>
@@ -34,7 +34,7 @@
 <div class="cd-bouncy-nav-modal">
     <nav>
         <ul class="cd-bouncy-nav">
-            <li><a href="#home">Home</a></li>
+            <li><a href="/epam.by/product_list">${menu}</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#gallery">Gallery</a></li>

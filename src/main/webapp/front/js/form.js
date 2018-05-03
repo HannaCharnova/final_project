@@ -10,6 +10,9 @@ $(document).ready(function () {
     });
 });
 
+
+
+
 //Валидация формы входа
 $(document).ready(function ($) {
     $('form#sign-in-form').on('click', function (e) {

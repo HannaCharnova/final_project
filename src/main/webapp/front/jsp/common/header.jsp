@@ -28,7 +28,6 @@
         <%@include file="/front/js/form.js" %>
     </script>
 </head>
-<body>
 
 <div class="navbar navbar-my navbar-fixed-top" role="navigation" id="slide-nav">
     <div class="container">
@@ -68,7 +67,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false"><img class="img-circle"
                                                           src="http://bootstraptema.ru/snippets/icons/2016/mia/1.png"
-                                                          alt="USER" width="20"/> ${client.name} <span
+                                                          alt="USER" width="20"/> ${client.login} <span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">My profile</a></li>
@@ -107,19 +106,20 @@
                         </c:choose>
 
                     </form>
+
                 </li>
-                <%--<li><a href="http://bootstraptema.ru/">Главная</a></li>--%>
-                <%--<li><a href="http://bootstraptema.ru/stuff/templates_bootstrap/1">Шаблоны</a></li>--%>
-                <%--<li><a href="http://bootstraptema.ru/stuff/plugins_bootstrap/2">Плагины</a></li>--%>
-                <%--<li><a href="http://bootstraptema.ru/stuff/snippets_bootstrap/3">Сниппеты</a></li>--%>
-                <%--<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Ещё <b--%>
-                <%--class="caret"></b></a>--%>
-                <%--<ul class="dropdown-menu">--%>
-                <%--<li><a href="http://bootstraptema.ru/stuff/0-0-0-0-1">Заработать</a></li>--%>
-                <%--<li><a href="http://bootstraptema.ru/index/best_for_bootstrap/0-4">Топ 100</a></li>--%>
-                <%--<li><a href="http://bootstraptema.ru/index/feedback/0-3">Связь</a></li>--%>
-                <%--</ul>--%>
-                <%--</li>--%>
+                <li><a href="http://bootstraptema.ru/">Главная</a></li>
+                <li><a href="http://bootstraptema.ru/stuff/templates_bootstrap/1">Шаблоны</a></li>
+                <li><a href="http://bootstraptema.ru/stuff/plugins_bootstrap/2">Плагины</a></li>
+                <li><a href="http://bootstraptema.ru/stuff/snippets_bootstrap/3">Сниппеты</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Ещё <b
+                class="caret"></b></a>
+                <ul class="dropdown-menu">
+                <li><a href="http://bootstraptema.ru/stuff/0-0-0-0-1">Заработать</a></li>
+                <li><a href="http://bootstraptema.ru/index/best_for_bootstrap/0-4">Топ 100</a></li>
+                <li><a href="http://bootstraptema.ru/index/feedback/0-3">Связь</a></li>
+                </ul>
+                </li>
             </ul>
 
         </div>
@@ -127,5 +127,4 @@
 </div>
 
 
-</body>
 </html>

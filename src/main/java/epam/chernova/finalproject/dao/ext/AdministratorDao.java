@@ -13,7 +13,7 @@ import java.sql.*;
 public class AdministratorDao implements IAdministratorDao {
     private final static Logger LOGGER = LogManager.getLogger(AdministratorDao.class);
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 1";
-    private static final String FIND_BY_LOGIN = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =?";
+    private static final String FIND_BY_LOGIN = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.role=1";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
