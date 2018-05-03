@@ -2,6 +2,7 @@ package epam.chernova.finalproject.dao.ext;
 
 import epam.chernova.finalproject.connectionpool.ConnectionPool;
 import epam.chernova.finalproject.dao.IClientDao;
+import epam.chernova.finalproject.entity.User;
 import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
 import org.apache.log4j.Level;
@@ -12,10 +13,11 @@ import java.sql.*;
 public class ClientDao implements IClientDao {
     private static final Logger LOGGER = Logger.getLogger(ClientDao.class);
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 0";
-    private static final String FIND_BY_LOGIN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =?";
+    private static final String FIND_CLIENT_BY_LOGIN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =?";
+    private static final String FIND_USER_BY_LOGIN = "SELECT * FROM user  WHERE user.login =?";
     private static final String FIND_BY_EMAIL = "SELECT * FROM client  WHERE user.email =?";
     private static final String ADD_USER = "INSERT INTO user (login,password,role) VALUES (?,?,?)";
-    private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email) VALUES (LAST_INSERT_ID(),?,?,?)";
+    private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email) VALUES (?,?,?,?)";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -59,7 +61,7 @@ public class ClientDao implements IClientDao {
         PreparedStatement statement = null;
         Client client = null;
         try {
-            statement = connection.prepareStatement(FIND_BY_LOGIN);
+            statement = connection.prepareStatement(FIND_CLIENT_BY_LOGIN);
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
@@ -106,7 +108,7 @@ public class ClientDao implements IClientDao {
     }
 
     @Override
-    public boolean addUser(String login, String password) throws DaoException {
+    public User addUser(String login, String password) throws DaoException {
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
         PreparedStatement statement = null;
@@ -117,7 +119,7 @@ public class ClientDao implements IClientDao {
             statement.setString(2, password);
             statement.setInt(3, 0);
             if (statement.executeUpdate() != 0) {
-                return true;
+                return findUserByLogin(login);
             }
         } catch (SQLException e) {
             throw new DaoException("Exception while user executing SQL query", e);
@@ -125,20 +127,21 @@ public class ClientDao implements IClientDao {
             LOGGER.log(Level.DEBUG, "Client DAO: finish addUser");
             connectionPool.putBack(connection, resultSet, statement);
         }
-        return false;
+        return null;
     }
 
     @Override
-    public Client addClient(String login,String name, String surname, String email) throws DaoException {
+    public Client addClient(int idUser,String login,String name, String surname, String email) throws DaoException {
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
         PreparedStatement statement = null;
         LOGGER.log(Level.DEBUG, "Client DAO: start addClient");
         try {
             statement = connection.prepareStatement(ADD_CLIENT);
-            statement.setString(1, name);
-            statement.setString(2, surname);
-            statement.setString(3, email);
+            statement.setInt(1, idUser);
+            statement.setString(2, name);
+            statement.setString(3, surname);
+            statement.setString(4, email);
             if (statement.executeUpdate() != 0) {
                 return findClientByLogin(login);
             }
@@ -149,6 +152,32 @@ public class ClientDao implements IClientDao {
             connectionPool.putBack(connection, resultSet, statement);
         }
         return null;
+    }
+
+    @Override
+    public User findUserByLogin(String login) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        User user = null;
+        try {
+            statement = connection.prepareStatement(FIND_USER_BY_LOGIN);
+            statement.setString(1, login);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                user = new User();
+                user.setIdUser(resultSet.getInt("iduser"));
+                user.setLogin(resultSet.getString("user.login"));
+                user.setPassword(resultSet.getString("user.password"));
+                user.setRole(resultSet.getBoolean("user.role"));
+                System.out.println(user);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return user;
     }
 
 

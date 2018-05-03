@@ -2,6 +2,7 @@ package epam.chernova.finalproject.service.impl;
 
 
 import epam.chernova.finalproject.dao.ext.ClientDao;
+import epam.chernova.finalproject.entity.User;
 import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
@@ -38,13 +39,14 @@ public class ClientServiceImpl implements ClientService {
     public Client signUp(String login, String password, String name, String surname, String email) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Client Service: Sign up started");
         Client client = null;
+        User user = null;
         try {
             if(Validator.isNull(login, password, name, surname, email)&&Validator.isEmptyString(login, password, name, surname, email)&&Validator.matchProperName(name, surname)&&Validator.matchLogin(login)&&Validator.matchPassword(password)&&Validator.matchEmail(email)) {
 //            password = Hasher.sha1Hash(password);
-                System.out.println("ghbd");
                 if (!daoFactory.getAdministratorDao().findAdministratorByLogin(login)) {
-                    if (daoFactory.getClientDao().addUser(login, password)) {
-                        client = daoFactory.getClientDao().addClient(login, name, surname, email);
+                    user=daoFactory.getClientDao().addUser(login, password);
+                    if (user!=null) {
+                        client = daoFactory.getClientDao().addClient(user.getIdUser(),login, name, surname, email);
                     }
                 }
             }

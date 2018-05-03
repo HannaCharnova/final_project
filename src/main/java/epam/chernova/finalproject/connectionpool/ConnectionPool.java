@@ -1,6 +1,7 @@
 package epam.chernova.finalproject.connectionpool;
 
 import epam.chernova.finalproject.webenum.DBparameter;
+import org.apache.log4j.Level;
 
 import java.sql.*;
 import java.util.PriorityQueue;
@@ -19,7 +20,7 @@ public class ConnectionPool {
     private static Lock connectionLock = new ReentrantLock();
 
     private BlockingQueue<Connection> connections;
-    private Queue<Connection> givenConnections;
+    private BlockingQueue<Connection> givenConnections;
     private int waitingTime;
 
 
@@ -34,7 +35,7 @@ public class ConnectionPool {
             waitingTime = Integer.parseInt(dbResourceManager.getValue(DBparameter.WAITING_TIME.getValue()));
             Class.forName(driver);
             connections = new ArrayBlockingQueue<>(poolSize);
-            givenConnections = new PriorityQueue<>(poolSize);
+            givenConnections = new ArrayBlockingQueue<>(poolSize);
             for (int i = 0; i < poolSize; i++) {
                 connections.add(DriverManager.getConnection(url, user, password));
             }
@@ -49,7 +50,7 @@ public class ConnectionPool {
         if (!instanceCreated.get()) {
             try {
                 instanceLock.lock();
-                if (instance == null) {
+                if (instance == null && !instanceCreated.get()) {
                     instance = new ConnectionPool();
                     instanceCreated.set(true);
                 }
@@ -85,14 +86,21 @@ public class ConnectionPool {
     }
 
     public void releasePool() {
-        try {
-            while (!connections.isEmpty()) {
-                connections.take().close();
+        while (!givenConnections.isEmpty()) {
+            try {
+                Connection connection = givenConnections.take();
+                connection.close();
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        }
+        while (!connections.isEmpty()) {
+            try {
+                Connection connection = connections.take();
+                connection.close();
+            } catch (InterruptedException | SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
