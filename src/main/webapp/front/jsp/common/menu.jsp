@@ -34,7 +34,7 @@
 <div class="cd-bouncy-nav-modal">
     <nav>
         <ul class="cd-bouncy-nav">
-            <li><a href="/epam.by/product_list">${menu}</a></li>
+            <li><a href="/epam.by/menu">${menu}</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#services">Services</a></li>
             <li><a href="#gallery">Gallery</a></li>

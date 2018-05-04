@@ -18,7 +18,7 @@ public class CommandProvider {
         commands.put(CommandName.SIGN_UP,new SignUp());
         commands.put(CommandName.INDEX,new Index());
         commands.put(CommandName.CHANGE_LOCALE,new ChangeLocale());
-        commands.put(CommandName.PRODUCT_LIST,new ProductList());
+        commands.put(CommandName.MENU,new ProductList());
     }
 
     public static CommandProvider getInstance() {

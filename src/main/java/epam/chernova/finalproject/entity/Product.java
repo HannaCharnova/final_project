@@ -8,28 +8,25 @@ public class Product {
     private double cost;
     private String type;
     private double weight;
-    private String description;
     private String imagePath;
 
     public Product() {
     }
 
-    public Product(int idProduct, String name, double cost, String type, double weight, String description, String imagePath) {
+    public Product(int idProduct, String name, double cost, String type, double weight, String imagePath) {
         this.idProduct = idProduct;
         this.name = name;
         this.cost = cost;
         this.type = type;
         this.weight = weight;
-        this.description = description;
         this.imagePath = imagePath;
     }
 
-    public Product(String name, double cost, String type, double weight, String description, String imagePath) {
+    public Product(String name, double cost, String type, double weight, String imagePath) {
         this.name = name;
         this.cost = cost;
         this.type = type;
         this.weight = weight;
-        this.description = description;
         this.imagePath = imagePath;
     }
 
@@ -73,14 +70,6 @@ public class Product {
         this.weight = weight;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImagePath() {
         return imagePath;
     }
@@ -99,14 +88,13 @@ public class Product {
                 Double.compare(product.weight, weight) == 0 &&
                 Objects.equals(name, product.name) &&
                 Objects.equals(type, product.type) &&
-                Objects.equals(description, product.description) &&
                 Objects.equals(imagePath, product.imagePath);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(idProduct, name, cost, type, weight, description, imagePath);
+        return Objects.hash(idProduct, name, cost, type, weight, imagePath);
     }
 
     @Override
@@ -117,7 +105,6 @@ public class Product {
                 ", cost=" + cost +
                 ", type='" + type + '\'' +
                 ", weight=" + weight +
-                ", description='" + description + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 '}';
     }

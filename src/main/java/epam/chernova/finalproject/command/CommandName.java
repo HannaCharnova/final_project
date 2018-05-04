@@ -6,5 +6,5 @@ public enum CommandName {
     SIGN_UP,
     INDEX,
     CHANGE_LOCALE,
-    PRODUCT_LIST;
+    MENU;
 }

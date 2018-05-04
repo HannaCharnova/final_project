@@ -14,6 +14,10 @@
     <script>
         <%@include file="/front/js/lib/jquery.min.js" %>
     </script>
+    <style>
+        <%@include file="/front/css/common.css" %>
+    </style>
+
     <title>Cafe</title>
 </head>
 <header>
