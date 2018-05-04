@@ -14,4 +14,11 @@
         <tag-class>epam.chernova.finalproject.tag.HomeTag</tag-class>
         <body-content>empty</body-content>
     </tag>
+
+    <tag>
+        <name>menu</name>
+        <tag-class>epam.chernova.finalproject.tag.MenuTag</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
 </taglib>

@@ -26,9 +26,9 @@
 
 <body>
 <%@ include file="/front/jsp/common/information.jsp" %>
-<%@ include file="/front/jsp/common/menu.jsp" %>
 <%@ include file="/front/jsp/common/form.jsp" %>
 <%@ include file="/front/jsp/common/main.jsp" %>
+<ctg:menu/>
 
 </body>
 </html>
