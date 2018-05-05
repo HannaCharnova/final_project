@@ -19,8 +19,4 @@ public class HomeTag extends TagSupport{
         return SKIP_BODY;
     }
 
-    @Override
-    public int doEndTag() throws JspException {
-        return EVAL_PAGE;
-    }
 }

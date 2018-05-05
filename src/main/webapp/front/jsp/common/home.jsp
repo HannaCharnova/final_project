@@ -21,10 +21,10 @@
     <title>Cafe</title>
 </head>
 <header>
-    <%@ include file="/front/jsp/common/header.jsp" %>
 </header>
 
 <body>
+<%@ include file="/front/jsp/common/header.jsp" %>
 <%@ include file="/front/jsp/common/information.jsp" %>
 <%@ include file="/front/jsp/common/form.jsp" %>
 <%@ include file="/front/jsp/common/main.jsp" %>
