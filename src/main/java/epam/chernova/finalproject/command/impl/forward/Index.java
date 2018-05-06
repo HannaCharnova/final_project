@@ -1,6 +1,7 @@
-package epam.chernova.finalproject.command.impl;
+package epam.chernova.finalproject.command.impl.forward;
 
 import epam.chernova.finalproject.command.ICommand;
+import epam.chernova.finalproject.command.impl.redirect.ChangeLocale;
 import epam.chernova.finalproject.util.SessionElements;
 import epam.chernova.finalproject.webenum.PageName;
 import epam.chernova.finalproject.webenum.PageNameRedirect;

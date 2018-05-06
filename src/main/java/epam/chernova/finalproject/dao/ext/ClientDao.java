@@ -85,9 +85,9 @@ public class ClientDao implements IClientDao {
     }
 
     @Override
-    public boolean findClientByEmail(String email) throws DaoException {
+    public Client findClientByEmail(String email) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start findClientByEmail");
-
+        Client client=null;
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
         PreparedStatement statement = null;
@@ -96,7 +96,16 @@ public class ClientDao implements IClientDao {
             statement.setString(1, email);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
-                return true;
+                client = new Client();
+                client.setIdUser(resultSet.getInt("user_iduser"));
+                client.setLogin(resultSet.getString("user.login"));
+                client.setPassword(resultSet.getString("user.password"));
+                client.setName(resultSet.getString("name"));
+                client.setSurname(resultSet.getString("surname"));
+                client.setEmail(resultSet.getString("email"));
+                client.setPoint(resultSet.getDouble("point"));
+                client.setBan(resultSet.getBoolean("ban"));
+                client.setRole(resultSet.getBoolean("user.role"));
             }
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);
@@ -104,7 +113,7 @@ public class ClientDao implements IClientDao {
             connectionPool.putBack(connection, resultSet, statement);
         }
         LOGGER.log(Level.DEBUG, "Client DAO: finish findClientByEmail");
-        return false;
+        return client;
     }
 
     @Override
@@ -131,7 +140,7 @@ public class ClientDao implements IClientDao {
     }
 
     @Override
-    public Client addClient(int idUser,String login,String name, String surname, String email) throws DaoException {
+    public Client addClient(int idUser, String login, String name, String surname, String email) throws DaoException {
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
         PreparedStatement statement = null;

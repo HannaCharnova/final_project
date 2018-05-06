@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public class Product {
     private int idProduct;
-    private String name;
+    private String nameEn;
+    private String nameRu;
     private double cost;
     private String type;
     private double weight;
@@ -13,17 +14,19 @@ public class Product {
     public Product() {
     }
 
-    public Product(int idProduct, String name, double cost, String type, double weight, String imagePath) {
+    public Product(int idProduct, String nameEn, String nameRu,double cost, String type, double weight, String imagePath) {
         this.idProduct = idProduct;
-        this.name = name;
+        this.nameEn = nameEn;
+        this.nameRu = nameRu;
         this.cost = cost;
         this.type = type;
         this.weight = weight;
         this.imagePath = imagePath;
     }
 
-    public Product(String name, double cost, String type, double weight, String imagePath) {
-        this.name = name;
+    public Product(String nameEn, String nameRu, double cost, String type, double weight, String imagePath) {
+        this.nameEn = nameEn;
+        this.nameRu = nameRu;
         this.cost = cost;
         this.type = type;
         this.weight = weight;
@@ -38,12 +41,20 @@ public class Product {
         this.idProduct = idProduct;
     }
 
-    public String getName() {
-        return name;
+    public String getnameEn() {
+        return nameEn;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setnameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
+
+    public String getnameRu() {
+        return nameRu;
+    }
+
+    public void setnameRu(String nameRu) {
+        this.nameRu = nameRu;
     }
 
     public double getCost() {
@@ -86,7 +97,8 @@ public class Product {
         return idProduct == product.idProduct &&
                 Double.compare(product.cost, cost) == 0 &&
                 Double.compare(product.weight, weight) == 0 &&
-                Objects.equals(name, product.name) &&
+                Objects.equals(nameEn, product.nameEn) &&
+                Objects.equals(nameRu, product.nameRu) &&
                 Objects.equals(type, product.type) &&
                 Objects.equals(imagePath, product.imagePath);
     }
@@ -94,14 +106,15 @@ public class Product {
     @Override
     public int hashCode() {
 
-        return Objects.hash(idProduct, name, cost, type, weight, imagePath);
+        return Objects.hash(idProduct, nameEn, nameRu, cost, type, weight, imagePath);
     }
 
     @Override
     public String toString() {
         return "Product{" +
                 "idProduct=" + idProduct +
-                ", name='" + name + '\'' +
+                ", nameEn='" + nameEn + '\'' +
+                ", nameRu='" + nameRu + '\'' +
                 ", cost=" + cost +
                 ", type='" + type + '\'' +
                 ", weight=" + weight +

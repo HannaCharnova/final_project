@@ -21,4 +21,10 @@
         <body-content>empty</body-content>
     </tag>
 
+    <tag>
+        <name>productlist</name>
+        <tag-class>epam.chernova.finalproject.tag.ProductList</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
 </taglib>

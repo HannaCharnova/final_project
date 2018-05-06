@@ -1,0 +1,43 @@
+.cd-bouncy-nav {
+    position: absolute;
+    left: 50%;
+    top: 57vh;
+}
+
+.cd-bouncy-nav a {
+    display: inline-block;
+    min-width: 100px;
+    position: relative;
+    padding: 90px 20px 15px;
+    margin-bottom: 30px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    color: #fff !important;
+}
+
+.cd-bouncy-nav-modal .cd-close {
+    display: block;
+    position: fixed;
+    top: 50px;
+    right: 5%;
+    width: 44px;
+    height: 44px;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+}
+
+.cd-bouncy-nav {
+    max-width: 700px;
+}
+.cd-section {
+    top:60px;
+    right: 35px;
+    position: fixed;
+    z-index: 1;
+}
+
+.cd-bouncy-nav li {
+    width: 25%;
+    float: left;
+}

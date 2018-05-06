@@ -41,12 +41,12 @@ public class ClientServiceImpl implements ClientService {
         Client client = null;
         User user = null;
         try {
-            if(Validator.isNull(login, password, name, surname, email)&&Validator.isEmptyString(login, password, name, surname, email)&&Validator.matchProperName(name, surname)&&Validator.matchLogin(login)&&Validator.matchPassword(password)&&Validator.matchEmail(email)) {
+            if (Validator.isNull(login, password, name, surname, email) && Validator.isEmptyString(login, password, name, surname, email) && Validator.matchProperName(name, surname) && Validator.matchLogin(login) && Validator.matchPassword(password) && Validator.matchEmail(email)) {
 //            password = Hasher.sha1Hash(password);
                 if (!daoFactory.getAdministratorDao().findAdministratorByLogin(login)) {
-                    user=daoFactory.getClientDao().addUser(login, password);
-                    if (user!=null) {
-                        client = daoFactory.getClientDao().addClient(user.getIdUser(),login, name, surname, email);
+                    user = daoFactory.getClientDao().addUser(login, password);
+                    if (user != null) {
+                        client = daoFactory.getClientDao().addClient(user.getIdUser(), login, name, surname, email);
                     }
                 }
             }
@@ -60,7 +60,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client findClientByLogin(String login) {
         ClientDao clientDao = daoFactory.getClientDao();
-        Client client=null;
+        Client client = null;
         try {
             client = clientDao.findClientByLogin(login);
         } catch (DaoException e) {
@@ -69,16 +69,17 @@ public class ClientServiceImpl implements ClientService {
         return client;
     }
 
+
     @Override
-    public boolean checkUniqueEmail(String email) {
+    public Client findClientByEmail(String email) {
         ClientDao clientDao = daoFactory.getClientDao();
-        boolean result = false;
+        Client client = null;
         try {
-            result = clientDao.findClientByEmail(email);
+            client = clientDao.findClientByEmail(email);
         } catch (DaoException e) {
             LOGGER.log(Level.ERROR, "");
         }
-        return result;
+        return client;
     }
 
 

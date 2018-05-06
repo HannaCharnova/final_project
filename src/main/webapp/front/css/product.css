@@ -14,7 +14,6 @@ body {
 }
 
 .pic:after {
-    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -144,3 +143,4 @@ body {
     padding-left: 30px;
     padding-bottom: 30px;
 }
+

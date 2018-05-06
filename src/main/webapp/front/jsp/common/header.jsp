@@ -42,7 +42,7 @@
         </div>
 
         <div id="slidemenu">
-
+            
             <c:choose>
                 <c:when test="${role==1}">
                     <ul class="nav navbar-nav navbar-right">

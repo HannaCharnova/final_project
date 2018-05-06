@@ -2,9 +2,16 @@
 <%@ taglib prefix="ctg" uri="customtags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean class="epam.chernova.finalproject.entity.Product" scope="page" id="product"/>
+<fmt:setLocale scope="session" value="${locale}"/>
+<fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
+<fmt:message bundle="${loc}" key="local.word.cost" var="cost"/>
+<fmt:message bundle="${loc}" key="local.word.weight" var="weight"/>
 
 <html>
 <head>
+    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/font-awesome/4-4-0/font-awesome.min.css"/>
     <meta name="viewport" content="width=device-width, initial-scale = 1">
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
     <link rel="stylesheet" href="http://bootstraptema.ru/snippets/menu/2016/slidemenu/slidemenu.css"/>
@@ -34,21 +41,20 @@
         <%@include file="/front/css/menu.css" %>
         <%@include file="/front/css/form.css" %>
         <%@include file="/front/css/common.css" %>
+        <%@include file="/front/css/product.css" %>
+
     </style>
 
     <title>Cafe</title>
 </head>
-
-
 <header>
     <%@ include file="/front/jsp/common/header.jsp" %>
 </header>
 
 <body>
-<%@ include file="/front/jsp/common/menu.jsp" %>
-<%@ include file="/front/jsp/common/main.jsp" %>
-<%@ include file="/front/jsp/common/form.jsp" %>
 <%@ include file="/front/jsp/common/information.jsp" %>
-<%--<ctg:menu/>--%>
+<%@ include file="/front/jsp/common/menu.jsp" %>
+<%@ include file="/front/jsp/common/form.jsp" %>
+<ctg:productlist/>
 </body>
 </html>

@@ -4,6 +4,6 @@
 
 <html>
 <body>
-<ctg:home/>
+<%@ include file="/front/jsp/common/home.jsp" %>
 </body>
 </html>

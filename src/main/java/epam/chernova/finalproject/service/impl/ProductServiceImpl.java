@@ -21,7 +21,6 @@ public class ProductServiceImpl implements ProductService {
     private static DaoFactory daoFactory = DaoFactory.getInstance();
 
 
-
     @Override
     public List<Product> findAllProducts() throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: Start get all products");
@@ -33,5 +32,17 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-
+    @Override
+    public List<Product> findProductByType(String productType) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: Start find product by type");
+        try {
+            if (Validator.isNull(productType) && Validator.isEmptyString(productType)) {
+                LOGGER.log(Level.DEBUG, "Product Service: Finish find product by type");
+                return daoFactory.getProductDao().findProductByType(productType);
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+        return null;
+    }
 }

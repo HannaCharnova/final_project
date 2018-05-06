@@ -1,20 +1,12 @@
+//Валидация формы входа
 $(document).ready(function () {
     $("#signin").click(function () {
         $("#sign_in").modal({backdrop: true});
     });
-});
-
-$(document).ready(function () {
     $("#signup").click(function () {
         $("#sign_up").modal({backdrop: true});
     });
-});
 
-
-
-
-//Валидация формы входа
-$(document).ready(function ($) {
     $('form#sign-in-form').on('click', function (e) {
 
 // Запрещаем стандартное поведение для кнопки submit
@@ -53,11 +45,7 @@ $(document).ready(function ($) {
             e.preventDefault();
         }
     });
-});
 
-
-//Валидация формы регистрации
-$(document).ready(function ($) {
     $('form#sign-up-form').on('click', function (e) {
 
 // Запрещаем стандартное поведение для кнопки submit

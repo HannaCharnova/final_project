@@ -10,4 +10,6 @@ import java.util.List;
 public interface IProductDao extends AbstractDao {
     List<Product> findAllProducts() throws DaoException;
 
+    List<Product> findProductByType(String productType) throws DaoException;
+
 }

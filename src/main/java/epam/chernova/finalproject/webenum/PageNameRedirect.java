@@ -3,7 +3,7 @@ package epam.chernova.finalproject.webenum;
 public enum PageNameRedirect {
     INDEX("/epam.by/index"),
     ERROR("/epam.by/error"),
-    MENU("/epam.by/menu");
+    FIND_BY_TYPE("/epam.by/find_by_type");
 
     private String path;
 

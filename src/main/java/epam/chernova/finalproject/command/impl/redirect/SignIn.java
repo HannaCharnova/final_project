@@ -1,4 +1,4 @@
-package epam.chernova.finalproject.command.impl;
+package epam.chernova.finalproject.command.impl.redirect;
 
 import epam.chernova.finalproject.command.ICommand;
 import epam.chernova.finalproject.entity.ext.Administrator;

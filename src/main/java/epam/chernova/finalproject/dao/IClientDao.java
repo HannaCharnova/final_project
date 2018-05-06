@@ -11,7 +11,7 @@ public interface IClientDao extends AbstractDao {
 
     Client findClientByLogin(String login) throws DaoException;
 
-    boolean findClientByEmail(String email) throws DaoException;
+    Client findClientByEmail(String email) throws DaoException;
 
     User addUser(String login, String password) throws DaoException;
 

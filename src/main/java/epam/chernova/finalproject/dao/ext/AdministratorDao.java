@@ -13,7 +13,7 @@ import java.sql.*;
 public class AdministratorDao implements IAdministratorDao {
     private final static Logger LOGGER = LogManager.getLogger(AdministratorDao.class);
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 1";
-    private static final String FIND_BY_LOGIN = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.role=1";
+    private static final String FIND_ADMIN_BY_LOGIN = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.role=1";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -53,14 +53,14 @@ public class AdministratorDao implements IAdministratorDao {
         ResultSet resultSet = null;
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(FIND_BY_LOGIN);
+            statement = connection.prepareStatement(FIND_ADMIN_BY_LOGIN);
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Exception while executing adm SQL query", e);
+            throw new DaoException("Exception while executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "AdministratorDao: finish findAdministratorByLogin");
             connectionPool.putBack(connection, resultSet, statement);

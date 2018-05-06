@@ -1,4 +1,4 @@
-package epam.chernova.finalproject.command.impl;
+package epam.chernova.finalproject.command.impl.redirect;
 
 import epam.chernova.finalproject.command.ICommand;
 import epam.chernova.finalproject.entity.ext.Client;
@@ -11,9 +11,8 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class SignUp implements ICommand{
+public class SignUp implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignUp.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
@@ -21,30 +20,32 @@ public class SignUp implements ICommand{
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Command: Sign up started.");
+        Client client =null;
         ClientService clientService = serviceFactory.getClientService();
-        String login =  request.getParameter("login_up");
+        String login = request.getParameter("login_up");
         String password = request.getParameter("password_up");
         String email = request.getParameter("email");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
-        System.out.println(name+ surname+ login+ password+ email);
-        try{
-        Client client = clientService.signUp(login, password, name,surname,email);
-        if (client == null) {
-            if(clientService.findClientByLogin(login)!=null) {
-                diagnoseCommonLogin(request);
-            }else{
+        try {
+            if (clientService.findClientByEmail(email) != null) {
                 diagnoseCommonEmail(request);
+            } else {
+                if (clientService.findClientByLogin(login) != null) {
+                    diagnoseCommonLogin(request);
+                } else {
+                    client =clientService.signUp(login, password, name, surname, email);
+                    if(client==null){
+                        diagnoseCommonLogin(request);
+                    }
+                }
             }
-        } else {
-            LOGGER.log(Level.INFO, "Successful sign up in account as " + client.getLogin());
-        }
-        response.sendRedirect(PageNameRedirect.INDEX.getPath());
-    } catch (Exception e) {
+            response.sendRedirect(PageNameRedirect.INDEX.getPath());
+        } catch (Exception e) {
             e.printStackTrace();
-        LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
-        pageName = pageName.ERROR;
-    }
+            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
+            pageName = pageName.ERROR;
+        }
         LOGGER.log(Level.INFO, "Command: Sign Up finished.");
         return pageName.getPath();
     }

@@ -14,6 +14,7 @@ import java.util.List;
 public class ProductDao implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDao.class);
     private static final String FIND_ALL_PRODUCTS = "SELECT * FROM menu";
+    private static final String FIND_PRODUCT_BY_TYPE = "SELECT * FROM menu WHERE type=?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
@@ -39,11 +40,37 @@ public class ProductDao implements IProductDao {
         return products;
     }
 
+    @Override
+    public List<Product> findProductByType(String productType) throws DaoException {
+        LOGGER.log(Level.DEBUG, "ProductDAO: Start find product by type.");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        List<Product> products;
+        try {
+            statement = connection.prepareStatement(FIND_PRODUCT_BY_TYPE);
+            statement.setString(1, productType);
+            resultSet = statement.executeQuery();
+            products = new ArrayList<>();
+            while (resultSet.next()) {
+                products.add(createProductByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } finally {
+            LOGGER.log(Level.DEBUG, "ProductDAO: Finish find product by type.");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return products;
+
+    }
+
     private Product createProductByResultSet(ResultSet resultSet) throws DaoException {
         Product product = new Product();
         try {
             product.setIdProduct(resultSet.getInt("idproduct"));
-            product.setName(resultSet.getString("name"));
+            product.setnameEn(resultSet.getString("name_en"));
+            product.setnameRu(resultSet.getString("name_ru"));
             product.setCost(resultSet.getDouble("cost"));
             product.setType(resultSet.getString("type"));
             product.setWeight(resultSet.getInt("weight"));
