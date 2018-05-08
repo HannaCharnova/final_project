@@ -6,6 +6,6 @@ public enum CommandName {
     SIGN_UP,
     INDEX,
     CHANGE_LOCALE,
-    MENU,
-    FIND_BY_TYPE;
+    FIND_BY_TYPE,
+    SIGN_OUT;
 }

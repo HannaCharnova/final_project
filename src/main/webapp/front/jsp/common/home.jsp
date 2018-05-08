@@ -49,6 +49,5 @@
 <%@ include file="/front/jsp/common/main.jsp" %>
 <%@ include file="/front/jsp/common/form.jsp" %>
 <%@ include file="/front/jsp/common/information.jsp" %>
-<%--<ctg:menu/>--%>
 </body>
 </html>

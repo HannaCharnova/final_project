@@ -6,7 +6,10 @@
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
 <fmt:message bundle="${loc}" key="local.word.sign_in" var="sign_in"/>
 <fmt:message bundle="${loc}" key="local.word.sign_up" var="sign_up"/>
-<fmt:message bundle="${loc}" key="local.word.hello" var="hello"/>
+<fmt:message bundle="${loc}" key="local.word.my_profile" var="my_profile"/>
+<fmt:message bundle="${loc}" key="local.word.my_basket" var="my_basket"/>
+<fmt:message bundle="${loc}" key="local.word.my_orders" var="my_orders"/>
+<fmt:message bundle="${loc}" key="local.word.sign_out" var="sign_out"/>
 
 
 <html>
@@ -42,7 +45,7 @@
         </div>
 
         <div id="slidemenu">
-            
+
             <c:choose>
                 <c:when test="${role==1}">
                     <ul class="nav navbar-nav navbar-right">
@@ -70,11 +73,11 @@
                                                           alt="USER" width="20"/> ${client.login} <span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">My profile</a></li>
-                                <li><a href="#">Favorited</a></li>
-                                <li><a href="#">Settings</a></li>
+                                <li><a href="#">${my_profile}</a></li>
+                                <li><a href="#">${my_basket}</a></li>
+                                <li><a href="#">${my_orders}</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Logout</a></li>
+                                <li><a href="/epam.by/sign_out">${sign_out}</a></li>
                             </ul>
                     </ul>
                 </c:when>
@@ -113,12 +116,12 @@
                 <li><a href="http://bootstraptema.ru/stuff/plugins_bootstrap/2">Плагины</a></li>
                 <li><a href="http://bootstraptema.ru/stuff/snippets_bootstrap/3">Сниппеты</a></li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Ещё <b
-                class="caret"></b></a>
-                <ul class="dropdown-menu">
-                <li><a href="http://bootstraptema.ru/stuff/0-0-0-0-1">Заработать</a></li>
-                <li><a href="http://bootstraptema.ru/index/best_for_bootstrap/0-4">Топ 100</a></li>
-                <li><a href="http://bootstraptema.ru/index/feedback/0-3">Связь</a></li>
-                </ul>
+                        class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://bootstraptema.ru/stuff/0-0-0-0-1">Заработать</a></li>
+                        <li><a href="http://bootstraptema.ru/index/best_for_bootstrap/0-4">Топ 100</a></li>
+                        <li><a href="http://bootstraptema.ru/index/feedback/0-3">Связь</a></li>
+                    </ul>
                 </li>
             </ul>
 
