@@ -3,10 +3,7 @@ package epam.chernova.finalproject.command;
 
 import epam.chernova.finalproject.command.impl.forward.FindByType;
 import epam.chernova.finalproject.command.impl.forward.Index;
-import epam.chernova.finalproject.command.impl.redirect.ChangeLocale;
-import epam.chernova.finalproject.command.impl.redirect.SignIn;
-import epam.chernova.finalproject.command.impl.redirect.SignOut;
-import epam.chernova.finalproject.command.impl.redirect.SignUp;
+import epam.chernova.finalproject.command.impl.redirect.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.EnumMap;
@@ -25,6 +22,8 @@ public class CommandProvider {
         commands.put(CommandName.CHANGE_LOCALE,new ChangeLocale());
         commands.put(CommandName.FIND_BY_TYPE,new FindByType());
         commands.put(CommandName.SIGN_OUT,new SignOut());
+        commands.put(CommandName.ADD_PRODUCT_BASKET,new AddBasketProduct());
+
 
 
     }

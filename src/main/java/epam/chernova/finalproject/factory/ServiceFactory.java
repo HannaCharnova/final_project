@@ -1,17 +1,15 @@
 package epam.chernova.finalproject.factory;
 
-import epam.chernova.finalproject.service.AdministratorService;
-import epam.chernova.finalproject.service.ClientService;
-import epam.chernova.finalproject.service.ProductService;
-import epam.chernova.finalproject.service.impl.AdministratorServiceImpl;
-import epam.chernova.finalproject.service.impl.ClientServiceImpl;
-import epam.chernova.finalproject.service.impl.ProductServiceImpl;
+import epam.chernova.finalproject.service.*;
+import epam.chernova.finalproject.service.impl.*;
 
 public class ServiceFactory {
     private static final ServiceFactory INSTANCE = new ServiceFactory();
     private ClientService clientService = new ClientServiceImpl();
     private AdministratorService administratorService = new AdministratorServiceImpl();
     private ProductService productService = new ProductServiceImpl();
+    private OrderService orderService = new OrderServiceImpl();
+    private OrderProductService orderProductService = new OrderProductServiceImpl();
 
 
     public static ServiceFactory getInstance() {
@@ -28,5 +26,13 @@ public class ServiceFactory {
 
     public ProductService getProductService() {
         return productService;
+    }
+
+    public OrderService getOrderService() {
+        return orderService;
+    }
+
+    public OrderProductService getOrderProductService() {
+        return orderProductService;
     }
 }

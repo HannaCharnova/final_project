@@ -7,7 +7,9 @@
 <fmt:message bundle="${loc}" key="local.word.cost" var="cost"/>
 <fmt:message bundle="${loc}" key="local.word.weight" var="weight"/>
 
-
+<style>
+    <%@include file="/front/css/productlist.css" %>
+</style>
 
 <div class="container">
     <div class="row">
@@ -23,9 +25,7 @@
                                      alt=""/>
                             </div>
                                 <ul class="social-links">
-                                <li><a href="#" class="fa fa-facebook"></a></li>
-                                <li><a href="#" class="fa fa-google"></a></li>
-                                <li><a href="#" class="fa fa-twitter"></a></li>
+                                <li><a href="/epam.by/add_product_basket" class="fa"></a></li>
                                 </ul>
                             <div class="over-layer">
                                 <h4 class="post">

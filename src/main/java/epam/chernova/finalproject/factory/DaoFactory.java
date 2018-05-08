@@ -1,8 +1,6 @@
 package epam.chernova.finalproject.factory;
 
-import epam.chernova.finalproject.dao.ext.AdministratorDao;
-import epam.chernova.finalproject.dao.ext.ClientDao;
-import epam.chernova.finalproject.dao.ext.ProductDao;
+import epam.chernova.finalproject.dao.ext.*;
 import epam.chernova.finalproject.entity.Product;
 
 public class DaoFactory {
@@ -10,6 +8,8 @@ public class DaoFactory {
     private ClientDao clientDao = new ClientDao();
     private AdministratorDao administratorDao = new AdministratorDao();
     private ProductDao productDao = new ProductDao();
+    private OrderDao orderDao = new OrderDao();
+    private OrderProductDao orderProductDao = new OrderProductDao();
 
 
     public static DaoFactory getInstance() {
@@ -26,5 +26,13 @@ public class DaoFactory {
 
     public ProductDao getProductDao() {
         return productDao;
+    }
+
+    public OrderDao getOrderDao() {
+        return orderDao;
+    }
+
+    public OrderProductDao getOrderProductDao() {
+        return orderProductDao;
     }
 }

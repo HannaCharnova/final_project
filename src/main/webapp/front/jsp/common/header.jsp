@@ -10,6 +10,7 @@
 <fmt:message bundle="${loc}" key="local.word.my_basket" var="my_basket"/>
 <fmt:message bundle="${loc}" key="local.word.my_orders" var="my_orders"/>
 <fmt:message bundle="${loc}" key="local.word.sign_out" var="sign_out"/>
+<fmt:message bundle="${loc}" key="local.word.home" var="home"/>
 
 
 <html>
@@ -74,7 +75,6 @@
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">${my_profile}</a></li>
-                                <li><a href="#">${my_basket}</a></li>
                                 <li><a href="#">${my_orders}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/epam.by/sign_out">${sign_out}</a></li>
@@ -111,7 +111,7 @@
                     </form>
 
                 </li>
-                <li><a href="http://bootstraptema.ru/">Главная</a></li>
+                <li><a href="/epam.by/index">${home}</a></li>
                 <li><a href="http://bootstraptema.ru/stuff/templates_bootstrap/1">Шаблоны</a></li>
                 <li><a href="http://bootstraptema.ru/stuff/plugins_bootstrap/2">Плагины</a></li>
                 <li><a href="http://bootstraptema.ru/stuff/snippets_bootstrap/3">Сниппеты</a></li>

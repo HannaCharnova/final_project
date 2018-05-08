@@ -56,7 +56,6 @@
             <li><a href="/epam.by/find_by_type?product_type=tea">${tea}</a></li>
             <li><a href="/epam.by/find_by_type?product_type=hot_dishes">${hot_dishes}</a></li>
             <li><a href="/epam.by/find_by_type?product_type=smuzzi">${smuzzi}</a></li>
-
         </ul>
     </nav>
     <a href="#0" class="cd-close">Close modal</a>

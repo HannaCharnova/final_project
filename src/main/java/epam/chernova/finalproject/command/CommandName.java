@@ -7,5 +7,6 @@ public enum CommandName {
     INDEX,
     CHANGE_LOCALE,
     FIND_BY_TYPE,
-    SIGN_OUT;
+    SIGN_OUT,
+    ADD_PRODUCT_BASKET;
 }
