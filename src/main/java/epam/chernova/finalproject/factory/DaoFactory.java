@@ -10,6 +10,7 @@ public class DaoFactory {
     private ProductDao productDao = new ProductDao();
     private OrderDao orderDao = new OrderDao();
     private OrderProductDao orderProductDao = new OrderProductDao();
+    private AccountDao accountDao = new AccountDao();
 
 
     public static DaoFactory getInstance() {
@@ -34,5 +35,9 @@ public class DaoFactory {
 
     public OrderProductDao getOrderProductDao() {
         return orderProductDao;
+    }
+
+    public AccountDao getAccountDao() {
+        return accountDao;
     }
 }

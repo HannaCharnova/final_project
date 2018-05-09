@@ -20,6 +20,8 @@ public class OrderDao implements IOrderDao {
     private static final String EDIT_ORDER_COST = "UPDATE cafe.order SET cafe.order.total_cost = (cafe.order.total_cost + ?) WHERE cafe.order.idorder = ?";
     private static final String ADD_ORDER = "INSERT INTO cafe.order (date,client_user_iduser,status) VALUES (CURRENT_DATE,?,1)";
     private static final String FIND_ORDERS_BY_CLIENT_ID = "SELECT * FROM cafe.order WHERE cafe.order.client_user_iduser =?";
+    private static final String FIND_ORDER_BY_ORDER_ID = "SELECT * FROM cafe.order WHERE cafe.order.idorder =?";
+    private static final String PAY_ORDER = "UPDATE cafe.order SET cafe.order.status = 0 WHERE cafe.order.idorder = ?";
 
 
     @Override
@@ -39,7 +41,7 @@ public class OrderDao implements IOrderDao {
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
-            LOGGER.log(Level.DEBUG, "Order DAO: finish findClientByEmail");
+            LOGGER.log(Level.DEBUG, "Order DAO: finish findActiveOrderByClientId");
             connectionPool.putBack(connection, resultSet, statement);
         }
         return null;
@@ -75,7 +77,7 @@ public class OrderDao implements IOrderDao {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(ADD_ORDER);
-            statement.setDouble(1, idClient);
+            statement.setInt(1, idClient);
             if (statement.executeUpdate() != 0) {
                 return true;
             }
@@ -111,6 +113,49 @@ public class OrderDao implements IOrderDao {
         }
         return orders;
 
+    }
+
+    @Override
+    public Order findOrderByOrderId(int idOrder) throws DaoException {
+        LOGGER.log(Level.DEBUG, "OrderDao: Start findOrderByOrderId.");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(FIND_ORDER_BY_ORDER_ID);
+            statement.setInt(1, idOrder);
+            resultSet = statement.executeQuery();
+            while (resultSet.first()) {
+                return createOrderByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } finally {
+            LOGGER.log(Level.DEBUG, "OrderDao: Finish findOrderByOrderId.");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return null;
+
+    }
+
+    @Override
+    public void payOrder(int idOrder) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Order DAO: start payOrder");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(PAY_ORDER);
+            statement.setInt(1, idOrder);
+            if (statement.executeUpdate() != 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query order adding", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Order DAO: finish payOrder");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
     }
 
     private Order createOrderByResultSet(ResultSet resultSet) throws DaoException {

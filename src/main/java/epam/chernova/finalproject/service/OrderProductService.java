@@ -12,4 +12,5 @@ public interface OrderProductService {
     void removeOrderProduct(int idOrder, int idProduct) throws ServiceException;
 
     List<OrderProduct> findOrderProductsByClientId(int idClient) throws ServiceException;
+
 }

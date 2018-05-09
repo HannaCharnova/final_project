@@ -31,7 +31,7 @@ public class RemoveBasketProduct implements ICommand {
             quantity = Integer.parseInt(request.getParameter("quantity"));
             serviceFactory.getOrderProductService().removeOrderProduct(idOrder,idProduct);
             deltaTotalCost = (serviceFactory.getProductService().findProductById(idProduct)).getCost() * quantity;
-            serviceFactory.getOrderService().editOrderCost(idOrder, -deltaTotalCost);
+            serviceFactory.getOrderService().editOrderCost(idOrder, (-deltaTotalCost));
 
             response.sendRedirect(SessionElements.getPageCommand(request));
         } catch (IOException | ServiceException e) {

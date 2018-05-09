@@ -9,6 +9,8 @@
 <fmt:message bundle="${loc}" key="local.word.order_word" var="order_word"/>
 <fmt:message bundle="${loc}" key="local.word.total_cost" var="total_cost"/>
 <fmt:message bundle="${loc}" key="local.word.remove_from_basket" var="remove_from_basket"/>
+<fmt:message bundle="${loc}" key="local.word.has_been_paid" var="has_been_paid"/>
+<fmt:message bundle="${loc}" key="local.word.pay" var="pay"/>
 
 <style>
     <%@include file="/front/css/orderlist.css" %>
@@ -26,22 +28,34 @@
                     <div class="message-item">
                         <div class="message-inner">
                             <div class="message-head clearfix">
+                                <form action="/epam.by/pay_for_order?idOrder=${order.idOrder}" method="post">
+                                    <div class="user-detail">
+                                        <h5 class="handle">${order_word} ${order.idOrder} </h5>
+                                        <c:choose>
+                                            <c:when test="${order.status eq 'true'}">
+                                                <button type="submit" class="btn-right"
+                                                        class="btn btn-default">${pay}</button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="submit" disabled="disabled" class="btn-right"
+                                                        class="btn btn-default">${has_been_paid}</button>
+                                            </c:otherwise>
+                                        </c:choose>
 
-                                <div class="user-detail">
-                                    <h5 class="handle">${order_word} ${order.idOrder} </h5>
-                                    <div class="post-meta">
-                                        <div class="asker-meta">
-                                            <span class="qa-message-what"></span>
-                                            <span class="qa-message-when">
+                                        <div class="post-meta">
+                                            <div class="asker-meta">
+                                                <span class="qa-message-what"></span>
+                                                <span class="qa-message-when">
  <span class="qa-message-when-data">${order.date}</span>
  </span>
-                                            <span class="qa-message-who">
+                                                <span class="qa-message-who">
  <span class="qa-message-who-pad">${total_cost} </span>
  <span class="qa-message-who-data">${order.totalCost}</span>
  </span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
 
                             <div class="qa-message-content">

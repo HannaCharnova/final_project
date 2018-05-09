@@ -14,4 +14,9 @@ public interface IOrderDao extends AbstractDao {
     boolean addOrder(int idClient) throws DaoException;
 
     List<Order> findAllOrdersByClientId(int idClient) throws DaoException;
+
+    Order findOrderByOrderId(int idOrder) throws DaoException;
+
+    void payOrder(int idOrder) throws DaoException;
+
 }

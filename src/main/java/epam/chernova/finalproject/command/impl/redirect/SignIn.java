@@ -72,9 +72,9 @@ public class SignIn implements ICommand {
 
     private static void diagnoseIncorrectSignIn(HttpServletRequest request) {
         if (request.getSession().getAttribute("locale").equals("ru")) {
-            request.setAttribute("error_data", "Неверно введен логин или пароль. Повторите вход.");
+            request.getSession().setAttribute("error_data", "Неверно введен логин или пароль. Повторите вход.");
         } else {
-            request.setAttribute("error_data", "Incorrect login or password. Try again.");
+            request.getSession().setAttribute("error_data", "Incorrect login or password. Try again.");
         }
     }
 }

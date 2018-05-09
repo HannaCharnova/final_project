@@ -14,4 +14,9 @@ public interface OrderService {
     void addOrder(int idClient) throws ServiceException;
 
     List<Order> findAllOrdersByClientId(int idClient) throws ServiceException;
+
+    Order findOrderByOrderId(int idOrder) throws ServiceException;
+
+    void payOrder(int idOrder) throws ServiceException;
+
 }

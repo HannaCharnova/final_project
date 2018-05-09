@@ -10,5 +10,6 @@ public enum CommandName {
     SIGN_OUT,
     ADD_PRODUCT_BASKET,
     REMOVE_PRODUCT_BASKET,
-    SHOW_ORDER_CLIENT;
+    SHOW_ORDER_CLIENT,
+    PAY_FOR_ORDER;
 }

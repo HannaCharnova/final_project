@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
     public void editOrderCost(int idOrder, double deltaTotalCost) throws ServiceException {
         LOGGER.log(Level.DEBUG, "OrderService: Start editOrder");
         try {
-            daoFactory.getOrderDao().editOrderCost(idOrder,deltaTotalCost);
+            daoFactory.getOrderDao().editOrderCost(idOrder, deltaTotalCost);
             LOGGER.log(Level.DEBUG, "OrderService: Finish editOrder");
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
@@ -62,6 +62,28 @@ public class OrderServiceImpl implements OrderService {
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+    }
 
+    @Override
+    public Order findOrderByOrderId(int idOrder) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderService: Start findOrderByOrderId");
+        try {
+            LOGGER.log(Level.DEBUG, "Order Service: Finish findOrderByOrderId");
+            return daoFactory.getOrderDao().findOrderByOrderId(idOrder);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void payOrder(int idOrder) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderService: Start payOrder");
+        try {
+            daoFactory.getOrderDao().payOrder(idOrder);
+            LOGGER.log(Level.DEBUG, "Order Service: Finish payOrder");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
     }
 }

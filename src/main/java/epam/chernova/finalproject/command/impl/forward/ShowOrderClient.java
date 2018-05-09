@@ -35,12 +35,9 @@ public class ShowOrderClient implements ICommand {
             request.setAttribute("orders", orders);
             request.setAttribute("order_products",orderProducts);
             request.setAttribute("products", products);
-            System.out.println(orders);
-            System.out.println(orderProducts);
-            System.out.println(products);
-
             request.getSession().setAttribute("pageCommand", PageNameRedirect.ORDERS.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
+            rewrite(request);
         } catch (ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             pageName = pageName.ERROR;
@@ -50,4 +47,10 @@ public class ShowOrderClient implements ICommand {
         return pageName.getPath();
 
     }
+
+    private void rewrite(HttpServletRequest request) {
+        request.setAttribute("error_data", request.getSession().getAttribute("error_data"));
+        request.getSession().removeAttribute("error_data");
+    }
+
 }

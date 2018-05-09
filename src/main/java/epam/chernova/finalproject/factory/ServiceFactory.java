@@ -10,6 +10,7 @@ public class ServiceFactory {
     private ProductService productService = new ProductServiceImpl();
     private OrderService orderService = new OrderServiceImpl();
     private OrderProductService orderProductService = new OrderProductServiceImpl();
+    private AccountService accountService = new AccountServiceImpl();
 
 
     public static ServiceFactory getInstance() {
@@ -34,5 +35,9 @@ public class ServiceFactory {
 
     public OrderProductService getOrderProductService() {
         return orderProductService;
+    }
+
+    public AccountService getAccountService() {
+        return accountService;
     }
 }

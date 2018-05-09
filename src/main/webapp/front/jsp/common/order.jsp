@@ -11,7 +11,8 @@
 
 <html>
 <head>
-    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css" />    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/font-awesome/4-4-0/font-awesome.min.css"/>
     <meta name="viewport" content="width=device-width, initial-scale = 1">
@@ -53,9 +54,9 @@
 </header>
 
 <body>
-<%@ include file="/front/jsp/common/information.jsp" %>
 <%@ include file="/front/jsp/common/menu.jsp" %>
 <%@ include file="/front/jsp/common/form.jsp" %>
+<%@ include file="/front/jsp/common/information.jsp" %>
 <ctg:orderlist/>
 </body>
 </html>

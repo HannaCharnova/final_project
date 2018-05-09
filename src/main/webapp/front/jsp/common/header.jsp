@@ -86,16 +86,8 @@
                         <li><a id="signin">${sign_in}</a></li>
                         <li><a id="signup">${sign_up}</a></li>
                     </ul>
-                    <c:choose>
-                        <c:when test="${error_data!=null}">
-                            <script>
-                                <%@include file="/front/js/information.js" %>
-                            </script>
-                        </c:when>
-                    </c:choose>
                 </c:otherwise>
             </c:choose>
-
             <ul class="nav navbar-nav">
                 <li>
                     <form method="post" action="/epam.by/change_locale" id="locale">
@@ -107,23 +99,19 @@
                                 <input class="img-circle" type="submit" id="lang_ru">
                             </c:when>
                         </c:choose>
-
                     </form>
 
                 </li>
                 <li><a href="/epam.by/index">${home}</a></li>
-                <li><a href="http://bootstraptema.ru/stuff/templates_bootstrap/1">Шаблоны</a></li>
-                <li><a href="http://bootstraptema.ru/stuff/plugins_bootstrap/2">Плагины</a></li>
-                <li><a href="http://bootstraptema.ru/stuff/snippets_bootstrap/3">Сниппеты</a></li>
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Ещё <b
-                        class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="http://bootstraptema.ru/stuff/0-0-0-0-1">Заработать</a></li>
-                        <li><a href="http://bootstraptema.ru/index/best_for_bootstrap/0-4">Топ 100</a></li>
-                        <li><a href="http://bootstraptema.ru/index/feedback/0-3">Связь</a></li>
-                    </ul>
-                </li>
             </ul>
+
+            <c:choose>
+                <c:when test="${error_data!=null}">
+                    <script>
+                        <%@include file="/front/js/information.js" %>
+                    </script>
+                </c:when>
+            </c:choose>
 
         </div>
     </div>
