@@ -15,6 +15,7 @@ public class ProductDao implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDao.class);
     private static final String FIND_ALL_PRODUCTS = "SELECT * FROM menu";
     private static final String FIND_PRODUCT_BY_TYPE = "SELECT * FROM menu WHERE type=?";
+    private static final String FIND_PRODUCT_BY_ID = "SELECT * FROM menu WHERE idproduct=?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
@@ -62,6 +63,31 @@ public class ProductDao implements IProductDao {
             connectionPool.putBack(connection, resultSet, statement);
         }
         return products;
+
+    }
+
+    @Override
+    public Product findProductById(int idProduct) throws DaoException {
+        LOGGER.log(Level.DEBUG, "ProductDAO: Start find product by id.");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        Product product;
+        try {
+            statement = connection.prepareStatement(FIND_PRODUCT_BY_ID);
+            statement.setInt(1, idProduct);
+            resultSet = statement.executeQuery();
+            product = new Product();
+            while (resultSet.next()) {
+                product=createProductByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } finally {
+            LOGGER.log(Level.DEBUG, "ProductDAO: Finish find product by id.");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return product;
 
     }
 

@@ -30,8 +30,6 @@ public class FindByType implements ICommand {
                 productType = type;
             }
             List<Product> products = serviceFactory.getProductService().findProductByType(productType);
-            System.out.println(products);
-            System.out.println(productType);
             request.setAttribute("products", products);
             request.getSession().setAttribute("pageCommand", PageNameRedirect.FIND_BY_TYPE.getPath());
         } catch (ServiceException e) {

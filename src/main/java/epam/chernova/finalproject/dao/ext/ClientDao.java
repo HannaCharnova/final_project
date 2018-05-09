@@ -179,7 +179,6 @@ public class ClientDao implements IClientDao {
                 user.setLogin(resultSet.getString("user.login"));
                 user.setPassword(resultSet.getString("user.password"));
                 user.setRole(resultSet.getBoolean("user.role"));
-                System.out.println(user);
             }
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);

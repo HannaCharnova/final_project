@@ -45,4 +45,15 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
+
+    @Override
+    public Product findProductById(int idProduct) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: Start find product by id");
+        try {
+            LOGGER.log(Level.DEBUG, "Product Service: Finish find product by id");
+            return daoFactory.getProductDao().findProductById(idProduct);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
 }

@@ -35,7 +35,6 @@ public class AdministratorDao implements IAdministratorDao {
                 administrator.setLogin(resultSet.getString("user.login"));
                 administrator.setPassword(resultSet.getString("user.password"));
                 administrator.setMain(resultSet.getBoolean("is_main"));
-                System.out.println(administrator);
             }
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);

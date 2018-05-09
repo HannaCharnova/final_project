@@ -31,7 +31,6 @@ public class SignIn implements ICommand {
         } else {
             role = false;
         }
-        System.out.println(login + password + role);
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             diagnoseIncorrectSignIn(request);
             return pageName.getPath();

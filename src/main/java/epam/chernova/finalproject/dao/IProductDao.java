@@ -12,4 +12,5 @@ public interface IProductDao extends AbstractDao {
 
     List<Product> findProductByType(String productType) throws DaoException;
 
+    Product findProductById(int idProduct) throws DaoException;
 }
