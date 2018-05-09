@@ -10,6 +10,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 
 public class OrderServiceImpl implements OrderService {
     private static final Logger LOGGER = LogManager.getLogger(OrderServiceImpl.class);
@@ -33,6 +35,30 @@ public class OrderServiceImpl implements OrderService {
         try {
             daoFactory.getOrderDao().editOrderCost(idOrder,deltaTotalCost);
             LOGGER.log(Level.DEBUG, "OrderService: Finish editOrder");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void addOrder(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderService: Start addOrder");
+        try {
+            daoFactory.getOrderDao().addOrder(idClient);
+            LOGGER.log(Level.DEBUG, "OrderService: Finish addOrder");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public List<Order> findAllOrdersByClientId(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderService: Start findAllOrdersByClientId");
+        try {
+            LOGGER.log(Level.DEBUG, "Order Service: Finish findAllOrdersByClientId");
+            return daoFactory.getOrderDao().findAllOrdersByClientId(idClient);
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }

@@ -8,5 +8,6 @@ public enum CommandName {
     CHANGE_LOCALE,
     FIND_BY_TYPE,
     SIGN_OUT,
-    ADD_PRODUCT_BASKET;
+    ADD_PRODUCT_BASKET,
+    SHOW_ORDER_CLIENT;
 }

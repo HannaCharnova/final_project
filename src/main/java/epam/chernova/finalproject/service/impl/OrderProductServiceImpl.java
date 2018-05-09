@@ -1,6 +1,7 @@
 package epam.chernova.finalproject.service.impl;
 
 
+import epam.chernova.finalproject.entity.OrderProduct;
 import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.DaoFactory;
@@ -8,6 +9,8 @@ import epam.chernova.finalproject.service.OrderProductService;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 
 public class OrderProductServiceImpl implements OrderProductService {
@@ -21,6 +24,18 @@ public class OrderProductServiceImpl implements OrderProductService {
         try {
             daoFactory.getOrderProductDao().addOrderProduct(idOrder,idProduct,quantity);
             LOGGER.log(Level.DEBUG, "OrderProductService: Finish addOrderProduct");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public List<OrderProduct> findOrderProductsByClientId(int idClient) {
+        LOGGER.log(Level.DEBUG, "OrderProductService: Start findAllOrdersByClientId");
+        try {
+            LOGGER.log(Level.DEBUG, "OrderProductService: Finish findAllOrdersByClientId");
+            return daoFactory.getOrderDao().findAllOrdersByClientId(idClient);
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }

@@ -16,4 +16,10 @@
         <body-content>empty</body-content>
     </tag>
 
+    <tag>
+        <name>orderlist</name>
+        <tag-class>epam.chernova.finalproject.tag.OrderList</tag-class>
+        <body-content>empty</body-content>
+    </tag>
+
 </taglib>

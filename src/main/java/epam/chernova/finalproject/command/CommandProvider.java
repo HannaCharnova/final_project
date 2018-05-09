@@ -3,6 +3,7 @@ package epam.chernova.finalproject.command;
 
 import epam.chernova.finalproject.command.impl.forward.FindByType;
 import epam.chernova.finalproject.command.impl.forward.Index;
+import epam.chernova.finalproject.command.impl.forward.ShowOrderClient;
 import epam.chernova.finalproject.command.impl.redirect.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ public class CommandProvider {
         commands.put(CommandName.FIND_BY_TYPE,new FindByType());
         commands.put(CommandName.SIGN_OUT,new SignOut());
         commands.put(CommandName.ADD_PRODUCT_BASKET,new AddBasketProduct());
+        commands.put(CommandName.SHOW_ORDER_CLIENT,new ShowOrderClient());
 
 
 

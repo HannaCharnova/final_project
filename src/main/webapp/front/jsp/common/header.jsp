@@ -75,7 +75,7 @@
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">${my_profile}</a></li>
-                                <li><a href="#">${my_orders}</a></li>
+                                <li><a href="/epam.by/show_order_client">${my_orders}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/epam.by/sign_out">${sign_out}</a></li>
                             </ul>
