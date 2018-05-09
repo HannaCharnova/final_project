@@ -1,4 +1,6 @@
-
+.btn-right{
+    float:right;
+}
 
 .message-item {
     margin-bottom: 25px;

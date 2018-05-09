@@ -2,6 +2,7 @@ package epam.chernova.finalproject.dao.ext;
 
 import epam.chernova.finalproject.connectionpool.ConnectionPool;
 import epam.chernova.finalproject.dao.IProductDao;
+import epam.chernova.finalproject.entity.Order;
 import epam.chernova.finalproject.entity.Product;
 import epam.chernova.finalproject.exception.DaoException;
 import org.apache.log4j.Level;

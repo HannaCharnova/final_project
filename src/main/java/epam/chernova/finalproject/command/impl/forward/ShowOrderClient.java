@@ -31,7 +31,14 @@ public class ShowOrderClient implements ICommand {
             int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
             List<Order> orders = serviceFactory.getOrderService().findAllOrdersByClientId(idClient);
             List<OrderProduct> orderProducts = serviceFactory.getOrderProductService().findOrderProductsByClientId(idClient);
+            List<Product> products = serviceFactory.getProductService().findAllProducts();
             request.setAttribute("orders", orders);
+            request.setAttribute("order_products",orderProducts);
+            request.setAttribute("products", products);
+            System.out.println(orders);
+            System.out.println(orderProducts);
+            System.out.println(products);
+
             request.getSession().setAttribute("pageCommand", PageNameRedirect.ORDERS.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
         } catch (ServiceException e) {

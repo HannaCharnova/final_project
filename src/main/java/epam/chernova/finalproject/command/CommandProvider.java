@@ -25,6 +25,7 @@ public class CommandProvider {
         commands.put(CommandName.SIGN_OUT,new SignOut());
         commands.put(CommandName.ADD_PRODUCT_BASKET,new AddBasketProduct());
         commands.put(CommandName.SHOW_ORDER_CLIENT,new ShowOrderClient());
+        commands.put(CommandName.REMOVE_PRODUCT_BASKET,new RemoveBasketProduct());
 
 
 

@@ -12,4 +12,5 @@ public interface ProductService {
     List<Product> findProductByType(String productType) throws ServiceException;
 
     Product findProductById(int idProduct) throws ServiceException;
+
 }

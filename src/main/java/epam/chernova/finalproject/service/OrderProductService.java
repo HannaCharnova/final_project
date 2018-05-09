@@ -7,7 +7,9 @@ import epam.chernova.finalproject.exception.ServiceException;
 import java.util.List;
 
 public interface OrderProductService {
-    void addOrderProduct(int idOrder,int idProduct,int quantity) throws ServiceException;
+    void addOrderProduct(int idOrder, int idProduct, int quantity) throws ServiceException;
 
-    List<OrderProduct> findOrderProductsByClientId(int idClient);
+    void removeOrderProduct(int idOrder, int idProduct) throws ServiceException;
+
+    List<OrderProduct> findOrderProductsByClientId(int idClient) throws ServiceException;
 }

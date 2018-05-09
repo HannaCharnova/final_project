@@ -31,11 +31,22 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     @Override
-    public List<OrderProduct> findOrderProductsByClientId(int idClient) {
-        LOGGER.log(Level.DEBUG, "OrderProductService: Start findAllOrdersByClientId");
+    public void removeOrderProduct(int idOrder, int idProduct) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderProductService: Start removeOrderProduct");
         try {
-            LOGGER.log(Level.DEBUG, "OrderProductService: Finish findAllOrdersByClientId");
-            return daoFactory.getOrderDao().findAllOrdersByClientId(idClient);
+            daoFactory.getOrderProductDao().removeOrderProduct(idOrder,idProduct);
+            LOGGER.log(Level.DEBUG, "OrderProductService: Finish removeOrderProduct");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<OrderProduct> findOrderProductsByClientId(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderProductService: Start findOrderProductsByClientId");
+        try {
+            LOGGER.log(Level.DEBUG, "OrderProductService: Finish findOrderProductsByClientId");
+            return daoFactory.getOrderProductDao().findOrderProductsByClientId(idClient);
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
