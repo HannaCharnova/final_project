@@ -47,7 +47,7 @@ public class SignIn implements ICommand {
                     response.sendRedirect(PageNameRedirect.INDEX.getPath());
                 } else {
                     diagnoseIncorrectSignIn(request);
-                    return pageName.getPath();
+                    response.sendRedirect(PageNameRedirect.INDEX.getPath());
                 }
             } else {
                 Client client = serviceFactory.getClientService().signIn(login, password);
@@ -59,7 +59,7 @@ public class SignIn implements ICommand {
                     response.sendRedirect(PageNameRedirect.INDEX.getPath());
                 } else {
                     diagnoseIncorrectSignIn(request);
-                    return pageName.getPath();
+                    response.sendRedirect(PageNameRedirect.INDEX.getPath());
                 }
             }
         } catch (IOException | ServiceException e) {

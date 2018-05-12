@@ -13,4 +13,6 @@ public interface OrderProductService {
 
     List<OrderProduct> findOrderProductsByClientId(int idClient) throws ServiceException;
 
+    boolean checkActiveOrderProduct(int idProduct) throws ServiceException;
+
 }

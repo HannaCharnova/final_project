@@ -13,4 +13,8 @@ public interface ProductService {
 
     Product findProductById(int idProduct) throws ServiceException;
 
+    List<Product> findExistProducts() throws ServiceException;
+
+    void deleteProduct(int idProduct) throws ServiceException;
+
 }

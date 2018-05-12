@@ -33,6 +33,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findExistProducts() throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: Start get exist products");
+        try {
+            LOGGER.log(Level.DEBUG, "Product Service: Finish get exist products");
+            return daoFactory.getProductDao().findExistProducts();
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteProduct(int idProduct) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: Start deleteProduct");
+        try {
+            LOGGER.log(Level.DEBUG, "Product Service: Finish deleteProduct");
+            daoFactory.getProductDao().deleteProduct(idProduct);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+
+    @Override
     public List<Product> findProductByType(String productType) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: Start find product by type");
         try {

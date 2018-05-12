@@ -5,6 +5,7 @@ import epam.chernova.finalproject.dao.IProductDao;
 import epam.chernova.finalproject.entity.Order;
 import epam.chernova.finalproject.entity.Product;
 import epam.chernova.finalproject.exception.DaoException;
+import epam.chernova.finalproject.exception.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -15,8 +16,10 @@ import java.util.List;
 public class ProductDao implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDao.class);
     private static final String FIND_ALL_PRODUCTS = "SELECT * FROM menu";
-    private static final String FIND_PRODUCT_BY_TYPE = "SELECT * FROM menu WHERE type=?";
+    private static final String FIND_EXIST_PRODUCTS = "SELECT * FROM menu WHERE exist=1 ";
+    private static final String FIND_PRODUCT_BY_TYPE = "SELECT * FROM menu WHERE type=? AND exist=1";
     private static final String FIND_PRODUCT_BY_ID = "SELECT * FROM menu WHERE idproduct=?";
+    private static final String DELETE_PRODUCT = "UPDATE cafe.menu SET cafe.menu.exist = 0 WHERE cafe.menu.idproduct = ?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
@@ -41,6 +44,51 @@ public class ProductDao implements IProductDao {
         }
         return products;
     }
+
+    @Override
+    public List<Product> findExistProducts() throws DaoException {
+        LOGGER.log(Level.DEBUG, "ProductDAO: Start find exist products");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        List<Product> products;
+        try {
+            statement = connection.prepareStatement(FIND_EXIST_PRODUCTS);
+            resultSet = statement.executeQuery();
+            products = new ArrayList<>();
+            while (resultSet.next()) {
+                products.add(createProductByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } finally {
+            LOGGER.log(Level.DEBUG, "ProductDAO: Finish find exist products");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return products;
+    }
+
+    @Override
+    public void deleteProduct(int idProduct) throws ServiceException, DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        LOGGER.log(Level.DEBUG, "Product DAO: start deleteProduct");
+        try {
+            statement = connection.prepareStatement(DELETE_PRODUCT);
+            statement.setInt(1, idProduct);
+            if (statement.executeUpdate() != 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish deleteProduct");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+
+    }
+
 
     @Override
     public List<Product> findProductByType(String productType) throws DaoException {
@@ -96,12 +144,13 @@ public class ProductDao implements IProductDao {
         Product product = new Product();
         try {
             product.setIdProduct(resultSet.getInt("idproduct"));
-            product.setnameEn(resultSet.getString("name_en"));
-            product.setnameRu(resultSet.getString("name_ru"));
+            product.setNameEn(resultSet.getString("name_en"));
+            product.setNameRu(resultSet.getString("name_ru"));
             product.setCost(resultSet.getDouble("cost"));
             product.setType(resultSet.getString("type"));
             product.setWeight(resultSet.getInt("weight"));
             product.setImagePath(resultSet.getString("image_path"));
+            product.setExist(resultSet.getBoolean("exist"));
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query",e);
         }

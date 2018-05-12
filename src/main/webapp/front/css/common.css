@@ -42,3 +42,15 @@ input#lang_en,input#lang_ru{
     z-index: 1;
 }
 
+#profile-row{
+    margin-top:70px;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+#profile-password{
+    margin-left: 0px;
+    display:grid;
+    margin-right: 0px;
+}
+

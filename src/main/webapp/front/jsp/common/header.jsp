@@ -61,7 +61,7 @@
                                 <li><a href="#">Favorited</a></li>
                                 <li><a href="#">Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Logout</a></li>
+                                <li><a href="/epam.by/sign_out">${sign_out}</a></li>
                             </ul>
                     </ul>
                 </c:when>
@@ -74,7 +74,7 @@
                                                           alt="USER" width="20"/> ${client.login} <span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">${my_profile}</a></li>
+                                <li><a href="/epam.by/client_profile">${my_profile}</a></li>
                                 <li><a href="/epam.by/show_order_client">${my_orders}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/epam.by/sign_out">${sign_out}</a></li>
@@ -88,6 +88,7 @@
                     </ul>
                 </c:otherwise>
             </c:choose>
+
             <ul class="nav navbar-nav">
                 <li>
                     <form method="post" action="/epam.by/change_locale" id="locale">

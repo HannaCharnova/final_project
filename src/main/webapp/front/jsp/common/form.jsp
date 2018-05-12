@@ -15,7 +15,6 @@
 <fmt:message bundle="${loc}" key="local.sentence.name_mistake" var="name_mistake"/>
 <fmt:message bundle="${loc}" key="local.sentence.surname_mistake" var="surname_mistake"/>
 <fmt:message bundle="${loc}" key="local.sentence.email_mistake" var="email_mistake"/>
-<fmt:message bundle="${loc}" key="local.sentence.re_password" var="re_password"/>
 
 
 <head>

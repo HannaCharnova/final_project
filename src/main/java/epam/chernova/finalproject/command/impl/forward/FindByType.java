@@ -32,6 +32,7 @@ public class FindByType implements ICommand {
             List<Product> products = serviceFactory.getProductService().findProductByType(productType);
             request.setAttribute("products", products);
             request.getSession().setAttribute("pageCommand", PageNameRedirect.FIND_BY_TYPE.getPath());
+            rewrite(request);
         } catch (ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             pageName = pageName.ERROR;
@@ -40,6 +41,12 @@ public class FindByType implements ICommand {
         LOGGER.log(Level.INFO, "Command: FindByType finished.");
         return pageName.getPath();
     }
+
+    private void rewrite(HttpServletRequest request) {
+        request.setAttribute("error_data", request.getSession().getAttribute("error_data"));
+        request.getSession().removeAttribute("error_data");
+    }
+
 
 
 }

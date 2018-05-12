@@ -11,7 +11,6 @@
 <fmt:message bundle="${loc}" key="local.word.remove_from_basket" var="remove_from_basket"/>
 <fmt:message bundle="${loc}" key="local.word.has_been_paid" var="has_been_paid"/>
 <fmt:message bundle="${loc}" key="local.word.pay" var="pay"/>
-<fmt:message bundle="${loc}" key="local.word.not_exist" var="not_exist"/>
 
 <style>
     <%@include file="/front/css/orderlist.css" %>
@@ -77,13 +76,6 @@
                                                                 ${product.nameEn}
                                                             </c:when>
                                                         </c:choose>
-
-                                                        <c:choose>
-                                                            <c:when test="${product.exist eq 'false'}">
-                                                                <small style="float: right">${not_exist}</small>
-                                                            </c:when>
-                                                        </c:choose>
-
                                                         <c:choose>
                                                             <c:when test="${order.status eq 'true'}">
                                                                 <button type="submit" class="btn-right"

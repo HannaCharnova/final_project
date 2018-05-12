@@ -1,6 +1,7 @@
 package epam.chernova.finalproject.command;
 
 
+import epam.chernova.finalproject.command.impl.forward.ClientProfile;
 import epam.chernova.finalproject.command.impl.forward.FindByType;
 import epam.chernova.finalproject.command.impl.forward.Index;
 import epam.chernova.finalproject.command.impl.forward.ShowOrderClient;
@@ -27,6 +28,8 @@ public class CommandProvider {
         commands.put(CommandName.SHOW_ORDER_CLIENT,new ShowOrderClient());
         commands.put(CommandName.REMOVE_PRODUCT_BASKET,new RemoveBasketProduct());
         commands.put(CommandName.PAY_FOR_ORDER,new PayOrder());
+        commands.put(CommandName.CLIENT_PROFILE,new ClientProfile());
+        commands.put(CommandName.DELETE_PRODUCT,new DeleteProduct());
 
 
 

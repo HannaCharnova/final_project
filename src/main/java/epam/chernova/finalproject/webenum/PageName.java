@@ -4,7 +4,8 @@ public enum PageName {
     INDEX("/front/jsp/index.jsp"),
     ERROR("/front/jsp/error.jsp"),
     PRODUCTS("/front/jsp/common/product.jsp"),
-    ORDERS("/front/jsp/common/order.jsp");
+    ORDERS("/front/jsp/common/order.jsp"),
+    PROFILE("/front/jsp/client/profile.jsp");
 
     private String path;
 

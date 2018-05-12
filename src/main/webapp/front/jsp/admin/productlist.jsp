@@ -6,19 +6,19 @@
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
 <fmt:message bundle="${loc}" key="local.word.cost" var="cost"/>
 <fmt:message bundle="${loc}" key="local.word.weight" var="weight"/>
-<fmt:message bundle="${loc}" key="local.word.add_to_basket" var="add_to_basket"/>
+<fmt:message bundle="${loc}" key="local.word.delete_product" var="delete_product"/>
 
 <style>
     <%@include file="/front/css/productlist.css" %>
 </style>
-
 <div class="container">
+    <button  class="btn btn-default"><a id="signup">${sign_up}Add</a></button>
     <div class="row">
 
         <c:choose>
             <c:when test="${products!=null}">
                 <c:forEach var="product" items="${products}">
-                    <form action="/epam.by/add_product_basket?idProduct=${product.idProduct}" method="post">
+                    <form action="/epam.by/delete_product?idProduct=${product.idProduct}" method="post">
                         <div class="col-md-4 col-sm-6">
                             <div class="box">
                                 <div class="pic">
@@ -38,7 +38,7 @@
                                         <small>${cost}: ${product.cost}</small>
                                         <small>${weight}: ${product.weight}</small>
                                         <small><input type="number" name="quantity" value="0" min="0" max="100" class="input-number"></small>
-                                        <small><button type="submit" class="btn btn-default">${add_to_basket}</button></small>
+                                        <small><button type="submit" class="btn btn-default">${delete_product}</button></small>
                                     </h4>
                                 </div>
                             </div>

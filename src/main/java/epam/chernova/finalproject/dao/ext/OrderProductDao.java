@@ -19,6 +19,7 @@ public class OrderProductDao implements IOrderProductDao {
     private static final String ADD_ORDER_PRODUCT = "INSERT INTO cafe.order_product (order_product.order_idorder,order_product.product_idproduct,order_product.quantity) VALUES (?,?,?)";
     private static final String FIND_ORDER_PRODUCT_BY_CLIENT_ID = "SELECT * FROM cafe.order_product JOIN cafe.order ON cafe.order.idorder = cafe.order_product.order_idorder WHERE cafe.order.client_user_iduser =?";
     private static final String REMOVE_ORDER_PRODUCT = "DELETE FROM cafe.order_product WHERE cafe.order_product.order_idorder=? AND cafe.order_product.product_idproduct=?";
+    private static final String FIND_ORDER_PRODUCT_BY_PRODUCT_ID = "SELECT * FROM cafe.order_product WHERE cafe.order_product.product_idproduct =?";
 
     @Override
     public void addOrderProduct(int idOrder, int idProduct, int quantity) throws DaoException {
@@ -87,6 +88,28 @@ public class OrderProductDao implements IOrderProductDao {
 
     }
 
+    @Override
+    public boolean checkActiveOrderProduct(int idProduct) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        LOGGER.log(Level.DEBUG, "OrderProduct DAO: start checkActiveOrderProduct");
+        try {
+            statement = connection.prepareStatement(FIND_ORDER_PRODUCT_BY_PRODUCT_ID);
+            statement.setInt(1, idProduct);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish checkActiveOrderProduct");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return false;
+    }
+
     private OrderProduct createOrderProductByResultSet(ResultSet resultSet) throws DaoException {
         OrderProduct orderProduct = new OrderProduct();
         try {
@@ -94,7 +117,7 @@ public class OrderProductDao implements IOrderProductDao {
             orderProduct.setIdProduct(resultSet.getInt("product_idproduct"));
             orderProduct.setQuantity(resultSet.getInt("quantity"));
         } catch (SQLException e) {
-            throw new DaoException("Exception while executing SQL query",e);
+            throw new DaoException("Exception while executing SQL query", e);
         }
         return orderProduct;
     }
