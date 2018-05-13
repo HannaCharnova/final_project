@@ -5,6 +5,7 @@ import epam.chernova.finalproject.dao.ext.ClientDao;
 import epam.chernova.finalproject.entity.ext.Administrator;
 import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
+import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.exception.ValidatorException;
 import epam.chernova.finalproject.factory.DaoFactory;
 import epam.chernova.finalproject.service.AdministratorService;
@@ -13,6 +14,8 @@ import epam.chernova.finalproject.util.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 
 public class AdministratorServiceImpl implements AdministratorService {
@@ -32,6 +35,18 @@ public class AdministratorServiceImpl implements AdministratorService {
         } catch (DaoException  e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Administrator> findAllAdministrators() throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AdministratorService: Start findAllAdministrators");
+        try {
+            LOGGER.log(Level.DEBUG, "AdministratorService: Finish findAllAdministrators");
+            return daoFactory.getAdministratorDao().findAllAdministrators();
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
     }
 
 

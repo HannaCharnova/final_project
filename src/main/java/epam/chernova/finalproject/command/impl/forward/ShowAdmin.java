@@ -1,9 +1,7 @@
 package epam.chernova.finalproject.command.impl.forward;
 
 import epam.chernova.finalproject.command.ICommand;
-import epam.chernova.finalproject.entity.Order;
-import epam.chernova.finalproject.entity.OrderProduct;
-import epam.chernova.finalproject.entity.Product;
+import epam.chernova.finalproject.entity.ext.Administrator;
 import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
@@ -17,20 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowClient implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(ShowClient.class);
+public class ShowAdmin implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(ShowAdmin.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private PageName pageName = PageName.CLIENTS;
+    private PageName pageName = PageName.ADMINS;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command: ShowClient started.");
+        LOGGER.log(Level.INFO, "Command: ShowAdmin started.");
         try {
-            List<Client> clients = serviceFactory.getClientService().findAllClients();
-            request.setAttribute("clients", clients);
+            List<Administrator> administrators = serviceFactory.getAdministratorService().findAllAdministrators();
+            request.setAttribute("admins", administrators);
 
-            System.out.println(request.getAttribute("clients"));
-            request.getSession().setAttribute("pageCommand", PageNameRedirect.CLIENTS.getPath());
+            System.out.println(request.getAttribute("admins"));
+            request.getSession().setAttribute("pageCommand", PageNameRedirect.ADMINS.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
             rewrite(request);
         } catch (ServiceException e) {
@@ -38,7 +36,7 @@ public class ShowClient implements ICommand {
             pageName = pageName.ERROR;
         }
 
-        LOGGER.log(Level.INFO, "Command: ShowClient finished.");
+        LOGGER.log(Level.INFO, "Command: ShowAdmin finished.");
         return pageName.getPath();
 
     }

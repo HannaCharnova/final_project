@@ -6,7 +6,9 @@ public enum PageName {
     PRODUCTS("/front/jsp/common/product.jsp"),
     ORDERS("/front/jsp/common/order.jsp"),
     PROFILE("/front/jsp/client/profile.jsp"),
-    CLIENTS("/front/jsp/admin/clientlist.jsp");
+    CLIENTS("/front/jsp/admin/clientlist.jsp"),
+    ADMINS("/front/jsp/admin/adminlist.jsp");
+
 
     private String path;
 

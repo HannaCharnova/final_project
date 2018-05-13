@@ -2,15 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean class="epam.chernova.finalproject.entity.ext.Client" scope="page" id="client"/>
+<jsp:useBean class="epam.chernova.finalproject.entity.ext.Administrator" scope="page" id="adminuser"/>
 <fmt:setLocale scope="session" value="${locale}"/>
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
-<fmt:message bundle="${loc}" key="local.word.email" var="email"/>
-<fmt:message bundle="${loc}" key="local.word.status_word" var="status_word"/>
-<fmt:message bundle="${loc}" key="local.word.not_banned" var="not_banned"/>
-<fmt:message bundle="${loc}" key="local.word.banned" var="banned"/>
-<fmt:message bundle="${loc}" key="local.word.ban_client" var="ban_client"/>
-<fmt:message bundle="${loc}" key="local.word.unban_client" var="unban_client"/>
+<fmt:message bundle="${loc}" key="local.word.main_admin" var="main_admin"/>
 
 <head>
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
@@ -64,46 +59,31 @@
     <div class="qa-message-list">
 
         <c:choose>
-            <c:when test="${clients!=null}">
-                <c:forEach var="client" items="${clients}">
-                    <div class="message-item">
-                        <div class="message-inner">
-                            <div class="clearfix">
-                                <form action="/epam.by/ban_client?idClient=${client.idUser}" method="post">
+            <c:when test="${admins!=null}">
+                <c:forEach var="adminuser" items="${admins}">
+                    <c:if test="${adminuser.idUser!=admin.idUser}">
+
+                        <div class="message-item">
+                            <div class="message-inner">
+                                <div class="clearfix">
+                                        <%--<form action="/epam.by/ban_client?idClient=${client.idUser}" method="post">--%>
 
                                     <div class="user-detail">
-                                        <h5 class="handle">${client.name} ${client.surname}</h5>
                                         <c:choose>
-                                            <c:when test="${client.ban eq 'false'}">
-                                                <button type="submit" class="btn-right"
-                                                        class="btn btn-default">${ban_client}</button>
+                                            <c:when test="${adminuser.main eq 'true'}">
+                                                <h5 class="handle">${main_admin}</h5>
                                             </c:when>
-                                            <c:otherwise>
-                                                <button type="submit"  class="btn-right"
-                                                        class="btn btn-default">${unban_client}</button>
-                                            </c:otherwise>
                                         </c:choose>
+                                        <br>
+                                        <h5 class="handle">${adminuser.login} </h5>
 
-                                        <div class="post-meta">
-                                            <div class="asker-meta">
-                                                <span class="qa-message-when-data">${login}: ${client.login}</span><br>
-                                                <span class="qa-message-when-data">${email}: ${client.email} </span><br>
-                                                <c:choose>
-                                                    <c:when test="${client.ban eq 'false'}">
-                                                        <span class="qa-message-when-data">${status_word}: ${not_banned}</span>
-                                                    </c:when>
-                                                    <c:when test="${client.ban eq 'true'}">
-                                                        <span class="qa-message-when-data">${status_word}: ${banned}</span>
-                                                    </c:when>
-                                                </c:choose>
-                                            </div>
-                                        </div>
 
                                     </div>
-                                </form>
+                                        <%--</form>--%>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </c:forEach>
             </c:when>
         </c:choose>

@@ -3,17 +3,21 @@ package epam.chernova.finalproject.dao.ext;
 import epam.chernova.finalproject.connectionpool.ConnectionPool;
 import epam.chernova.finalproject.dao.IAdministratorDao;
 import epam.chernova.finalproject.entity.ext.Administrator;
+import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdministratorDao implements IAdministratorDao {
     private final static Logger LOGGER = LogManager.getLogger(AdministratorDao.class);
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 1";
     private static final String FIND_ADMIN_BY_LOGIN = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.role=1";
+    private static final String FIND_ALL_ADMINS = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -66,6 +70,44 @@ public class AdministratorDao implements IAdministratorDao {
         }
         return false;
     }
+
+    @Override
+    public List<Administrator> findAllAdministrators() throws DaoException {
+        LOGGER.log(Level.DEBUG, "Administrator DAO: start findAllAdministrators");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        List<Administrator> administrators = new ArrayList<>();
+        try {
+            statement = connection.prepareStatement(FIND_ALL_ADMINS);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                administrators.add(createAdminByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Administrator DAO: finish findAllAdministrators");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return administrators;
+
+    }
+
+    private Administrator createAdminByResultSet(ResultSet resultSet) throws DaoException {
+        Administrator administrator = new Administrator();
+        try {
+            administrator.setIdUser(resultSet.getInt("user_iduser"));
+            administrator.setLogin(resultSet.getString("user.login"));
+            administrator.setPassword(resultSet.getString("user.password"));
+            administrator.setMain(resultSet.getBoolean("is_main"));
+            administrator.setRole(resultSet.getBoolean("user.role"));
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query",e);
+        }
+        return administrator;
+    }
+
 
 
     @Override
