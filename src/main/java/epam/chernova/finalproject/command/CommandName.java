@@ -18,5 +18,7 @@ public enum CommandName {
     SHOW_CLIENT,
     BAN_CLIENT,
     SHOW_ADMIN,
-    DELETE_ADMIN;
+    DELETE_ADMIN,
+    ADD_ADMIN,
+    SHOW_ORDER_ADMIN;
 }

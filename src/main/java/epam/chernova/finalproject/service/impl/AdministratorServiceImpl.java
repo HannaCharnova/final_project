@@ -2,6 +2,7 @@ package epam.chernova.finalproject.service.impl;
 
 
 import epam.chernova.finalproject.dao.ext.ClientDao;
+import epam.chernova.finalproject.entity.User;
 import epam.chernova.finalproject.entity.ext.Administrator;
 import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
@@ -32,7 +33,7 @@ public class AdministratorServiceImpl implements AdministratorService {
             Validator.matchPassword(password);
             LOGGER.log(Level.DEBUG, "Administrator Service: end SignIn");
             return daoFactory.getAdministratorDao().signIn(login, password);
-        } catch (DaoException  e) {
+        } catch (DaoException e) {
             return null;
         }
     }
@@ -59,6 +60,38 @@ public class AdministratorServiceImpl implements AdministratorService {
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+
+    }
+
+    @Override
+    public Administrator findAdministratorByLogin(String login) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AdministratorService: Start findAdministratorByLogin");
+        try {
+            LOGGER.log(Level.DEBUG, "AdministratorService: Finish findAdministratorByLogin");
+            return daoFactory.getAdministratorDao().findAdministratorByLogin(login);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public Administrator addAdministrator(String login, String password) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Administrator Service: start addAdministrator");
+        Administrator administrator = null;
+        User user = null;
+        try {
+            if (Validator.isNull(login, password) && Validator.isEmptyString(login, password) && Validator.matchLogin(login) && Validator.matchPassword(password)) {
+//            password = Hasher.sha1Hash(password);
+                user = daoFactory.getAdministratorDao().addUser(login, password);
+                if (user != null) {
+                    administrator = daoFactory.getAdministratorDao().addAdministrator(user.getIdUser(), login);
+                }
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+        LOGGER.log(Level.DEBUG, "Administrator Service: end addAdministrator");
+        return administrator;
 
     }
 

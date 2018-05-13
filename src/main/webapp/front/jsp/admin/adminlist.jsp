@@ -57,7 +57,11 @@
 
 
 <div class="order-container">
-    <button type="submit" id="add-admin-button" class="btn btn-default"><a id="addadmin">${add_admin_word}</a></button>
+    <c:choose>
+        <c:when test="${admin.main eq 'true'}">
+            <button type="submit" id="add-admin-button" class="btn btn-default"><a id="addadmin">${add_admin_word}</a></button>
+        </c:when>
+    </c:choose>
 
     <div class="qa-message-list">
 

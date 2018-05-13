@@ -45,7 +45,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             if (Validator.isNull(login, password, name, surname, email) && Validator.isEmptyString(login, password, name, surname, email) && Validator.matchProperName(name, surname) && Validator.matchLogin(login) && Validator.matchPassword(password) && Validator.matchEmail(email)) {
 //            password = Hasher.sha1Hash(password);
-                if (!daoFactory.getAdministratorDao().findAdministratorByLogin(login)) {
+                if (daoFactory.getAdministratorDao().findAdministratorByLogin(login)==null) {
                     user = daoFactory.getClientDao().addUser(login, password);
                     if (user != null) {
                         client = daoFactory.getClientDao().addClient(user.getIdUser(), login, name, surname, email);

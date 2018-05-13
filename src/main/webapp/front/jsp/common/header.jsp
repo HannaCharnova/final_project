@@ -14,6 +14,7 @@
 <fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
 <fmt:message bundle="${loc}" key="local.word.clients_show" var="clients_show"/>
 <fmt:message bundle="${loc}" key="local.word.admins_show" var="admins_show"/>
+<fmt:message bundle="${loc}" key="local.word.orders_show" var="orders_show"/>
 
 
 
@@ -65,6 +66,7 @@
                                 <li><a id="addproduct">${add_product}</a></li>
                                 <li><a href="/epam.by/show_client">${clients_show}</a></li>
                                 <li><a href="/epam.by/show_admin">${admins_show}</a></li>
+                                <li><a href="/epam.by/show_order">${orders_show}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/epam.by/sign_out">${sign_out}</a></li>
                             </ul>

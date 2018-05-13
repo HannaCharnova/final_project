@@ -12,4 +12,9 @@ public interface AdministratorService {
     List<Administrator> findAllAdministrators() throws ServiceException;
 
     void deleteAdministrator(int idAdmin) throws ServiceException;
+
+    Administrator findAdministratorByLogin(String login) throws ServiceException;
+
+    Administrator addAdministrator(String login,String password) throws ServiceException;
+
 }
