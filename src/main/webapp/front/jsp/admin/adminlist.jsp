@@ -6,6 +6,7 @@
 <fmt:setLocale scope="session" value="${locale}"/>
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
 <fmt:message bundle="${loc}" key="local.word.main_admin" var="main_admin"/>
+<fmt:message bundle="${loc}" key="local.word.delete_admin_word" var="delete_admin_word"/>
 
 <head>
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
@@ -66,20 +67,26 @@
                         <div class="message-item">
                             <div class="message-inner">
                                 <div class="clearfix">
-                                        <%--<form action="/epam.by/ban_client?idClient=${client.idUser}" method="post">--%>
+                                    <form action="/epam.by/delete_admin?idAdmin=${adminuser.idUser}" method="post">
 
-                                    <div class="user-detail">
-                                        <c:choose>
-                                            <c:when test="${adminuser.main eq 'true'}">
-                                                <h5 class="handle">${main_admin}</h5>
-                                            </c:when>
-                                        </c:choose>
-                                        <br>
-                                        <h5 class="handle">${adminuser.login} </h5>
+                                        <div class="user-detail">
+                                            <c:choose>
+                                                <c:when test="${admin.main eq 'true'}">
+                                                    <button type="submit" class="btn-right"
+                                                            class="btn btn-default">${delete_admin_word}</button>
+                                                </c:when>
+                                            </c:choose>
+                                            <c:choose>
+                                                <c:when test="${adminuser.main eq 'true'}">
+                                                    <h5 class="handle">${main_admin}</h5>
+                                                </c:when>
+                                            </c:choose>
+                                            <br>
+                                            <h5 class="handle">${adminuser.login} </h5>
 
 
-                                    </div>
-                                        <%--</form>--%>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

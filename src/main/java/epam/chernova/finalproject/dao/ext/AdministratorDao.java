@@ -18,6 +18,8 @@ public class AdministratorDao implements IAdministratorDao {
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 1";
     private static final String FIND_ADMIN_BY_LOGIN = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.login =? AND user.role=1";
     private static final String FIND_ALL_ADMINS = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser";
+    private static final String DELETE_ADMIN = "DELETE FROM admin WHERE admin.user_iduser=?";
+    private static final String DELETE_USER = "DELETE FROM user WHERE user.iduser=?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -93,6 +95,50 @@ public class AdministratorDao implements IAdministratorDao {
         return administrators;
 
     }
+
+    @Override
+    public void deleteAdministrator(int idAdmin) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        LOGGER.log(Level.DEBUG, "Administrator DAO: start deleteAdministrator");
+        try {
+            statement = connection.prepareStatement(DELETE_ADMIN);
+            statement.setInt(1, idAdmin);
+            if (statement.executeUpdate() != 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Administrator DAO: finish deleteAdministrator");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+
+    }
+
+
+    @Override
+    public void deleteUser(int idAdmin) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        LOGGER.log(Level.DEBUG, "Administrator DAO: start deleteUser");
+        try {
+            statement = connection.prepareStatement(DELETE_USER);
+            statement.setInt(1, idAdmin);
+            if (statement.executeUpdate() != 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Administrator DAO: finish deleteUser");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+
+    }
+
 
     private Administrator createAdminByResultSet(ResultSet resultSet) throws DaoException {
         Administrator administrator = new Administrator();

@@ -10,4 +10,6 @@ public interface AdministratorService {
     Administrator signIn(String login, String password);
 
     List<Administrator> findAllAdministrators() throws ServiceException;
+
+    void deleteAdministrator(int idAdmin) throws ServiceException;
 }

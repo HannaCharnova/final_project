@@ -49,5 +49,18 @@ public class AdministratorServiceImpl implements AdministratorService {
 
     }
 
+    @Override
+    public void deleteAdministrator(int idAdmin) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AdministratorService: Start deleteAdministrator");
+        try {
+            daoFactory.getAdministratorDao().deleteAdministrator(idAdmin);
+            daoFactory.getAdministratorDao().deleteUser(idAdmin);
+            LOGGER.log(Level.DEBUG, "deleteAdministrator: Finish deleteAdministrator");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
 
 }

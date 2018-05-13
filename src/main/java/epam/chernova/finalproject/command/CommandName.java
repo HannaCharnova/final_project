@@ -17,5 +17,6 @@ public enum CommandName {
     ADD_PRODUCT,
     SHOW_CLIENT,
     BAN_CLIENT,
-    SHOW_ADMIN;
+    SHOW_ADMIN,
+    DELETE_ADMIN;
 }

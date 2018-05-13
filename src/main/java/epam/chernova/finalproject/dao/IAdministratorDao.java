@@ -14,4 +14,8 @@ public interface IAdministratorDao extends AbstractDao {
 
     List<Administrator> findAllAdministrators() throws DaoException;
 
+    void deleteAdministrator(int idAdmin) throws DaoException;
+
+    void deleteUser(int idAdmin) throws DaoException;
+
 }

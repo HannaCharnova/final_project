@@ -31,6 +31,7 @@ public class CommandProvider {
         commands.put(CommandName.SHOW_CLIENT,new ShowClient());
         commands.put(CommandName.BAN_CLIENT,new BanClient());
         commands.put(CommandName.SHOW_ADMIN,new ShowAdmin());
+        commands.put(CommandName.DELETE_ADMIN,new DeleteAdmin());
 
 
 
