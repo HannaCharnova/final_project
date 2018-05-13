@@ -69,35 +69,38 @@
                     <div class="message-item">
                         <div class="message-inner">
                             <div class="clearfix">
-                                <div class="user-detail">
-                                    <h5 class="handle">${client.name} ${client.surname}</h5>
-                                    <c:choose>
-                                        <c:when test="${client.ban eq 'false'}">
-                                            <button type="submit" class="btn-right"
-                                                    class="btn btn-default">${ban_client}</button>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <button type="submit" disabled="disabled" class="btn-right"
-                                                    class="btn btn-default">${unban_client}</button>
-                                        </c:otherwise>
-                                    </c:choose>
+                                <form action="/epam.by/ban_client?idClient=${client.iduser}" method="post">
 
-                                    <div class="post-meta">
-                                        <div class="asker-meta">
- <span class="qa-message-when-data">${login}: ${client.login}</span><br>
- <span class="qa-message-when-data">${email}: ${client.email} </span><br>
-                                            <c:choose>
-                                                <c:when test="${client.ban eq 'false'}">
-                                                    <span class="qa-message-when-data">${status_word}: ${not_banned}</span>
-                                                </c:when>
-                                                <c:when test="${client.ban eq 'true'}">
-                                                    <span class="qa-message-when-data">${status_word}: ${banned}</span>
-                                                </c:when>
-                                            </c:choose>
+                                    <div class="user-detail">
+                                        <h5 class="handle">${client.name} ${client.surname}</h5>
+                                        <c:choose>
+                                            <c:when test="${client.ban eq 'false'}">
+                                                <button type="submit" class="btn-right"
+                                                        class="btn btn-default">${ban_client}</button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <button type="submit" disabled="disabled" class="btn-right"
+                                                        class="btn btn-default">${unban_client}</button>
+                                            </c:otherwise>
+                                        </c:choose>
+
+                                        <div class="post-meta">
+                                            <div class="asker-meta">
+                                                <span class="qa-message-when-data">${login}: ${client.login}</span><br>
+                                                <span class="qa-message-when-data">${email}: ${client.email} </span><br>
+                                                <c:choose>
+                                                    <c:when test="${client.ban eq 'false'}">
+                                                        <span class="qa-message-when-data">${status_word}: ${not_banned}</span>
+                                                    </c:when>
+                                                    <c:when test="${client.ban eq 'true'}">
+                                                        <span class="qa-message-when-data">${status_word}: ${banned}</span>
+                                                    </c:when>
+                                                </c:choose>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

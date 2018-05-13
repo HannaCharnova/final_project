@@ -29,6 +29,7 @@ public class CommandProvider {
         commands.put(CommandName.DELETE_PRODUCT,new DeleteProduct());
         commands.put(CommandName.ADD_PRODUCT,new AddProduct());
         commands.put(CommandName.SHOW_CLIENT,new ShowClient());
+        commands.put(CommandName.BAN_CLIENT,new BanClient());
 
 
 

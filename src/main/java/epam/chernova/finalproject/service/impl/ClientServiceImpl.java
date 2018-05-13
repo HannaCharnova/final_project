@@ -95,5 +95,16 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    @Override
+    public Client findClientById(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start findClientById");
+        try {
+            LOGGER.log(Level.DEBUG, "ClientService: Finish findClientById");
+            return daoFactory.getClientDao().findClientById(idClient);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
 
 }

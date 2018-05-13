@@ -30,7 +30,7 @@ CREATE TABLE `review` (
   PRIMARY KEY (`idreview`),
   KEY `fk_review_order1_idx` (`order_idorder`),
   CONSTRAINT `fk_review_order1` FOREIGN KEY (`order_idorder`) REFERENCES `order` (`idorder`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COMMENT='Таблица предназначена для хранения информации о клиентских отзывах на их заказы';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Таблица предназначена для хранения информации о клиентских отзывах на их заказы';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-06  1:02:51
+-- Dump completed on 2018-05-13 17:15:01

@@ -22,6 +22,7 @@ public class ClientDao implements IClientDao {
     private static final String ADD_USER = "INSERT INTO user (login,password,role) VALUES (?,?,?)";
     private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email) VALUES (?,?,?,?)";
     private static final String FIND_ALL_CLIENTS = "SELECT * FROM client JOIN user ON user.iduser=client.user_iduser";
+    private static final String FIND_BY_ID = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.iduser =?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -211,6 +212,30 @@ public class ClientDao implements IClientDao {
             connectionPool.putBack(connection, resultSet, statement);
         }
         return clients;
+    }
+
+    @Override
+    public Client findClientById(int idClient) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start findClientById");
+        Client client=null;
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(FIND_BY_ID);
+            statement.setInt(1, idClient);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                client = createClientByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        LOGGER.log(Level.DEBUG, "Client DAO: finish findClientById");
+        return client;
+
     }
 
     private Client createClientByResultSet(ResultSet resultSet) throws DaoException {

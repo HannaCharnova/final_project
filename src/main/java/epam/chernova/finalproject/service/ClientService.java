@@ -15,4 +15,6 @@ public interface ClientService {
     Client findClientByEmail(String email);
 
     List<Client> findAllClients() throws ServiceException;
+
+    Client findClientById(int idClient) throws ServiceException;
 }

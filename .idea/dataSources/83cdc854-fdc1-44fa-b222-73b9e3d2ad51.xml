@@ -835,6 +835,7 @@
     <table id="210" parent="3" name="menu">
       <Comment>Таблица предназначена для хранения информации о блюдах, которые готовятся в данном кафе, т.е. является своеобразным меню</Comment>
       <Engine>InnoDB</Engine>
+      <Collation>utf8_general_ci</Collation>
     </table>
     <table id="211" parent="3" name="order">
       <Comment>Таблица предназначена для хранения информации о клиентских заказах</Comment>
@@ -1019,7 +1020,6 @@
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
-      <Collation>utf8_general_ci</Collation>
     </column>
     <column id="245" parent="210" name="cost">
       <Position>3</Position>
@@ -1034,7 +1034,6 @@
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
-      <Collation>utf8_general_ci</Collation>
     </column>
     <column id="247" parent="210" name="weight">
       <Position>5</Position>
@@ -1048,6 +1047,7 @@
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
+      <Collation>latin1_swedish_ci</Collation>
     </column>
     <column id="249" parent="210" name="name_ru">
       <Position>7</Position>
@@ -1055,12 +1055,12 @@
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
-      <Collation>utf8_general_ci</Collation>
     </column>
     <column id="250" parent="210" name="exist">
       <Position>8</Position>
       <DataType>tinyint(4)|0</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="251" parent="210" name="PRIMARY">

@@ -24,14 +24,15 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order` (
   `idorder` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Синтетический ключ, который играет роль уникального идентификатора каждого заказа',
+  `total_cost` double NOT NULL DEFAULT '0' COMMENT 'Итоговая стоимость заказа с учетом всех бонусов клиента и подсчета стоимости всех входящих в заказ блюд',
   `date` date NOT NULL COMMENT 'Указывающаяся клиентом дата, к которой заказ должен быть готов',
-  `total_cost` double NOT NULL COMMENT 'Итоговая стоимость заказа с учетом всех бонусов клиента и подсчета стоимости всех входящих в заказ блюд',
   `client_user_iduser` int(10) unsigned NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`idorder`),
   UNIQUE KEY `idorder_UNIQUE` (`idorder`),
   KEY `fk_order_client1_idx` (`client_user_iduser`),
   CONSTRAINT `fk_order_client1` FOREIGN KEY (`client_user_iduser`) REFERENCES `client` (`user_iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1 COMMENT='Таблица предназначена для хранения информации о клиентских заказах';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COMMENT='Таблица предназначена для хранения информации о клиентских заказах';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,'2018-05-07',37.4,7),(2,'2018-05-09',34.9,22),(3,'2018-05-11',61.8,30);
+INSERT INTO `order` VALUES (1,37.4,'2018-05-07',7,0),(2,47.8,'2018-05-09',22,1),(3,61.8,'2018-05-11',30,0),(4,16.5,'2018-05-09',7,0),(5,39,'2018-05-11',22,0),(6,4.3,'2018-05-09',16,0),(7,3350,'2018-05-09',16,1),(8,0,'2018-05-10',12,1),(9,15.8,'2018-05-13',7,1);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-06  1:02:51
+-- Dump completed on 2018-05-13 17:15:01
