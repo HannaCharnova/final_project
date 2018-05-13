@@ -23,6 +23,8 @@ public class ClientDao implements IClientDao {
     private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email) VALUES (?,?,?,?)";
     private static final String FIND_ALL_CLIENTS = "SELECT * FROM client JOIN user ON user.iduser=client.user_iduser";
     private static final String FIND_BY_ID = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.iduser =?";
+    private static final String UNBAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 0 WHERE cafe.client.user_iduser = ?";
+    private static final String BAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 1 WHERE cafe.client.user_iduser = ?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -237,6 +239,47 @@ public class ClientDao implements IClientDao {
         return client;
 
     }
+
+    @Override
+    public void unbanClient(int idClient) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start unbanClient");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(UNBAN_CLIENT);
+            statement.setInt(1, idClient);
+            if (statement.executeUpdate() != 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Client DAO: finish unbanClient");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+    }
+
+    @Override
+    public void banClient(int idClient) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start banClient");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(BAN_CLIENT);
+            statement.setInt(1, idClient);
+            if (statement.executeUpdate() != 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Client DAO: finish banClient");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+    }
+
 
     private Client createClientByResultSet(ResultSet resultSet) throws DaoException {
         Client client = new Client();

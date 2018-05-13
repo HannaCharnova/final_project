@@ -1,6 +1,6 @@
 <fmt:setLocale scope="session" value="${locale}"/>
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
-<fmt:message bundle="${loc}" key="local.word.error" var="error"/>
+<fmt:message bundle="${loc}" key="local.word.info" var="info"/>
 <head>
     <head>
         <meta charset=utf-8"/>
@@ -23,7 +23,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">${error}</h4>
+                <h4 class="modal-title">${info}</h4>
             </div>
             <div class="modal-body">
                 <p>${error_data}</p>

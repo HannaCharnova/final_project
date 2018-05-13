@@ -24,4 +24,9 @@ public interface IClientDao extends AbstractDao {
     List<Client> findAllClients() throws DaoException;
 
     Client findClientById(int idClient) throws DaoException;
+
+    void unbanClient(int idClient) throws DaoException;
+
+    void banClient(int idClient) throws DaoException;
+
 }

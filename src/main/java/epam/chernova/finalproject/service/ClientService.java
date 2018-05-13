@@ -17,4 +17,9 @@ public interface ClientService {
     List<Client> findAllClients() throws ServiceException;
 
     Client findClientById(int idClient) throws ServiceException;
+
+    void unbanClient(int idClient) throws ServiceException;
+
+    void banClient(int idClient) throws ServiceException;
+
 }

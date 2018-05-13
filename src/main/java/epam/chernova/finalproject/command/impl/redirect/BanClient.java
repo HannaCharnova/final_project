@@ -26,14 +26,11 @@ public class BanClient implements ICommand {
         try {
             idClient = Integer.parseInt(request.getParameter("idClient"));
             if ((serviceFactory.getClientService().findClientById(idClient)).isBan()) {
-                System.out.println("забанен");
-//                serviceFactory.getClientService().banClient(idClient);
-                diagnoseClientBan(request);
-            } else {
-                System.out.println("разбанен");
-
-//                serviceFactory.getClientService().unbanClient(idClient);
+                serviceFactory.getClientService().unbanClient(idClient);
                 diagnoseClientUnban(request);
+            } else {
+                serviceFactory.getClientService().banClient(idClient);
+                diagnoseClientBan(request);
             }
             response.sendRedirect(SessionElements.getPageCommand(request));
         } catch (IOException |

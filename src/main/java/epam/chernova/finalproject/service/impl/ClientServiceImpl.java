@@ -106,5 +106,28 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
+    @Override
+    public void unbanClient(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start unbanClient");
+        try {
+            LOGGER.log(Level.DEBUG, "ClientService: Finish unbanClient");
+            daoFactory.getClientDao().unbanClient(idClient);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void banClient(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start banClient");
+        try {
+            LOGGER.log(Level.DEBUG, "ClientService: Finish banClient");
+            daoFactory.getClientDao().banClient(idClient);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
 
 }
