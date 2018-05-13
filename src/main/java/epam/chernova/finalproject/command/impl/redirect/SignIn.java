@@ -5,6 +5,7 @@ import epam.chernova.finalproject.entity.ext.Administrator;
 import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
+import epam.chernova.finalproject.util.SessionElements;
 import epam.chernova.finalproject.webenum.PageName;
 import epam.chernova.finalproject.webenum.PageNameRedirect;
 import org.apache.log4j.Level;
@@ -44,10 +45,10 @@ public class SignIn implements ICommand {
                     session.setAttribute("role", 1);
                     session.setAttribute("admin", administrator);
                     LOGGER.log(Level.INFO, "Successful sign in account as administrator " + administrator.getLogin());
-                    response.sendRedirect(PageNameRedirect.INDEX.getPath());
+                    response.sendRedirect(SessionElements.getPageCommand(request));
                 } else {
                     diagnoseIncorrectSignIn(request);
-                    response.sendRedirect(PageNameRedirect.INDEX.getPath());
+                    response.sendRedirect(SessionElements.getPageCommand(request));
                 }
             } else {
                 Client client = serviceFactory.getClientService().signIn(login, password);
@@ -56,10 +57,10 @@ public class SignIn implements ICommand {
                     session.setAttribute("role", 2);
                     session.setAttribute("client", client);
                     LOGGER.log(Level.INFO, "Successful sign in account as client " + client.getLogin());
-                    response.sendRedirect(PageNameRedirect.INDEX.getPath());
+                    response.sendRedirect(SessionElements.getPageCommand(request));
                 } else {
                     diagnoseIncorrectSignIn(request);
-                    response.sendRedirect(PageNameRedirect.INDEX.getPath());
+                    response.sendRedirect(SessionElements.getPageCommand(request));
                 }
             }
         } catch (IOException | ServiceException e) {

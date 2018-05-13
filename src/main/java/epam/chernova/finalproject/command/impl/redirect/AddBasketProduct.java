@@ -38,7 +38,6 @@ public class AddBasketProduct implements ICommand {
                 deltaTotalCost=(serviceFactory.getProductService().findProductById(idProduct)).getCost()*quantity;
                 serviceFactory.getOrderService().editOrderCost(idOrder,deltaTotalCost);
             } else {
-                System.out.println("add to new order");
                 serviceFactory.getOrderService().addOrder(idClient);
                 idOrder = serviceFactory.getOrderService().findActiveOrderByClientId(idClient).getIdOrder();
                 idProduct = Integer.parseInt(request.getParameter("idProduct"));

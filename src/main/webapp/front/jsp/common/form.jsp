@@ -15,6 +15,27 @@
 <fmt:message bundle="${loc}" key="local.sentence.name_mistake" var="name_mistake"/>
 <fmt:message bundle="${loc}" key="local.sentence.surname_mistake" var="surname_mistake"/>
 <fmt:message bundle="${loc}" key="local.sentence.email_mistake" var="email_mistake"/>
+<fmt:message bundle="${loc}" key="local.sentence.adding_product" var="adding_product"/>
+<fmt:message bundle="${loc}" key="local.word.breakfast" var="breakfast"/>
+<fmt:message bundle="${loc}" key="local.word.pizza" var="pizza"/>
+<fmt:message bundle="${loc}" key="local.word.sushi" var="sushi"/>
+<fmt:message bundle="${loc}" key="local.word.snacks" var="snacks"/>
+<fmt:message bundle="${loc}" key="local.word.hot_dishes" var="hot_dishes"/>
+<fmt:message bundle="${loc}" key="local.word.soup" var="soups"/>
+<fmt:message bundle="${loc}" key="local.word.desserts" var="desserts"/>
+<fmt:message bundle="${loc}" key="local.word.coffe" var="coffe"/>
+<fmt:message bundle="${loc}" key="local.word.cocoa" var="cocoa"/>
+<fmt:message bundle="${loc}" key="local.word.tea" var="tea"/>
+<fmt:message bundle="${loc}" key="local.word.smuzzi" var="smuzzi"/>
+<fmt:message bundle="${loc}" key="local.word.name_en" var="name_en"/>
+<fmt:message bundle="${loc}" key="local.word.name_ru" var="name_ru"/>
+<fmt:message bundle="${loc}" key="local.word.product_name_mistake" var="product_name_mistake"/>
+<fmt:message bundle="${loc}" key="local.word.cost" var="cost"/>
+<fmt:message bundle="${loc}" key="local.word.weight" var="weight"/>
+<fmt:message bundle="${loc}" key="local.word.cost_mistake" var="cost_mistake"/>
+<fmt:message bundle="${loc}" key="local.word.weight_mistake" var="weight_mistake"/>
+<fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
+<fmt:message bundle="${loc}" key="local.word.choose_image" var="choose_image"/>
 
 
 <head>
@@ -41,7 +62,8 @@
                 <div class="row">
 
                     <div class="col-md-6">
-                        <form id="sign-in-form" class="form-horizontal form-horizontal-log" method="post" action="/epam.by/sign_in">
+                        <form id="sign-in-form" class="form-horizontal form-horizontal-log" method="post"
+                              action="/epam.by/sign_in">
 
                             <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
                             <span class="heading">${authorization}</span>
@@ -64,7 +86,7 @@
                                     <label for="checkbox1"></label>
                                 </div>
                                 <span class="text">${administrator}</span>
-                                <button type="submit" id="signin-button"  class="btn btn-default">${enter}</button>
+                                <button type="submit" id="signin-button" class="btn btn-default">${enter}</button>
                             </div>
                         </form>
                     </div>
@@ -82,7 +104,8 @@
                 <div class="row">
 
                     <div class="col-md-6">
-                        <form id="sign-up-form" class="form-horizontal form-horizontal-reg" method="post" action="/epam.by/sign_up">
+                        <form id="sign-up-form" class="form-horizontal form-horizontal-reg" method="post"
+                              action="/epam.by/sign_up">
 
                             <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
                             <span class="heading">${registration}</span>
@@ -119,7 +142,84 @@
 
                             </div>
 
-                            <button type="submit" id="signup-button"  class="btn btn-default">${registrate}</button>
+                            <button type="submit" id="signup-button" class="btn btn-default">${registrate}</button>
+                        </form>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div>
+    </div>
+</div>
+
+<div class="modal" class="modal fade" class="cd-user-modal" id="add_product" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <form id="add-product-form" class="form-horizontal form-horizontal-reg" method="post"
+                              action="/epam.by/add_product">
+
+                            <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+                            <span class="heading">${adding_product}</span>
+
+                            <div class="form-group">
+
+                                <select id="product-type" name="product_type">
+                                    <option value="breakfast">${breakfast}</option>
+                                    <option value="pizza">${pizza}</option>
+                                    <option value="sushi">${sushi}</option>
+                                    <option value="snacks">${snacks}</option>
+                                    <option value="hot_dishes">${hot_dishes}</option>
+                                    <option value="hot_dishes">${hot_dishes}</option>
+                                    <option value="soups">${soups}</option>
+                                    <option value="desserts">${desserts}</option>
+                                    <option value="coffe">${coffe}</option>
+                                    <option value="cocoa">${cocoa}</option>
+                                    <option value="tea">${tea}</option>
+                                    <option value="smuzzi">${smuzzi}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="nameEn"
+                                       placeholder=${name_en} name="nameEn">
+                                <span class="cd-error-message" id="name-en">${product_name_mistake}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="nameRu"
+                                       placeholder=${name_ru} name="nameRu">
+                                <span class="cd-error-message" id="name-ru">${product_name_mistake}</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="cost"
+                                       placeholder=${cost} name="cost">
+                                <span class="cd-error-message" id="cost-span">${cost_mistake}</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="weight"
+                                       placeholder=${weight} name="weight">
+                                <span class="cd-error-message" id="weight-span">${weight_mistake}</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <p>
+                                    <label for="image" class="control-label" style="float: left">${choose_image}</label>
+                                </p>
+                                <input type="file" accept=".png, .jpg, .jpeg" style="float: right" name="image" id="image" required>
+                                <span class="cd-error-message" id="image-span">${image_mistake}</span>
+
+                            </div>
+
+                            <button type="submit" id="add-product-button"
+                                    class="btn btn-default">${add_product}</button>
                         </form>
                     </div>
                 </div><!-- /.row -->

@@ -8,9 +8,10 @@ public class Validator {
     private static final String REGEX_FOR_PASSWORD = "\\w{6,}";
     private static final String REGEX_FOR_NAME = "([A-Z]{1}[a-z]+)|([А-Я]{1}[а-я]+)";
     private static final String REGEX_FOR_EMAIL = "[0-9a-z\\_\\-\\.]+@[0-9a-z_-]+\\.[a-z]{2,5}";
+    private static final String REGEX_FOR_PRODUCT_NAME = "([A-Z][a-z\\s\\-\\`A-Z]+)|([А-Я][а-я\\s\\-\\`А-Я]+)";
 
 
-    public final static boolean isNull(Object... objects){
+    public final static boolean isNull(Object... objects) {
         for (Object ob : objects) {
             if (ob == null) {
                 return false;
@@ -29,7 +30,7 @@ public class Validator {
         return true;
     }
 
-    public final static boolean matchLogin(String... strings){
+    public final static boolean matchLogin(String... strings) {
         Pattern pattern = Pattern.compile(REGEX_FOR_LOGIN);
         Matcher matcher;
         for (String s : strings) {
@@ -42,7 +43,7 @@ public class Validator {
     }
 
 
-    public final static boolean matchPassword(String... strings){
+    public final static boolean matchPassword(String... strings) {
         Pattern pattern = Pattern.compile(REGEX_FOR_PASSWORD);
         Matcher matcher;
         for (String s : strings) {
@@ -54,7 +55,7 @@ public class Validator {
         return true;
     }
 
-    public final static boolean matchProperName(String... strings){
+    public final static boolean matchProperName(String... strings) {
         Pattern pattern = Pattern.compile(REGEX_FOR_NAME);
         Matcher matcher;
         for (String s : strings) {
@@ -66,8 +67,20 @@ public class Validator {
         return true;
     }
 
-    public final static boolean matchEmail(String... strings){
+    public final static boolean matchEmail(String... strings) {
         Pattern pattern = Pattern.compile(REGEX_FOR_EMAIL);
+        Matcher matcher;
+        for (String s : strings) {
+            matcher = pattern.matcher(s);
+            if (!matcher.matches()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public final static boolean matchProductName(String... strings) {
+        Pattern pattern = Pattern.compile(REGEX_FOR_PRODUCT_NAME);
         Matcher matcher;
         for (String s : strings) {
             matcher = pattern.matcher(s);

@@ -6,6 +6,9 @@ $(document).ready(function () {
     $("#signup").click(function () {
         $("#sign_up").modal({backdrop: true});
     });
+    $("#addproduct").click(function () {
+        $("#add_product").modal({backdrop: true});
+    });
 
     $('form#sign-in-form').on('click', function (e) {
 
@@ -226,4 +229,76 @@ $(document).ready(function () {
             e.preventDefault();
         }
     });
+
+    $('form#add-product-form').on('click', function (e) {
+
+        var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\\-\\s\\`]+)$');
+        var name_enReg = new RegExp('^([A-Z]{1}[a-zA-Z-\\s\\-\\`]+)$');
+        var costweightReg = new RegExp('^(([0-9]+)(\\.){0,1}([0-9]+))$');
+
+        var name_ru = $('input#nameRu').val();
+        var name_en = $('input#nameEn').val();
+        var weight = $('input#weight').val();
+        var cost = $('input#cost').val();
+        var image_name = $('input#image').val();
+        var $numberCorrectField = 0;
+
+        if (name_ru.length >= 2 && name_ru != '' && name_ruReg.test(name_ru)) {
+            $('input#nameRu').css('border-color', 'green');
+            $('#name-ru').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (name_ru.length != 0) {
+                $('input#nameRu').css('border-color', 'red');
+                $('#name-ru').addClass('is-visible');
+            }
+        }
+
+        if (name_en.length >= 2 && name_en != '' && name_enReg.test(name_en)) {
+            $('input#nameEn').css('border-color', 'green');
+            $('#name-en').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (name_ru.length != 0) {
+                $('input#nameEn').css('border-color', 'red');
+                $('#name-en').addClass('is-visible');
+            }
+        }
+
+        if (cost != '' && costweightReg.test(cost)) {
+            $('input#cost').css('border-color', 'green');
+            $('#cost-span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (cost.length != 0) {
+                $('input#cost').css('border-color', 'red');
+                $('#cost-span').addClass('is-visible');
+            }
+        }
+
+        if (weight != '' && costweightReg.test(weight)) {
+            $('input#weight').css('border-color', 'green');
+            $('#weight-span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (weight.length != 0) {
+                $('input#weight').css('border-color', 'red');
+                $('#weight-span').addClass('is-visible');
+            }
+        }
+
+        if (image_name != "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B") {
+            $('input#image').css('border-color', 'green');
+            $('#image-span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            $('input#image').css('border-color', 'red');
+            $('#image-span').addClass('is-visible');
+        }
+
+        if ($numberCorrectField != 5) {
+            e.preventDefault();
+        }
+    });
+
 });

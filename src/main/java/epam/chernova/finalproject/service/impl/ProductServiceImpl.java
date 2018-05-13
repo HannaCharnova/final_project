@@ -3,6 +3,7 @@ package epam.chernova.finalproject.service.impl;
 
 import epam.chernova.finalproject.entity.Product;
 import epam.chernova.finalproject.entity.ext.Administrator;
+import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.DaoFactory;
@@ -49,6 +50,30 @@ public class ProductServiceImpl implements ProductService {
         try {
             LOGGER.log(Level.DEBUG, "Product Service: Finish deleteProduct");
             daoFactory.getProductDao().deleteProduct(idProduct);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public Product findProductByName(String nameEn, String nameRu) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: Start find product by name");
+        try {
+            LOGGER.log(Level.DEBUG, "Product Service: Finish find product by name");
+            return daoFactory.getProductDao().findProductByName(nameEn, nameRu);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void addProduct(String type, String nameEn, String nameRu, double cost, double weight, String imagePath) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Product Service: start addProduct");
+        try {
+            if (Validator.isNull(type, nameEn, nameRu, cost, weight, imagePath) && Validator.isEmptyString(type, nameEn, nameRu, imagePath) && Validator.matchProductName(nameEn,nameRu)) {
+                daoFactory.getProductDao().addProduct(type, nameEn, nameRu, cost, weight, imagePath);
+                LOGGER.log(Level.DEBUG, "Product Service: end addProduct");
+            }
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }

@@ -7,12 +7,13 @@
 <fmt:message bundle="${loc}" key="local.word.cost" var="cost"/>
 <fmt:message bundle="${loc}" key="local.word.weight" var="weight"/>
 <fmt:message bundle="${loc}" key="local.word.delete_product" var="delete_product"/>
+<fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
 
 <style>
     <%@include file="/front/css/productlist.css" %>
 </style>
 <div class="container">
-    <button  class="btn btn-default"><a id="signup">${sign_up}Add</a></button>
+    <button  class="btn btn-default" id="add-button"><a id="signup">${add_product}</a></button>
     <div class="row">
 
         <c:choose>

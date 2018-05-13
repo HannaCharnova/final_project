@@ -11,6 +11,8 @@
 <fmt:message bundle="${loc}" key="local.word.my_orders" var="my_orders"/>
 <fmt:message bundle="${loc}" key="local.word.sign_out" var="sign_out"/>
 <fmt:message bundle="${loc}" key="local.word.home" var="home"/>
+<fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
+
 
 
 <html>
@@ -57,7 +59,7 @@
                                                           alt="USER" width="20"/> ${admin.login} <span
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">My profile</a></li>
+                                <li><a id="addproduct">${add_product}</a></li>
                                 <li><a href="#">Favorited</a></li>
                                 <li><a href="#">Settings</a></li>
                                 <li class="divider"></li>
