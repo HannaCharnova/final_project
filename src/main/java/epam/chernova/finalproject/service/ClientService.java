@@ -22,4 +22,6 @@ public interface ClientService {
 
     void banClient(int idClient) throws ServiceException;
 
+    boolean checkBan(int idClient) throws ServiceException;
+
 }

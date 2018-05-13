@@ -65,6 +65,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Order> findAllOrders() throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderService: Start findAllOrders");
+        try {
+            LOGGER.log(Level.DEBUG, "Order Service: Finish findAllOrders");
+            return daoFactory.getOrderDao().findAllOrders();
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
     public Order findOrderByOrderId(int idOrder) throws ServiceException {
         LOGGER.log(Level.DEBUG, "OrderService: Start findOrderByOrderId");
         try {

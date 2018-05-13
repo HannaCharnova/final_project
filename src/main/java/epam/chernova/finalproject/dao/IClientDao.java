@@ -29,4 +29,7 @@ public interface IClientDao extends AbstractDao {
 
     void banClient(int idClient) throws DaoException;
 
+    boolean checkBan(int idClient) throws DaoException;
+
+
 }

@@ -129,5 +129,16 @@ public class ClientServiceImpl implements ClientService {
 
     }
 
+    @Override
+    public boolean checkBan(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start checkBan");
+        try {
+            LOGGER.log(Level.DEBUG, "ClientService: Finish checkBan");
+            return daoFactory.getClientDao().checkBan(idClient);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
 
 }

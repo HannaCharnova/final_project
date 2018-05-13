@@ -66,7 +66,7 @@
                                 <li><a id="addproduct">${add_product}</a></li>
                                 <li><a href="/epam.by/show_client">${clients_show}</a></li>
                                 <li><a href="/epam.by/show_admin">${admins_show}</a></li>
-                                <li><a href="/epam.by/show_order">${orders_show}</a></li>
+                                <li><a href="/epam.by/show_order_admin">${orders_show}</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/epam.by/sign_out">${sign_out}</a></li>
                             </ul>

@@ -53,11 +53,17 @@ public class SignIn implements ICommand {
             } else {
                 Client client = serviceFactory.getClientService().signIn(login, password);
                 if (client != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("role", 2);
-                    session.setAttribute("client", client);
-                    LOGGER.log(Level.INFO, "Successful sign in account as client " + client.getLogin());
-                    response.sendRedirect(SessionElements.getPageCommand(request));
+                    if(!serviceFactory.getClientService().checkBan(client.getIdUser())) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("role", 2);
+                        session.setAttribute("client", client);
+                        LOGGER.log(Level.INFO, "Successful sign in account as client " + client.getLogin());
+                        response.sendRedirect(SessionElements.getPageCommand(request));
+                    }else{
+                        diagnoseClientBan(request);
+                        response.sendRedirect(SessionElements.getPageCommand(request));
+
+                    }
                 } else {
                     diagnoseIncorrectSignIn(request);
                     response.sendRedirect(SessionElements.getPageCommand(request));
@@ -78,4 +84,13 @@ public class SignIn implements ICommand {
             request.getSession().setAttribute("error_data", "Incorrect login or password. Try again.");
         }
     }
+
+    private static void diagnoseClientBan(HttpServletRequest request) {
+        if (request.getSession().getAttribute("locale").equals("ru")) {
+            request.getSession().setAttribute("error_data", "Вы заблокированы.");
+        } else {
+            request.getSession().setAttribute("error_data", "You're blocked.");
+        }
+    }
+
 }

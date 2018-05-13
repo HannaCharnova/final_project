@@ -18,7 +18,7 @@ public class ClientDao implements IClientDao {
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 0";
     private static final String FIND_CLIENT_BY_LOGIN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =?";
     private static final String FIND_USER_BY_LOGIN = "SELECT * FROM user  WHERE user.login =?";
-    private static final String FIND_BY_EMAIL = "SELECT * FROM client  WHERE user.email =?";
+    private static final String FIND_BY_EMAIL = "SELECT * FROM client  WHERE client.email =?";
     private static final String ADD_USER = "INSERT INTO user (login,password,role) VALUES (?,?,?)";
     private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email) VALUES (?,?,?,?)";
     private static final String FIND_ALL_CLIENTS = "SELECT * FROM client JOIN user ON user.iduser=client.user_iduser";

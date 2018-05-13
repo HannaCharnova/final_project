@@ -29,6 +29,8 @@ public class ShowOrderAdmin implements ICommand {
             List<Order> orders = serviceFactory.getOrderService().findAllOrders();
             List<OrderProduct> orderProducts = serviceFactory.getOrderProductService().findAllOrderProducts();
             List<Product> products = serviceFactory.getProductService().findAllProducts();
+            List<Client> clients = serviceFactory.getClientService().findAllClients();
+            request.setAttribute("clients", clients);
             request.setAttribute("orders", orders);
             request.setAttribute("order_products",orderProducts);
             request.setAttribute("products", products);

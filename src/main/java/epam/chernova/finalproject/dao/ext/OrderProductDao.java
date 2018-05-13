@@ -20,6 +20,7 @@ public class OrderProductDao implements IOrderProductDao {
     private static final String FIND_ORDER_PRODUCT_BY_CLIENT_ID = "SELECT * FROM cafe.order_product JOIN cafe.order ON cafe.order.idorder = cafe.order_product.order_idorder WHERE cafe.order.client_user_iduser =?";
     private static final String REMOVE_ORDER_PRODUCT = "DELETE FROM cafe.order_product WHERE cafe.order_product.order_idorder=? AND cafe.order_product.product_idproduct=?";
     private static final String FIND_ORDER_PRODUCT_BY_PRODUCT_ID = "SELECT * FROM cafe.order_product WHERE cafe.order_product.product_idproduct =?";
+    private static final String FIND_ALL_ORDER_PRODUCT = "SELECT * FROM cafe.order_product";
 
     @Override
     public void addOrderProduct(int idOrder, int idProduct, int quantity) throws DaoException {
@@ -87,6 +88,31 @@ public class OrderProductDao implements IOrderProductDao {
         return orderProducts;
 
     }
+
+    @Override
+    public List<OrderProduct> findAllOrderProducts() throws DaoException {
+        LOGGER.log(Level.DEBUG, "OrderProductDAO: start findAllOrderProducts");
+        List<OrderProduct> orderProducts = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(FIND_ALL_ORDER_PRODUCT);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                orderProducts.add(createOrderProductByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "OrderProductDAO: finish findAllOrderProducts");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return orderProducts;
+
+    }
+
+
 
     @Override
     public boolean checkActiveOrderProduct(int idProduct) throws DaoException {

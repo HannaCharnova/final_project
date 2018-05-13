@@ -22,6 +22,7 @@ public class OrderDao implements IOrderDao {
     private static final String FIND_ORDERS_BY_CLIENT_ID = "SELECT * FROM cafe.order WHERE cafe.order.client_user_iduser =?";
     private static final String FIND_ORDER_BY_ORDER_ID = "SELECT * FROM cafe.order WHERE cafe.order.idorder =?";
     private static final String PAY_ORDER = "UPDATE cafe.order SET cafe.order.status = 0 WHERE cafe.order.idorder = ?";
+    private static final String FIND_ALL_ORDERS = "SELECT * FROM cafe.order";
 
 
     @Override
@@ -114,6 +115,32 @@ public class OrderDao implements IOrderDao {
         return orders;
 
     }
+
+    @Override
+    public List<Order> findAllOrders() throws DaoException {
+        LOGGER.log(Level.DEBUG, "OrderDao: Start findAllOrders.");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        List<Order> orders;
+        try {
+            statement = connection.prepareStatement(FIND_ALL_ORDERS);
+            resultSet = statement.executeQuery();
+            orders = new ArrayList<>();
+            while (resultSet.next()) {
+                orders.add(createOrderByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } finally {
+            LOGGER.log(Level.DEBUG, "OrderDao: Finish findAllOrders.");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return orders;
+
+    }
+
+
 
     @Override
     public Order findOrderByOrderId(int idOrder) throws DaoException {

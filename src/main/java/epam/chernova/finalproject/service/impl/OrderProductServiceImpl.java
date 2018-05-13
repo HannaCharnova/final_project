@@ -54,6 +54,19 @@ public class OrderProductServiceImpl implements OrderProductService {
     }
 
     @Override
+    public List<OrderProduct> findAllOrderProducts() throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderProductService: Start findAllOrderProducts");
+        try {
+            LOGGER.log(Level.DEBUG, "OrderProductService: Finish findAllOrderProducts");
+            return daoFactory.getOrderProductDao().findAllOrderProducts();
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+
+    @Override
     public boolean checkActiveOrderProduct(int idProduct) throws ServiceException {
         LOGGER.log(Level.DEBUG, "OrderProductService: Start checkActiveOrderProduct");
         try {
