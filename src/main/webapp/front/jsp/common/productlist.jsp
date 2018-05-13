@@ -31,8 +31,8 @@
                                             <a href="#">${product.nameEn}</a>
                                         </c:when>
                                     </c:choose>
-                                    <small>${cost}: ${product.cost}</small>
-                                    <small>${weight}: ${product.weight}</small>
+                                    <small>${cost}: ${product.cost} BYN</small>
+                                    <small>${weight}: ${product.weight} g</small>
 
                                 </h4>
                             </div>

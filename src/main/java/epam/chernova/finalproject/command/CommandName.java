@@ -14,5 +14,6 @@ public enum CommandName {
     PAY_FOR_ORDER,
     CLIENT_PROFILE,
     DELETE_PRODUCT,
-    ADD_PRODUCT;
+    ADD_PRODUCT,
+    SHOW_CLIENT;
 }

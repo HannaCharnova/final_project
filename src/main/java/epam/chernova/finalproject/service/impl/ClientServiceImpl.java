@@ -15,6 +15,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
+import java.util.List;
+
 
 public class ClientServiceImpl implements ClientService {
     private static final Logger LOGGER = LogManager.getLogger(ClientServiceImpl.class);
@@ -80,6 +82,17 @@ public class ClientServiceImpl implements ClientService {
             LOGGER.log(Level.ERROR, "");
         }
         return client;
+    }
+
+    @Override
+    public List<Client> findAllClients() throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start findAllClients");
+        try {
+                LOGGER.log(Level.DEBUG, "ClientService: Finish findAllClients");
+                return daoFactory.getClientDao().findAllClients();
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
     }
 
 

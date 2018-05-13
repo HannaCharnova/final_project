@@ -2,6 +2,7 @@ package epam.chernova.finalproject.dao.ext;
 
 import epam.chernova.finalproject.connectionpool.ConnectionPool;
 import epam.chernova.finalproject.dao.IClientDao;
+import epam.chernova.finalproject.entity.Product;
 import epam.chernova.finalproject.entity.User;
 import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
@@ -9,6 +10,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientDao implements IClientDao {
     private static final Logger LOGGER = Logger.getLogger(ClientDao.class);
@@ -18,6 +21,7 @@ public class ClientDao implements IClientDao {
     private static final String FIND_BY_EMAIL = "SELECT * FROM client  WHERE user.email =?";
     private static final String ADD_USER = "INSERT INTO user (login,password,role) VALUES (?,?,?)";
     private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email) VALUES (?,?,?,?)";
+    private static final String FIND_ALL_CLIENTS = "SELECT * FROM client JOIN user ON user.iduser=client.user_iduser";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -186,6 +190,45 @@ public class ClientDao implements IClientDao {
             connectionPool.putBack(connection, resultSet, statement);
         }
         return user;
+    }
+
+    @Override
+    public List<Client> findAllClients() throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        List<Client> clients = new ArrayList<>();
+        try {
+            statement = connection.prepareStatement(FIND_ALL_CLIENTS);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                clients.add(createClientByResultSet(resultSet));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Client DAO: finish findClientByEmail");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return clients;
+    }
+
+    private Client createClientByResultSet(ResultSet resultSet) throws DaoException {
+        Client client = new Client();
+        try {
+            client.setIdUser(resultSet.getInt("user_iduser"));
+            client.setLogin(resultSet.getString("user.login"));
+            client.setPassword(resultSet.getString("user.password"));
+            client.setName(resultSet.getString("name"));
+            client.setSurname(resultSet.getString("surname"));
+            client.setEmail(resultSet.getString("email"));
+            client.setPoint(resultSet.getDouble("point"));
+            client.setBan(resultSet.getBoolean("ban"));
+            client.setRole(resultSet.getBoolean("user.role"));
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query",e);
+        }
+        return client;
     }
 
 

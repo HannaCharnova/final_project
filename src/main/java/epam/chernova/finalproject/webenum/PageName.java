@@ -5,7 +5,8 @@ public enum PageName {
     ERROR("/front/jsp/error.jsp"),
     PRODUCTS("/front/jsp/common/product.jsp"),
     ORDERS("/front/jsp/common/order.jsp"),
-    PROFILE("/front/jsp/client/profile.jsp");
+    PROFILE("/front/jsp/client/profile.jsp"),
+    CLIENTS("/front/jsp/admin/clientlist.jsp");
 
     private String path;
 

@@ -12,11 +12,13 @@
 <fmt:message bundle="${loc}" key="local.word.sign_out" var="sign_out"/>
 <fmt:message bundle="${loc}" key="local.word.home" var="home"/>
 <fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
+<fmt:message bundle="${loc}" key="local.word.clients_show" var="clients_show"/>
 
 
 
 <html>
 <head>
+    <meta charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale = 1">
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
     <link rel="stylesheet" href="http://bootstraptema.ru/snippets/menu/2016/slidemenu/slidemenu.css"/>
@@ -60,7 +62,7 @@
                                     class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a id="addproduct">${add_product}</a></li>
-                                <li><a href="#">Favorited</a></li>
+                                <li><a href="/epam.by/show_client">${clients_show}</a></li>
                                 <li><a href="#">Settings</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/epam.by/sign_out">${sign_out}</a></li>

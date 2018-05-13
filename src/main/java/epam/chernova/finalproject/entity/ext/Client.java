@@ -82,6 +82,26 @@ public class Client extends User implements Serializable, Cloneable {
     }
 
     @Override
+    public boolean getRole() {
+        return super.getRole();
+    }
+
+    @Override
+    public int getIdUser() {
+        return super.getIdUser();
+    }
+
+    @Override
+    public String getLogin() {
+        return super.getLogin();
+    }
+
+    @Override
+    public String getPassword() {
+        return super.getPassword();
+    }
+
+    @Override
     public String toString() {
         return super.toString() + "Client{" +
                 ", name='" + name + '\'' +

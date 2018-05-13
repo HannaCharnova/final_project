@@ -1,7 +1,10 @@
 package epam.chernova.finalproject.command.impl.forward;
 
 import epam.chernova.finalproject.command.ICommand;
+import epam.chernova.finalproject.entity.Order;
+import epam.chernova.finalproject.entity.OrderProduct;
 import epam.chernova.finalproject.entity.Product;
+import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.util.SessionElements;
@@ -14,25 +17,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-
-public class FindByType implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(FindByType.class);
+public class ShowClient implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(ShowClient.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private PageName pageName = PageName.PRODUCTS;
-    private String productType;
-
+    private PageName pageName = PageName.CLIENTS;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command: FindByType started.");
+        LOGGER.log(Level.INFO, "Command: ShowClient started.");
         try {
-            String type = request.getParameter("product_type");
-            if (type != null) {
-                productType = type;
-            }
-            List<Product> products = serviceFactory.getProductService().findProductByType(productType);
-            request.setAttribute("products", products);
-            request.getSession().setAttribute("pageCommand", PageNameRedirect.FIND_BY_TYPE.getPath());
+            List<Client> clients = serviceFactory.getClientService().findAllClients();
+            request.setAttribute("clients", clients);
+            request.setAttribute("clientc", clients.get(0));
+
+            System.out.println(request.getAttribute("clients"));
+            request.getSession().setAttribute("pageCommand", PageNameRedirect.CLIENTS.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
             rewrite(request);
         } catch (ServiceException e) {
@@ -40,15 +39,14 @@ public class FindByType implements ICommand {
             pageName = pageName.ERROR;
         }
 
-        LOGGER.log(Level.INFO, "Command: FindByType finished.");
+        LOGGER.log(Level.INFO, "Command: ShowClient finished.");
         return pageName.getPath();
+
     }
 
     private void rewrite(HttpServletRequest request) {
         request.setAttribute("error_data", request.getSession().getAttribute("error_data"));
         request.getSession().removeAttribute("error_data");
     }
-
-
 
 }

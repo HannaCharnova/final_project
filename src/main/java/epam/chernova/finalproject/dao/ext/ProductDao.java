@@ -127,7 +127,7 @@ public class ProductDao implements IProductDao {
         try {
             statement = connection.prepareStatement(ADD_PRODUCT);
             statement.setString(1, nameEn);
-            statement.setString(2, nameRu);
+            statement.setString(2, "Вакперн");
             statement.setString(3, type);
             statement.setDouble(4, cost);
             statement.setDouble(5, weight);

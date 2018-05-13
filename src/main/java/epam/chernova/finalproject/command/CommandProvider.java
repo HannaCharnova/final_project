@@ -1,10 +1,7 @@
 package epam.chernova.finalproject.command;
 
 
-import epam.chernova.finalproject.command.impl.forward.ClientProfile;
-import epam.chernova.finalproject.command.impl.forward.FindByType;
-import epam.chernova.finalproject.command.impl.forward.Index;
-import epam.chernova.finalproject.command.impl.forward.ShowOrderClient;
+import epam.chernova.finalproject.command.impl.forward.*;
 import epam.chernova.finalproject.command.impl.redirect.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +28,7 @@ public class CommandProvider {
         commands.put(CommandName.CLIENT_PROFILE,new ClientProfile());
         commands.put(CommandName.DELETE_PRODUCT,new DeleteProduct());
         commands.put(CommandName.ADD_PRODUCT,new AddProduct());
+        commands.put(CommandName.SHOW_CLIENT,new ShowClient());
 
 
 

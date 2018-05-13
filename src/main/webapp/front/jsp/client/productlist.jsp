@@ -35,8 +35,8 @@
                                                 <a href="#">${product.nameEn}</a>
                                             </c:when>
                                         </c:choose>
-                                        <small>${cost}: ${product.cost}</small>
-                                        <small>${weight}: ${product.weight}</small>
+                                        <small>${cost}: ${product.cost} BYN</small>
+                                        <small>${weight}: ${product.weight} g</small>
                                         <small><input type="number" name="quantity" value="0" min="0" max="100" class="input-number"></small>
                                         <small><button type="submit" class="btn btn-default">${add_to_basket}</button></small>
                                     </h4>

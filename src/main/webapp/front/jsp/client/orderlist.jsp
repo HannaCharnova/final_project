@@ -71,10 +71,10 @@
                                                     <p>
                                                         <c:choose>
                                                             <c:when test="${locale eq 'ru'}">
-                                                                ${product.nameRu}
+                                                                ${product.nameRu} (${product.cost} BYN x ${orderProduct.quantity})
                                                             </c:when>
                                                             <c:when test="${locale eq 'en'}">
-                                                                ${product.nameEn}
+                                                                ${product.nameEn} (${product.cost} BYN x ${orderProduct.quantity})
                                                             </c:when>
                                                         </c:choose>
 
