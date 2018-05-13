@@ -6,6 +6,9 @@ $(document).ready(function () {
     $("#signup").click(function () {
         $("#sign_up").modal({backdrop: true});
     });
+    $("#addadmin").click(function () {
+        $("#add_admin").modal({backdrop: true});
+    });
     $("#addproduct").click(function () {
         $("#add_product").modal({backdrop: true});
     });
@@ -143,7 +146,7 @@ $(document).ready(function () {
 
 
         var $numberCorrectField = 0;
-        var $passwordNumber=0;
+        var $passwordNumber = 0;
 
         if (password.length >= 4 && passwordReg.test(password)) {
             $('input#profilePassword').css('border-color', 'green');
@@ -169,7 +172,7 @@ $(document).ready(function () {
             }
         }
 
-        if($passwordNumber==2) {
+        if ($passwordNumber == 2) {
             if (re_password == password) {
                 $('input#profilePasswordConfirm').css('border-color', 'green');
                 $('input#profilePasswordConfirm').removeClass('has-error').next('div').removeClass('is-visible');
@@ -186,8 +189,6 @@ $(document).ready(function () {
                 }
             }
         }
-
-
 
 
         if (name.length >= 2 && name_surnameReg.test(name)) {
@@ -299,6 +300,75 @@ $(document).ready(function () {
         if ($numberCorrectField != 5) {
             e.preventDefault();
         }
+    });
+
+    $('form#add-admin-form').on('click', function (e) {
+        var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+
+        var password = $('input#passwordAdmin').val();
+        var repassword = $('input#repasswordAdmin').val();
+        var login = $('input#loginAdmin').val();
+        var $numberCorrectField = 0;
+        var $numberCorrectPassword = 0;
+
+
+        if (password.length >= 4 && password != '' && passwordReg.test(password)) {
+            $('input#passwordAdmin').css('border-color', 'green');
+            $('input#passwordAdmin').removeClass('has-error').next('span#password-admin').removeClass('is-visible');
+            $numberCorrectField++;
+            $numberCorrectPassword++;
+        }
+        else {
+            if (password.length != 0) {
+                $('input#passwordAdmin').css('border-color', 'red');
+                $('input#passwordAdmin').addClass('has-error').next('span#password-admin').addClass('is-visible');
+            }
+        }
+
+        if (repassword.length >= 4 && password != '' && passwordReg.test(repassword)) {
+            $('input#repasswordAdmin').css('border-color', 'green');
+            $('input#repasswordAdmin').removeClass('has-error').next('span#repassword-admin').removeClass('is-visible');
+            $numberCorrectField++;
+            $numberCorrectPassword++;
+        }
+        else {
+            if (repassword.length != 0) {
+                $('input#repasswordAdmin').css('border-color', 'red');
+                $('input#repasswordAdmin').addClass('has-error').next('span#repassword-admin').addClass('is-visible');
+            }
+        }
+
+        if($numberCorrectPassword==2){
+            if(repassword!=password){
+                $('input#repasswordAdmin').css('border-color', 'red')
+                $('input#passwordAdmin').css('border-color', 'red');
+                $('input#repasswordAdmin').addClass('has-error');
+                $('span#repassword-confirm').addClass('is-visible');
+            }
+            else{
+                $('input#repasswordAdmin').css('border-color', 'green')
+                $('input#passwordAdmin').css('border-color', 'green');
+                $('input#repasswordAdmin').removeClass('has-error');
+                $('span#repassword-confirm').removeClass('is-visible');
+                $numberCorrectField++;
+            }
+        }
+
+        if (login.length > 3 && login != '' && loginReg.test(login)) {
+            $('input#loginAdmin').css('border-color', 'green');
+            $('input#loginAdmin').removeClass('has-error').next('span#login-admin').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (login.length != 0) {
+                $('input#loginAdmin').css('border-color', 'red');
+                $('input#loginAdmin').addClass('has-error').next('span#login-admin').addClass('is-visible');
+            }
+        }
+        if ($numberCorrectField != 4) {
+            e.preventDefault();
+        }
+
     });
 
 });

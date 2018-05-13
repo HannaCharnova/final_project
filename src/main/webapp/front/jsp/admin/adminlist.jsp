@@ -7,6 +7,7 @@
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
 <fmt:message bundle="${loc}" key="local.word.main_admin" var="main_admin"/>
 <fmt:message bundle="${loc}" key="local.word.delete_admin_word" var="delete_admin_word"/>
+<fmt:message bundle="${loc}" key="local.word.add_admin_word" var="add_admin_word"/>
 
 <head>
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
@@ -56,6 +57,7 @@
 
 
 <div class="order-container">
+    <button type="submit" id="add-admin-button" class="btn btn-default"><a id="addadmin">${add_admin_word}</a></button>
 
     <div class="qa-message-list">
 
@@ -72,7 +74,7 @@
                                         <div class="user-detail">
                                             <c:choose>
                                                 <c:when test="${admin.main eq 'true'}">
-                                                    <button type="submit" class="btn-right"
+                                                    <button type="submit" id="delete-admin-button" class="btn-right"
                                                             class="btn btn-default">${delete_admin_word}</button>
                                                 </c:when>
                                             </c:choose>

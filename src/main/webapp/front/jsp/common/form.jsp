@@ -37,6 +37,9 @@
 <fmt:message bundle="${loc}" key="local.word.weight_mistake" var="weight_mistake"/>
 <fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
 <fmt:message bundle="${loc}" key="local.word.choose_image" var="choose_image"/>
+<fmt:message bundle="${loc}" key="local.word.adding_admin" var="adding_admin"/>
+<fmt:message bundle="${loc}" key="local.word.repassword" var="repassword"/>
+<fmt:message bundle="${loc}" key="local.word.repassword_mistake" var="repassword_mistake"/>
 
 
 <head>
@@ -222,6 +225,51 @@
 
                             <button type="submit" id="add-product-button"
                                     class="btn btn-default">${add_product}</button>
+                        </form>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" class="modal fade" class="cd-user-modal" id="add_admin" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <form id="add-admin-form" class="form-horizontal form-horizontal-reg" method="post"
+                              action="/epam.by/add_admin">
+
+                            <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+                            <span class="heading">${adding_admin}</span>
+
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="loginAdmin"
+                                       placeholder=${login} name="login-admin">
+                                <span class="cd-error-message" id="login-admin">${login_mistake}</span>
+                            </div>
+
+                            <div class="form-group">
+                            <input type="text" class="form-control has-border" id="passwordAdmin"
+                                   placeholder=${password} name="password-admin">
+                            <span class="cd-error-message" id="password-admin">${password_mistake}</span>
+                        </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="repasswordAdmin"
+                                       placeholder=${repassword} name="repassword-admin">
+                                <span class="cd-error-message" id="repassword-admin">${password_mistake}</span>
+                                <span class="cd-error-message" id="repassword-confirm">${repassword_mistake}</span>
+
+                            </div>
+
+                            <button type="submit" id="button"
+                                    class="btn btn-default">${add_admin_word}</button>
                         </form>
                     </div>
                 </div><!-- /.row -->

@@ -1,5 +1,5 @@
-.btn-right{
-    float:right;
+.btn-right {
+    float: right;
 }
 
 .message-item {
@@ -75,7 +75,6 @@
     padding-bottom: 8px;
 }
 
-
 .message-item .message-head .user-detail {
     overflow: hidden;
 }
@@ -115,8 +114,6 @@
     line-height: 22px;
 }
 
-
-
 .order-container {
     padding-right: 15px;
     padding-left: 15px;
@@ -125,9 +122,25 @@
     margin-left: auto;
 }
 
-qa-message-when-data{
+qa-message-when-data {
     font-size: 14px;
     font-weight: bold;
     margin: 0;
 
+}
+
+#add-admin-button {
+    position: inherit;
+    margin-left: 50%;
+    width: 200px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 15px;
+    border-color: #ccc;
+}
+
+#delete-admin-button {
+    border-color: #ccc;
+    border-radius: 10px;
+    height: 35px;
 }
