@@ -17,6 +17,7 @@ public class ClientDao implements IClientDao {
     private static final Logger LOGGER = Logger.getLogger(ClientDao.class);
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 0";
     private static final String FIND_CLIENT_BY_LOGIN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =?";
+    private static final String FIND_CLIENT_BY_ID_AND_PASSWORD = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.iduser =? AND user.password=?";
     private static final String FIND_USER_BY_LOGIN = "SELECT * FROM user  WHERE user.login =?";
     private static final String FIND_BY_EMAIL = "SELECT * FROM client  JOIN user ON user.iduser=client.user_iduser  WHERE client.email =?";
     private static final String ADD_USER = "INSERT INTO user (login,password,role) VALUES (?,?,?)";
@@ -27,6 +28,7 @@ public class ClientDao implements IClientDao {
     private static final String BAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 1 WHERE cafe.client.user_iduser = ?";
     private static final String EDIT_CLIENT = "UPDATE cafe.client SET cafe.client.surname = ?,cafe.client.name = ?,cafe.client.email = ? WHERE cafe.client.user_iduser = ?";
     private static final String CHECK_BAN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE client.user_iduser =? AND client.ban=1";
+    private static final String CHANGE_PASSWORD = "UPDATE cafe.user SET cafe.user.password = ? WHERE cafe.user.iduser = ?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -317,6 +319,50 @@ public class ClientDao implements IClientDao {
             connectionPool.putBack(connection, resultSet, statement);
         }
         return null;
+    }
+
+    @Override
+    public Client changePassword(int idClient, String password) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start changePassword");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(CHANGE_PASSWORD);
+            statement.setString(1, password);
+            statement.setInt(2, idClient);
+            if (statement.executeUpdate() != 0) {
+                return findClientById(idClient);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Client DAO: finish changePassword");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return null;
+    }
+
+    @Override
+    public Client findClientByIdAndPassword(int idClient, String oldPassword) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        Client client = null;
+        try {
+            statement = connection.prepareStatement(FIND_CLIENT_BY_ID_AND_PASSWORD);
+            statement.setInt(1, idClient);
+            statement.setString(2, oldPassword);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                client = createClientByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return client;
     }
 
 

@@ -25,5 +25,10 @@ public interface IAdministratorDao extends AbstractDao {
 
     User findUserByLogin(String login) throws DaoException;
 
+    Administrator changePassword(int idAdin, String password) throws DaoException;
+
+    Administrator findAdministratorById(int idAdmin) throws DaoException;
+
+    Administrator findAdministratorByIdAndPassword(int idAdmin,String oldPassword) throws DaoException;
 
 }

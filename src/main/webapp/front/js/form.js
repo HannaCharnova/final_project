@@ -6,6 +6,10 @@ $(document).ready(function () {
     $("#signup").click(function () {
         $("#sign_up").modal({backdrop: true});
     });
+    $("#changepassword").click(function () {
+        $("#change_password").modal({backdrop: true});
+    });
+
     $("#addadmin").click(function () {
         $("#add_admin").modal({backdrop: true});
     });
@@ -272,6 +276,79 @@ $(document).ready(function () {
         }
 
     });
+
+    $('form#change-password-form').on('click', function (e) {
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+
+        var oldpassword = $('input#passwordOld').val();
+        var newpassword = $('input#passwordNew').val();
+        var repassword = $('input#repasswordNew').val();
+        var $numberCorrectField = 0;
+        var $numberCorrectPassword = 0;
+
+
+        if (oldpassword.length >= 4 && oldpassword != '' && passwordReg.test(oldpassword)) {
+            $('input#passwordOld').css('border-color', 'green');
+            $('input#passwordOld').removeClass('has-error').next('span#password-old').removeClass('is-visible');
+            $numberCorrectField++;
+            $numberCorrectPassword++;
+        }
+        else {
+            if (oldpassword.length != 0) {
+                $('input#passwordOld').css('border-color', 'red');
+                $('input#passwordOld').addClass('has-error').next('span#password-old').addClass('is-visible');
+            }
+        }
+
+        if (newpassword.length >= 4 && newpassword != '' && passwordReg.test(newpassword)) {
+            $('input#passwordNew').css('border-color', 'green');
+            $('input#passwordNew').removeClass('has-error').next('span#password-new').removeClass('is-visible');
+            $numberCorrectField++;
+            $numberCorrectPassword++;
+        }
+        else {
+            if (newpassword.length != 0) {
+                $('input#passwordNew').css('border-color', 'red');
+                $('input#passwordNew').addClass('has-error').next('span#password-new').addClass('is-visible');
+            }
+        }
+
+        if (repassword.length >= 4 && repassword != '' && passwordReg.test(repassword)) {
+            $('input#repasswordNew').css('border-color', 'green');
+            $('input#repasswordNew').removeClass('has-error').next('span#repassword-new').removeClass('is-visible');
+            $numberCorrectField++;
+            $numberCorrectPassword++;
+        }
+        else {
+            if (repassword.length != 0) {
+                $('input#repasswordNew').css('border-color', 'red');
+                $('input#repasswordNew').addClass('has-error').next('span#repassword-new').addClass('is-visible');
+            }
+        }
+
+
+        if($numberCorrectPassword==3){
+            if(repassword!=newpassword){
+                $('input#repasswordNew').css('border-color', 'red')
+                $('input#passwordNew').css('border-color', 'red');
+                $('input#repasswordNew').addClass('has-error');
+                $('span#repassword-new-confirm').addClass('is-visible');
+            }
+            else{
+                $('input#repasswordNew').css('border-color', 'green')
+                $('input#passwordNew').css('border-color', 'green');
+                $('input#repasswordNew').removeClass('has-error');
+                $('span#repassword-new-confirm').removeClass('is-visible');
+                $numberCorrectField++;
+            }
+        }
+
+        if ($numberCorrectField != 4) {
+            e.preventDefault();
+        }
+
+    });
+
 
 
     $('form#profile-form').on('click', function (e) {

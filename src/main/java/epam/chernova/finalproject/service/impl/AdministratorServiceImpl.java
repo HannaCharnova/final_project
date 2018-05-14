@@ -90,9 +90,32 @@ public class AdministratorServiceImpl implements AdministratorService {
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Administrator Service: end addAdministrator");
+        LOGGER.log(Level.DEBUG, "AdministratorService: end addAdministrator");
         return administrator;
 
+    }
+
+    @Override
+    public Administrator changePassword(int idAdmin, String password) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AdministratorService: Start changePassword");
+        try {
+            LOGGER.log(Level.DEBUG, "AdministratorService: Finish changePassword");
+            return daoFactory.getAdministratorDao().changePassword(idAdmin, password);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public Administrator findAdministratorByIdAndPassword(int idAdmin, String oldPassword) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AdministratorService: Start findAdministratorByIdAndPassword");
+        try {
+            LOGGER.log(Level.DEBUG, "AdministratorService: Finish findAdministratorByIdAndPassword");
+            return daoFactory.getAdministratorDao().findAdministratorByIdAndPassword(idAdmin,oldPassword);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
     }
 
 

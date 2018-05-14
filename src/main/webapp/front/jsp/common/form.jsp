@@ -40,6 +40,9 @@
 <fmt:message bundle="${loc}" key="local.word.adding_admin" var="adding_admin"/>
 <fmt:message bundle="${loc}" key="local.word.repassword" var="repassword"/>
 <fmt:message bundle="${loc}" key="local.word.repassword_mistake" var="repassword_mistake"/>
+<fmt:message bundle="${loc}" key="local.word.changing_password" var="changing_password"/>
+<fmt:message bundle="${loc}" key="local.word.password_old" var="password_old"/>
+<fmt:message bundle="${loc}" key="local.word.password_new" var="password_new"/>
 
 
 <head>
@@ -277,6 +280,52 @@
         </div>
     </div>
 </div>
+
+<div class="modal" class="modal fade" class="cd-user-modal" id="change_password" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <form id="change-password-form" class="form-horizontal form-horizontal-reg" method="post"
+                              action="/epam.by/change_password">
+
+                            <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+                            <span class="heading">${changing_password}</span>
+
+
+                            <div class="form-group">
+                                <input type="password" class="form-control has-border" id="passwordOld"
+                                       placeholder=${password_old} name="password-old">
+                                <span class="cd-error-message" id="password-old">${password_mistake}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" class="form-control has-border" id="passwordNew"
+                                       placeholder=${password_new} name="password-new">
+                                <span class="cd-error-message" id="password-new">${password_mistake}</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" class="form-control has-border" id="repasswordNew"
+                                       placeholder=${repassword} name="repassword-new">
+                                <span class="cd-error-message" id="repassword-new">${password_mistake}</span>
+                                <span class="cd-error-message" id="repassword-new-confirm">${repassword_mistake}</span>
+
+                            </div>
+
+                            <button type="submit" id="button-password"
+                                    class="btn btn-default">${change_password_word}</button>
+                        </form>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div>
+    </div>
+</div>
+
 
 
 

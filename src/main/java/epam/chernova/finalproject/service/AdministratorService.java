@@ -17,4 +17,8 @@ public interface AdministratorService {
 
     Administrator addAdministrator(String login,String password) throws ServiceException;
 
+    Administrator changePassword(int idAdmin, String password) throws ServiceException;
+
+    Administrator findAdministratorByIdAndPassword(int idAdmin,String oldPassword) throws ServiceException;
+
 }

@@ -151,5 +151,27 @@ public class ClientServiceImpl implements ClientService {
 
     }
 
+    @Override
+    public Client changePassword(int idClient, String password) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start changePassword");
+        try {
+            LOGGER.log(Level.DEBUG, "ClientService: Finish changePassword");
+            return daoFactory.getClientDao().changePassword(idClient, password);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public Client findClientByIdAndPassword(int idClient, String oldPassword) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start findClientByIdAndPassword");
+        try {
+            LOGGER.log(Level.DEBUG, "ClientService: Finish findClientByIdAndPassword");
+            return daoFactory.getClientDao().findClientByIdAndPassword(idClient, oldPassword);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
 
 }

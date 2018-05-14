@@ -33,4 +33,8 @@ public interface IClientDao extends AbstractDao {
 
     Client editClient(int idClient,String surname,String name,String email) throws DaoException;
 
+    Client changePassword(int idClient, String password) throws DaoException;
+
+    Client findClientByIdAndPassword(int idClient,String oldPassword) throws DaoException;
+
 }
