@@ -41,6 +41,9 @@ public class AddBasketProduct implements ICommand {
                         diagnoseAddProduct(request);
                     } else {
                         serviceFactory.getOrderProductService().addOrderProductQuantity(idOrder, idProduct, quantity);
+                        deltaTotalCost = (serviceFactory.getProductService().findProductById(idProduct)).getCost() * quantity;
+                        serviceFactory.getOrderService().editOrderCost(idOrder, deltaTotalCost);
+                        diagnoseAddProduct(request);
                     }
                 } else {
                     diagnoseEmptyChoise(request);

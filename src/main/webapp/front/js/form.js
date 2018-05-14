@@ -9,6 +9,11 @@ $(document).ready(function () {
     $("#changepassword").click(function () {
         $("#change_password").modal({backdrop: true});
     });
+
+    $("#changeproduct").click(function () {
+        $("#change_product").modal({backdrop: true});
+    });
+
     $("#addaccount").click(function () {
         $("#add_account").modal({backdrop: true});
     });
@@ -211,6 +216,77 @@ $(document).ready(function () {
         }
     });
 
+    $('form#срфтпу-product-form').on('click', function (e) {
+
+        var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\\-\\s\\`]+)$');
+        var name_enReg = new RegExp('^([A-Z]{1}[a-zA-Z-\\s\\-\\`]+)$');
+        var costweightReg = new RegExp('^(([0-9]+)(\\.){0,1}([0-9]+))$');
+
+        var name_ru = $('input#nameRuch').val();
+        var name_en = $('input#nameEnch').val();
+        var weight = $('input#weightch').val();
+        var cost = $('input#costch').val();
+        var image_name = $('input#imagech').val();
+        var $numberCorrectField = 0;
+
+        if (name_ru.length >= 2 && name_ru != '' && name_ruReg.test(name_ru)) {
+            $('input#nameRuch').css('border-color', 'green');
+            $('#name-ru-ch').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (name_ru.length != 0) {
+                $('input#nameRuch').css('border-color', 'red');
+                $('#name-ru-ch').addClass('is-visible');
+            }
+        }
+
+        if (name_en.length >= 2 && name_en != '' && name_enReg.test(name_en)) {
+            $('input#nameEnch').css('border-color', 'green');
+            $('#name-en-ch').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (name_ru.length != 0) {
+                $('input#nameEnch').css('border-color', 'red');
+                $('#name-en-ch').addClass('is-visible');
+            }
+        }
+
+        if (cost != '' && costweightReg.test(cost)) {
+            $('input#costch').css('border-color', 'green');
+            $('#cost-span-ch').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (cost.length != 0) {
+                $('input#costch').css('border-color', 'red');
+                $('#cost-span-ch').addClass('is-visible');
+            }
+        }
+
+        if (weight != '' && costweightReg.test(weight)) {
+            $('input#weightch').css('border-color', 'green');
+            $('#weight-span-ch').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (weight.length != 0) {
+                $('input#weightch').css('border-color', 'red');
+                $('#weight-span-ch').addClass('is-visible');
+            }
+        }
+
+        if (image_name != "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B") {
+            $('input#imagech').css('border-color', 'green');
+            $('#image-span-ch').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            $('input#imagech').css('border-color', 'red');
+            $('#image-span-ch').addClass('is-visible');
+        }
+
+        if ($numberCorrectField != 5) {
+            e.preventDefault();
+        }
+    });
+
     $('form#add-admin-form').on('click', function (e) {
         var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
         var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
@@ -248,14 +324,14 @@ $(document).ready(function () {
             }
         }
 
-        if($numberCorrectPassword==2){
-            if(repassword!=password){
+        if ($numberCorrectPassword == 2) {
+            if (repassword != password) {
                 $('input#repasswordAdmin').css('border-color', 'red')
                 $('input#passwordAdmin').css('border-color', 'red');
                 $('input#repasswordAdmin').addClass('has-error');
                 $('span#repassword-confirm').addClass('is-visible');
             }
-            else{
+            else {
                 $('input#repasswordAdmin').css('border-color', 'green')
                 $('input#passwordAdmin').css('border-color', 'green');
                 $('input#repasswordAdmin').removeClass('has-error');
@@ -330,14 +406,14 @@ $(document).ready(function () {
         }
 
 
-        if($numberCorrectPassword==3){
-            if(repassword!=newpassword){
+        if ($numberCorrectPassword == 3) {
+            if (repassword != newpassword) {
                 $('input#repasswordNew').css('border-color', 'red')
                 $('input#passwordNew').css('border-color', 'red');
                 $('input#repasswordNew').addClass('has-error');
                 $('span#repassword-new-confirm').addClass('is-visible');
             }
-            else{
+            else {
                 $('input#repasswordNew').css('border-color', 'green')
                 $('input#passwordNew').css('border-color', 'green');
                 $('input#repasswordNew').removeClass('has-error');
@@ -351,8 +427,6 @@ $(document).ready(function () {
         }
 
     });
-
-
 
     $('form#profile-form').on('click', function (e) {
 

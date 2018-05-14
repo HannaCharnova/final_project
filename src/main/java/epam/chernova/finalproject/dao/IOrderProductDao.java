@@ -19,4 +19,8 @@ public interface IOrderProductDao extends AbstractDao {
 
     boolean checkActiveOrderProduct(int idProduct) throws DaoException;
 
+    OrderProduct checkProductInActiveOrder(int idOrder, int idProduct) throws DaoException;
+
+    void addOrderProductQuantity(int idOrder, int idProduct, int quantity) throws DaoException;
+
 }

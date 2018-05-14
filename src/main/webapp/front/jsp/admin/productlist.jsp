@@ -39,7 +39,10 @@
                                         </c:choose>
                                         <small>${cost}: ${product.cost} BYN</small>
                                         <small>${weight}: ${product.weight} ${g}</small>
+                                        <div id="flex-btn-product" style="width: 480px;">
+                                        <small><button type="button" class="btn btn-default" id="changeproduct">${change_product}</button></small>
                                         <small><button type="submit" class="btn btn-default">${delete_product}</button></small>
+                                        </div>
                                     </h4>
                                 </div>
                             </div>

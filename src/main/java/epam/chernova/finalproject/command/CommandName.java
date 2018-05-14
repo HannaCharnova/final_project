@@ -24,5 +24,6 @@ public enum CommandName {
     EDIT_PROFILE,
     CHANGE_PASSWORD,
     ADD_ACCOUNT,
-    DELETE_ACCOUNT;
+    DELETE_ACCOUNT,
+    EDIT_PRODUCT;
 }

@@ -17,4 +17,8 @@ public interface OrderProductService {
 
     boolean checkActiveOrderProduct(int idProduct) throws ServiceException;
 
+    OrderProduct checkProductInActiveOrder(int idOrder,int  idProduct) throws ServiceException;
+
+    void addOrderProductQuantity(int idOrder,int idProduct,int quantity) throws ServiceException;
+
 }

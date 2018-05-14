@@ -45,6 +45,8 @@
 <fmt:message bundle="${loc}" key="local.word.password_new" var="password_new"/>
 <fmt:message bundle="${loc}" key="local.word.adding_account" var="adding_account"/>
 <fmt:message bundle="${loc}" key="local.word.account_number_mistake" var="account_number_mistake"/>
+<fmt:message bundle="${loc}" key="local.word.changing_product" var="changing_product"/>
+<fmt:message bundle="${loc}" key="local.word.change_product_word" var="change_product_word"/>
 
 
 <head>
@@ -359,5 +361,82 @@
 </div>
 
 
+
+<div class="modal" class="modal fade" class="cd-user-modal" id="change_product" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <form id="change-product-form" class="form-horizontal form-horizontal-reg" method="post"
+                              action="/epam.by/edit_product">
+
+                            <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+                            <span class="heading">${changing_product}</span>
+
+                            <div class="form-group">
+
+                                <select id="product-type-change" name="product_type">
+                                    <option value="breakfast">${breakfast}</option>
+                                    <option value="pizza">${pizza}</option>
+                                    <option value="sushi">${sushi}</option>
+                                    <option value="snacks">${snacks}</option>
+                                    <option value="hot_dishes">${hot_dishes}</option>
+                                    <option value="hot_dishes">${hot_dishes}</option>
+                                    <option value="soups">${soups}</option>
+                                    <option value="desserts">${desserts}</option>
+                                    <option value="coffe">${coffe}</option>
+                                    <option value="cocoa">${cocoa}</option>
+                                    <option value="tea">${tea}</option>
+                                    <option value="smuzzi">${smuzzi}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="nameEnch"
+                                       placeholder=${name_en} name="nameEn">
+                                <span class="cd-error-message" id="name-en-ch">${product_name_mistake}</span>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="nameRuch"
+                                       placeholder=${name_ru} name="nameRu">
+                                <span class="cd-error-message" id="name-ru-ch">${product_name_mistake}</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="costch"
+                                       placeholder=${cost} name="cost">
+                                <span class="cd-error-message" id="cost-span-ch">${cost_mistake}</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="weightch"
+                                       placeholder=${weight} name="weight">
+                                <span class="cd-error-message" id="weight-span-ch">${weight_mistake}</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <p>
+                                    <label for="image" class="control-label" style="float: left">${choose_image}</label>
+                                </p>
+                                <input type="file" accept=".png, .jpg, .jpeg" style="float: right" name="image" id="imagech" required>
+                                <span class="cd-error-message" id="image-span-ch">${image_mistake}</span>
+
+                            </div>
+
+                            <button type="submit" id="change-product-button"
+                                    class="btn btn-default">${change_product_word}</button>
+                        </form>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div>
+    </div>
+</div>
 
 

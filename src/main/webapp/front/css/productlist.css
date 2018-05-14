@@ -6,7 +6,6 @@
     color: #808080;
     text-align: center;
     background: #fff;
-    background-image: url("/front/image/add_to_basket.png");
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -15,3 +14,8 @@
     width:45px;
 }
 
+#flex-btn-product{
+    display: flex;
+    justify-content: space-between;
+
+}

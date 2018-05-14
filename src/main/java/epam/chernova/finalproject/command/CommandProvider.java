@@ -38,9 +38,7 @@ public class CommandProvider {
         commands.put(CommandName.CHANGE_PASSWORD,new ChangePassword());
         commands.put(CommandName.DELETE_ACCOUNT,new DeleteAccount());
         commands.put(CommandName.ADD_ACCOUNT,new AddAccount());
-
-
-
+        commands.put(CommandName.EDIT_PRODUCT,new EditProduct());
     }
 
     public static CommandProvider getInstance() {

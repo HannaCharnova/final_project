@@ -21,6 +21,8 @@ public class OrderProductDao implements IOrderProductDao {
     private static final String REMOVE_ORDER_PRODUCT = "DELETE FROM cafe.order_product WHERE cafe.order_product.order_idorder=? AND cafe.order_product.product_idproduct=?";
     private static final String FIND_ORDER_PRODUCT_BY_PRODUCT_ID = "SELECT * FROM cafe.order_product WHERE cafe.order_product.product_idproduct =?";
     private static final String FIND_ALL_ORDER_PRODUCT = "SELECT * FROM cafe.order_product";
+    private static final String FIND_PRODUCT_IN_ACTIVE_ORDER = "SELECT * FROM cafe.order_product WHERE cafe.order_product.product_idproduct =? AND cafe.order_product.order_idorder=?";
+    private static final String ADD_ORDER_PRODUCT_QUANTITY = "UPDATE cafe.order_product SET cafe.order_product.quantity = (cafe.order_product.quantity+?) WHERE cafe.order_product.product_idproduct = ? AND cafe.order_product.order_idorder=?";
 
     @Override
     public void addOrderProduct(int idOrder, int idProduct, int quantity) throws DaoException {
@@ -134,6 +136,51 @@ public class OrderProductDao implements IOrderProductDao {
             connectionPool.putBack(connection, resultSet, statement);
         }
         return false;
+    }
+
+    @Override
+    public OrderProduct checkProductInActiveOrder(int idOrder, int idProduct) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        LOGGER.log(Level.DEBUG, "OrderProduct DAO: start checkProductInActiveOrder");
+        try {
+            statement = connection.prepareStatement(FIND_PRODUCT_IN_ACTIVE_ORDER);
+            statement.setInt(1, idProduct);
+            statement.setInt(2, idOrder);
+            resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                return createOrderProductByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish checkProductInActiveOrder");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return null;
+    }
+
+    @Override
+    public void addOrderProductQuantity(int idOrder, int idProduct, int quantity) throws DaoException {
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        LOGGER.log(Level.DEBUG, "OrderProduct DAO: start addOrderProductQuantity");
+        try {
+            statement = connection.prepareStatement(ADD_ORDER_PRODUCT_QUANTITY);
+            statement.setInt(1, quantity);
+            statement.setInt(2, idProduct);
+            statement.setInt(3, idOrder);
+            if (statement.executeUpdate() != 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish addOrderProductQuantity");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
     }
 
     private OrderProduct createOrderProductByResultSet(ResultSet resultSet) throws DaoException {

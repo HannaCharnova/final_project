@@ -8,7 +8,6 @@ import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.service.ProductService;
 import epam.chernova.finalproject.util.SessionElements;
 import epam.chernova.finalproject.webenum.PageName;
-import epam.chernova.finalproject.webenum.PageNameRedirect;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -16,18 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-public class AddProduct implements ICommand {
-
-    private static final Logger LOGGER = Logger.getLogger(AddProduct.class);
+public class EditProduct implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(EditProduct.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command:Start add product ");
+        LOGGER.log(Level.INFO, "Command:Start EditProduct");
         Product product = null;
-        ProductService productService = serviceFactory.getProductService();
+        int idProduct = Integer.parseInt(request.getParameter("idProduct"));
         String type = request.getParameter("product_type");
         String nameEn = request.getParameter("nameEn");
         String nameRu = request.getParameter("nameRu");
@@ -35,18 +32,18 @@ public class AddProduct implements ICommand {
         Double weight = Double.parseDouble(request.getParameter("weight"));
         String imagePath = request.getParameter("image");
         try {
-            if (productService.findProductByName(nameEn, nameRu) != null) {
+            if (serviceFactory.getProductService().findProductByNameAndId(nameEn, nameRu,idProduct) != null) {
                 diagnoseCommonName(request);
             } else {
-                productService.addProduct(type, nameEn, nameRu, cost, weight, imagePath);
+                serviceFactory.getProductService().editProduct(idProduct,type, nameEn, nameRu, cost, weight, imagePath);
             }
             response.sendRedirect(SessionElements.getPageCommand(request));
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
-            pageName = pageName.ERROR;
+        } catch (IOException |
+                ServiceException e) {
+            LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
+            pageName = PageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Command:Finish add product");
+        LOGGER.log(Level.INFO, "Command:Finish EditProduct");
         return pageName.getPath();
     }
 
