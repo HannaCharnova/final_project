@@ -8,6 +8,7 @@
 <fmt:message bundle="${loc}" key="local.word.weight" var="weight"/>
 <fmt:message bundle="${loc}" key="local.word.delete_product" var="delete_product"/>
 <fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
+<fmt:message bundle="${loc}" key="local.word.g" var="g"/>
 
 <style>
     <%@include file="/front/css/productlist.css" %>
@@ -37,7 +38,7 @@
                                             </c:when>
                                         </c:choose>
                                         <small>${cost}: ${product.cost} BYN</small>
-                                        <small>${weight}: ${product.weight} g</small>
+                                        <small>${weight}: ${product.weight} ${g}</small>
                                         <small><button type="submit" class="btn btn-default">${delete_product}</button></small>
                                     </h4>
                                 </div>

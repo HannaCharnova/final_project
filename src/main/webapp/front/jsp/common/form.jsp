@@ -43,6 +43,8 @@
 <fmt:message bundle="${loc}" key="local.word.changing_password" var="changing_password"/>
 <fmt:message bundle="${loc}" key="local.word.password_old" var="password_old"/>
 <fmt:message bundle="${loc}" key="local.word.password_new" var="password_new"/>
+<fmt:message bundle="${loc}" key="local.word.adding_account" var="adding_account"/>
+<fmt:message bundle="${loc}" key="local.word.account_number_mistake" var="account_number_mistake"/>
 
 
 <head>
@@ -326,6 +328,35 @@
     </div>
 </div>
 
+<div class="modal" class="modal fade" class="cd-user-modal" id="add_account" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <form id="add-account-form" class="form-horizontal form-horizontal-reg" method="post"
+                              action="/epam.by/add_account">
+
+                            <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+                            <span class="heading">${adding_account}</span>
+
+
+                            <div class="form-group">
+                                <input type="text" class="form-control has-border" id="accountNumber"
+                                       placeholder=${account_number} name="account-number">
+                                <span class="cd-error-message" id="account-number">${account_number_mistake}</span>
+                            </div>
+
+                            <button type="submit"
+                                    class="btn btn-default">${add_account_btn}</button>
+                        </form>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div>
+    </div>
+</div>
 
 
 

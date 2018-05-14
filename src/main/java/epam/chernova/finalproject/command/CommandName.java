@@ -22,5 +22,7 @@ public enum CommandName {
     ADD_ADMIN,
     SHOW_ORDER_ADMIN,
     EDIT_PROFILE,
-    CHANGE_PASSWORD;
+    CHANGE_PASSWORD,
+    ADD_ACCOUNT,
+    DELETE_ACCOUNT;
 }

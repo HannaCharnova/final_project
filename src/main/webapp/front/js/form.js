@@ -9,6 +9,9 @@ $(document).ready(function () {
     $("#changepassword").click(function () {
         $("#change_password").modal({backdrop: true});
     });
+    $("#addaccount").click(function () {
+        $("#add_account").modal({backdrop: true});
+    });
 
     $("#addadmin").click(function () {
         $("#add_admin").modal({backdrop: true});
@@ -400,6 +403,32 @@ $(document).ready(function () {
         }
 
         if ($numberCorrectField != 3) {
+            e.preventDefault();
+        }
+    });
+
+    $('form#add-account-form').on('click', function (e) {
+
+// Запрещаем стандартное поведение для кнопки submit
+        var accountNumberReg = new RegExp("^[0-9]{7}$");
+
+        var accountNumber = $('input#accountNumber').val();
+
+        var $numberCorrectField = 0;
+
+
+        if (accountNumber.length >= 7 && accountNumberReg.test(accountNumber)) {
+            $('input#accountNumber').css('border-color', 'green');
+            $('input#accountNumber').removeClass('has-error').next('span#account-number').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (accountNumber.length != 0) {
+                $('input#accountNumber').css('border-color', 'red');
+                $('input#accountNumber').addClass('has-error').next('span#account-number').addClass('is-visible');
+            }
+        }
+
+        if ($numberCorrectField != 1) {
             e.preventDefault();
         }
     });

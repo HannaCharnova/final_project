@@ -36,6 +36,8 @@ public class CommandProvider {
         commands.put(CommandName.SHOW_ORDER_ADMIN,new ShowOrderAdmin());
         commands.put(CommandName.EDIT_PROFILE,new EditProfile());
         commands.put(CommandName.CHANGE_PASSWORD,new ChangePassword());
+        commands.put(CommandName.DELETE_ACCOUNT,new DeleteAccount());
+        commands.put(CommandName.ADD_ACCOUNT,new AddAccount());
 
 
 

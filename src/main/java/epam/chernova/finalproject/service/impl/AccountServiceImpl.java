@@ -41,4 +41,41 @@ public class AccountServiceImpl implements AccountService {
         }
 
     }
+
+    @Override
+    public void deleteAccount(int idAccount) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AccountService: Start deleteAccount");
+        try {
+            daoFactory.getAccountDao().deleteAccount(idAccount);
+            LOGGER.log(Level.DEBUG, "AccountService: Finish deleteAccount");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public Account findAccountByNumber(String accountNumber) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AccountService: Start findAccountByNumber");
+        try {
+            LOGGER.log(Level.DEBUG, "AccountService: Finish findAccountByNumber");
+            return daoFactory.getAccountDao().findAccountByNumber(accountNumber);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void addAccount(int idClient, String accountNumber) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AccountService: Start addAccount");
+        try {
+            double credit= Math.random()*1000;
+            System.out.println(credit);
+            daoFactory.getAccountDao().addAccount(idClient,accountNumber,credit);
+            LOGGER.log(Level.DEBUG, "AccountService: Finish addAccount");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
 }

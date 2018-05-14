@@ -25,33 +25,65 @@ public class AddBasketProduct implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Command:Start add product to basket");
-        int idClient,idOrder,idProduct,quantity;
+        int idClient, idOrder, idProduct, quantity;
         double deltaTotalCost;
         try {
             idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
             if (serviceFactory.getOrderService().findActiveOrderByClientId(idClient) != null) {
-                System.out.println("add to old order");
                 idOrder = serviceFactory.getOrderService().findActiveOrderByClientId(idClient).getIdOrder();
                 idProduct = Integer.parseInt(request.getParameter("idProduct"));
                 quantity = Integer.parseInt(request.getParameter("quantity"));
-                serviceFactory.getOrderProductService().addOrderProduct(idOrder,idProduct,quantity);
-                deltaTotalCost=(serviceFactory.getProductService().findProductById(idProduct)).getCost()*quantity;
-                serviceFactory.getOrderService().editOrderCost(idOrder,deltaTotalCost);
+                if (quantity > 0) {
+                    if (serviceFactory.getOrderProductService().checkProductInActiveOrder(idOrder, idProduct) == null) {
+                        serviceFactory.getOrderProductService().addOrderProduct(idOrder, idProduct, quantity);
+                        deltaTotalCost = (serviceFactory.getProductService().findProductById(idProduct)).getCost() * quantity;
+                        serviceFactory.getOrderService().editOrderCost(idOrder, deltaTotalCost);
+                        diagnoseAddProduct(request);
+                    } else {
+                        serviceFactory.getOrderProductService().addOrderProductQuantity(idOrder, idProduct, quantity);
+                    }
+                } else {
+                    diagnoseEmptyChoise(request);
+                }
             } else {
                 serviceFactory.getOrderService().addOrder(idClient);
                 idOrder = serviceFactory.getOrderService().findActiveOrderByClientId(idClient).getIdOrder();
                 idProduct = Integer.parseInt(request.getParameter("idProduct"));
                 quantity = Integer.parseInt(request.getParameter("quantity"));
-                serviceFactory.getOrderProductService().addOrderProduct(idOrder,idProduct,quantity);
-                deltaTotalCost=(serviceFactory.getProductService().findProductById(idProduct)).getCost()*quantity;
-                serviceFactory.getOrderService().editOrderCost(idOrder,deltaTotalCost);
+                if (quantity > 0) {
+
+                    serviceFactory.getOrderProductService().addOrderProduct(idOrder, idProduct, quantity);
+                    deltaTotalCost = (serviceFactory.getProductService().findProductById(idProduct)).getCost() * quantity;
+                    serviceFactory.getOrderService().editOrderCost(idOrder, deltaTotalCost);
+                    diagnoseAddProduct(request);
+                } else {
+                    diagnoseEmptyChoise(request);
+                }
             }
             response.sendRedirect(SessionElements.getPageCommand(request));
-        } catch (IOException|ServiceException e) {
+        } catch (IOException | ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
             pageName = PageName.ERROR;
         }
         LOGGER.log(Level.INFO, "Command:Finish add product to basket");
         return pageName.getPath();
     }
+
+    private static void diagnoseAddProduct(HttpServletRequest request) {
+        if (request.getSession().getAttribute("locale").equals("ru")) {
+            request.getSession().setAttribute("error_data", "Продукт добавлен в ваш заказ.");
+        } else {
+            request.getSession().setAttribute("error_data", "Product was added to your order.");
+        }
+    }
+
+    private static void diagnoseEmptyChoise(HttpServletRequest request) {
+        if (request.getSession().getAttribute("locale").equals("ru")) {
+            request.getSession().setAttribute("error_data", "Выберите необходимое количество продукта.");
+        } else {
+            request.getSession().setAttribute("error_data", "Choose the quantity of this product.");
+        }
+    }
+
+
 }
