@@ -6,7 +6,8 @@ public enum PageNameRedirect {
     FIND_BY_TYPE("/epam.by/find_by_type"),
     ORDERS("/epam.by/show_order_client"),
     CLIENTS("/epam.by/show_client"),
-    ADMINS("/epam.by/show_admin");
+    ADMINS("/epam.by/show_admin"),
+    PROFILE("/epam.by/client_profile");
 
     private String path;
 

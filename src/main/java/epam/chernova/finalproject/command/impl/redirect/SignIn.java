@@ -62,7 +62,6 @@ public class SignIn implements ICommand {
                     }else{
                         diagnoseClientBan(request);
                         response.sendRedirect(SessionElements.getPageCommand(request));
-
                     }
                 } else {
                     diagnoseIncorrectSignIn(request);

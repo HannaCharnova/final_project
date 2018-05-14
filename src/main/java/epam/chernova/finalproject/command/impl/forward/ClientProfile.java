@@ -33,9 +33,9 @@ public class ClientProfile implements ICommand {
 //            request.setAttribute("orders", orders);
 //            request.setAttribute("order_products",orderProducts);
 //            request.setAttribute("products", products);
-//            request.getSession().setAttribute("pageCommand", PageNameRedirect.ORDERS.getPath());
-//            request.getSession().setAttribute("locale", SessionElements.getLocale(request));
-//            rewrite(request);
+            request.getSession().setAttribute("pageCommand", PageNameRedirect.PROFILE.getPath());
+            request.getSession().setAttribute("locale", SessionElements.getLocale(request));
+            rewrite(request);
 //        } catch (ServiceException e) {
 //            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
 //            pageName = pageName.ERROR;

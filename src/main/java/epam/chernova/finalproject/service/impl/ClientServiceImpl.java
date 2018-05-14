@@ -45,7 +45,7 @@ public class ClientServiceImpl implements ClientService {
         try {
             if (Validator.isNull(login, password, name, surname, email) && Validator.isEmptyString(login, password, name, surname, email) && Validator.matchProperName(name, surname) && Validator.matchLogin(login) && Validator.matchPassword(password) && Validator.matchEmail(email)) {
 //            password = Hasher.sha1Hash(password);
-                if (daoFactory.getAdministratorDao().findAdministratorByLogin(login)==null) {
+                if (daoFactory.getAdministratorDao().findAdministratorByLogin(login) == null) {
                     user = daoFactory.getClientDao().addUser(login, password);
                     if (user != null) {
                         client = daoFactory.getClientDao().addClient(user.getIdUser(), login, name, surname, email);
@@ -73,23 +73,22 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public Client findClientByEmail(String email) {
-        ClientDao clientDao = daoFactory.getClientDao();
-        Client client = null;
+    public Client findClientByEmail(String email) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start findClientByEmail");
         try {
-            client = clientDao.findClientByEmail(email);
+            LOGGER.log(Level.DEBUG, "ClientService: Finish findClientByEmail");
+            return daoFactory.getClientDao().findClientByEmail(email);
         } catch (DaoException e) {
-            LOGGER.log(Level.ERROR, "");
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        return client;
     }
 
     @Override
     public List<Client> findAllClients() throws ServiceException {
         LOGGER.log(Level.DEBUG, "ClientService: Start findAllClients");
         try {
-                LOGGER.log(Level.DEBUG, "ClientService: Finish findAllClients");
-                return daoFactory.getClientDao().findAllClients();
+            LOGGER.log(Level.DEBUG, "ClientService: Finish findAllClients");
+            return daoFactory.getClientDao().findAllClients();
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
@@ -138,6 +137,18 @@ public class ClientServiceImpl implements ClientService {
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+    }
+
+    @Override
+    public Client editClient(int idClient, String surname, String name, String email) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start editClient");
+        try {
+            LOGGER.log(Level.DEBUG, "ClientService: Finish editClient");
+            return daoFactory.getClientDao().editClient(idClient, surname, name, email);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
     }
 
 

@@ -18,13 +18,15 @@ public class ClientDao implements IClientDao {
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =? AND user.password = ? AND user.role = 0";
     private static final String FIND_CLIENT_BY_LOGIN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.login =?";
     private static final String FIND_USER_BY_LOGIN = "SELECT * FROM user  WHERE user.login =?";
-    private static final String FIND_BY_EMAIL = "SELECT * FROM client  WHERE client.email =?";
+    private static final String FIND_BY_EMAIL = "SELECT * FROM client  JOIN user ON user.iduser=client.user_iduser  WHERE client.email =?";
     private static final String ADD_USER = "INSERT INTO user (login,password,role) VALUES (?,?,?)";
     private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email) VALUES (?,?,?,?)";
     private static final String FIND_ALL_CLIENTS = "SELECT * FROM client JOIN user ON user.iduser=client.user_iduser";
     private static final String FIND_BY_ID = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.iduser =?";
     private static final String UNBAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 0 WHERE cafe.client.user_iduser = ?";
     private static final String BAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 1 WHERE cafe.client.user_iduser = ?";
+    private static final String EDIT_CLIENT = "UPDATE cafe.client SET cafe.client.surname = ?,cafe.client.name = ?,cafe.client.email = ? WHERE cafe.client.user_iduser = ?";
+    private static final String CHECK_BAN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE client.user_iduser =? AND client.ban=1";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 
@@ -94,7 +96,6 @@ public class ClientDao implements IClientDao {
     @Override
     public Client findClientByEmail(String email) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start findClientByEmail");
-        Client client=null;
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
         PreparedStatement statement = null;
@@ -103,16 +104,7 @@ public class ClientDao implements IClientDao {
             statement.setString(1, email);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
-                client = new Client();
-                client.setIdUser(resultSet.getInt("user_iduser"));
-                client.setLogin(resultSet.getString("user.login"));
-                client.setPassword(resultSet.getString("user.password"));
-                client.setName(resultSet.getString("name"));
-                client.setSurname(resultSet.getString("surname"));
-                client.setEmail(resultSet.getString("email"));
-                client.setPoint(resultSet.getDouble("point"));
-                client.setBan(resultSet.getBoolean("ban"));
-                client.setRole(resultSet.getBoolean("user.role"));
+                return createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);
@@ -120,7 +112,7 @@ public class ClientDao implements IClientDao {
             connectionPool.putBack(connection, resultSet, statement);
         }
         LOGGER.log(Level.DEBUG, "Client DAO: finish findClientByEmail");
-        return client;
+        return null;
     }
 
     @Override
@@ -219,7 +211,7 @@ public class ClientDao implements IClientDao {
     @Override
     public Client findClientById(int idClient) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start findClientById");
-        Client client=null;
+        Client client = null;
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
         PreparedStatement statement = null;
@@ -280,6 +272,53 @@ public class ClientDao implements IClientDao {
         }
     }
 
+    @Override
+    public boolean checkBan(int idClient) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start checkBan");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(CHECK_BAN);
+            statement.setInt(1, idClient);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Client DAO: finish addOrder");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return false;
+
+    }
+
+    @Override
+    public Client editClient(int idClient, String surname, String name, String email) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start editClient");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(EDIT_CLIENT);
+            statement.setString(1, surname);
+            statement.setString(2, name);
+            statement.setString(3, email);
+            statement.setInt(4, idClient);
+            if (statement.executeUpdate() != 0) {
+                return findClientById(idClient);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Client DAO: finish editClient");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        return null;
+    }
+
 
     private Client createClientByResultSet(ResultSet resultSet) throws DaoException {
         Client client = new Client();
@@ -294,7 +333,7 @@ public class ClientDao implements IClientDao {
             client.setBan(resultSet.getBoolean("ban"));
             client.setRole(resultSet.getBoolean("user.role"));
         } catch (SQLException e) {
-            throw new DaoException("Exception while executing SQL query",e);
+            throw new DaoException("Exception while executing SQL query", e);
         }
         return client;
     }

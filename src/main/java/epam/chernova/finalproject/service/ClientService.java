@@ -12,7 +12,7 @@ public interface ClientService {
 
     Client findClientByLogin(String login);
 
-    Client findClientByEmail(String email);
+    Client findClientByEmail(String email) throws ServiceException;
 
     List<Client> findAllClients() throws ServiceException;
 
@@ -23,5 +23,9 @@ public interface ClientService {
     void banClient(int idClient) throws ServiceException;
 
     boolean checkBan(int idClient) throws ServiceException;
+
+    Client editClient(int idClient,String surname,String name,String email) throws ServiceException;
+
+
 
 }

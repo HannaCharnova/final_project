@@ -31,5 +31,6 @@ public interface IClientDao extends AbstractDao {
 
     boolean checkBan(int idClient) throws DaoException;
 
+    Client editClient(int idClient,String surname,String name,String email) throws DaoException;
 
 }

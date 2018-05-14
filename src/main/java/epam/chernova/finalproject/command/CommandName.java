@@ -20,5 +20,6 @@ public enum CommandName {
     SHOW_ADMIN,
     DELETE_ADMIN,
     ADD_ADMIN,
-    SHOW_ORDER_ADMIN;
+    SHOW_ORDER_ADMIN,
+    EDIT_PROFILE;
 }

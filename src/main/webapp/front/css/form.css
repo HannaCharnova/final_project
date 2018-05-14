@@ -14,7 +14,10 @@
     padding-bottom: 90px;
 }
 
-
+.form-horizontal-profile {
+    padding-bottom: 90px;
+    width: 720px;
+}
 .form-horizontal .heading {
     display: block;
     font-size: 35px;
@@ -137,6 +140,19 @@
     text-transform: capitalize;
     transition: all 0.5s ease 0s;
 }
+
+.form-horizontal-profile .btn {
+    float: right;
+    font-size: 14px;
+    color: #fff;
+    background: #00b4ef;
+    border-radius: 30px;
+    padding: 10px 25px;
+    border: none;
+    text-transform: capitalize;
+    transition: all 0.5s ease 0s;
+}
+
 
 .form-horizontal-reg .btn {
     float: right;

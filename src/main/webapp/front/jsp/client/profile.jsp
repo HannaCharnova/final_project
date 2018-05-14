@@ -13,6 +13,9 @@
 <fmt:message bundle="${loc}" key="local.sentence.name_mistake" var="name_mistake"/>
 <fmt:message bundle="${loc}" key="local.sentence.surname_mistake" var="surname_mistake"/>
 <fmt:message bundle="${loc}" key="local.sentence.email_mistake" var="email_mistake"/>
+<fmt:message bundle="${loc}" key="local.sentence.your_profile" var="your_profile"/>
+<fmt:message bundle="${loc}" key="local.sentence.save_changes" var="save_changes"/>
+<fmt:message bundle="${loc}" key="local.sentence.change_password" var="change_password"/>
 
 
 <html>
@@ -49,7 +52,7 @@
         <%@include file="/front/css/form.css" %>
         <%@include file="/front/css/common.css" %>
         <%@include file="/front/css/product.css" %>
-
+        <%@include file="/front/css/profile.css" %>
     </style>
 
     <title>Cafe</title>
@@ -65,61 +68,59 @@
 
 
 <%--<div class="container">--%>
-<div id="profile-row">
-    <div class="col-md-6 col-md-offset-3">
+<div>
+    <div class="modal-dialog"    style="padding-top: 65px;">
+        <div class="modal-content" style="width: 750px;margin:0 0 0 -100px;">
+            <div class="container">
+                <div class="row">
 
-        <form data-toggle="validator" role="form" id="profile-form">
+                    <div class="col-md-6">
+                        <form id="profile-form" class="form-horizontal form-horizontal-profile" method="post"
+                              action="/epam.by/edit_profile">
 
-            <div class="form-group">
-                <label for="profileLogin" class="control-label">${login}</label>
-                <input type="text" class="form-control" id="profileLogin" disabled="disabled" value="${client.login}" name="profileLogin"
-                       required>
-            </div>
+                            <span class="heading">${your_profile}</span>
 
-            <div class="form-group">
-                <label for="profileName" class="control-label">${name}</label>
-                <input type="text" class="form-control" id="profileName" value="${client.name}" name="profileName"
-                       required>
-                <span class="profile-error-message" id="profile-name-span">${password_mistake}</span>
+                            <div class="form-group">
+                                <span class="profile-span" >${login}</span>
+                                <input type="text" class="form-control has-border" id="profile-login"
+                                       value="${client.login}" disabled="disabled" name="login_profile">
+                            </div>
 
-            </div>
+                            <div class="form-group">
+                                <span class="profile-span" >${surname}</span>
+                                <input type="text" class="form-control has-border" id="profile-surname"
+                                       placeholder=${surname} name="surname" value="${client.surname}">
+                                <span class="cd-error-message" id="surname-profile-span">${surname_mistake}</span>
+                            </div>
 
-            <div class="form-group">
-                <label for="profileSurname" class="control-label">${surname}</label>
-                <input type="text" class="form-control" id="profileSurname" value="${client.surname}"
-                       name="profileSurname" required>
-                <span class="profile-error-message" id="profile-surname-span">${password_mistake}</span>
+                            <div class="form-group">
+                                <span class="profile-span" >${name}</span>
+                                <input type="text" class="form-control has-border" id="profile-name"
+                                       placeholder=${name} name="name" value="${client.name}">
+                                <span class="cd-error-message" id="name-profile-span">${name_mistake}</span>
 
-            </div>
+                            </div>
 
-            <div class="form-group">
-                <label for="profileEmail" class="control-label">${email}</label>
-                <input type="email" class="form-control" id="profileEmail" value="${client.email}"
-                       data-error="Вы не правильно ввели Ваш E-mail" name="profileEmail" required>
-                <span class="profile-error-message" id="profile-email-span">${password_mistake}</span>
-            </div>
+                            <div class="form-group">
+                                <span class="profile-span" >${email}</span>
+                                <input type="email" class="form-control has-border" id="profile-email"
+                                       placeholder=${email} value="${client.email}" name="email">
+                                <span class="cd-error-message" id="email-profile-span">${email_mistake}</span>
 
-            <div class="form-group">
-                <label for="profilePassword" class="control-label">${password}</label>
-                <div class="form-inline row" id="profile-password">
-                    <input type="password" data-toggle="validator" data-minlength="6" class="form-control"
-                           id="profilePassword" placeholder="123456" required>
-                    <span class="profile-error-message" id="profile-password-span">${password_mistake}</span>
-                    <input type="password" class="form-control" id="inputPasswordConfirm"
-                           data-match="#profilePassword" data-match-error="Ошибка! Пароли не совпадают!"
-                           placeholder="Повторите пароль" name="profilePasswordConfirm" required style="margin-top: 15px">
-                    <span class="profile-error-message" id="profile-re-password-span">${password_mistake}</span>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Отправить</button>
-            </div>
-        </form>
+                            </div>
 
+                            <div id="flex-btn">
+                            <button type="submit"  class="btn btn-default">${registrate}</button>
+                            <button type="submit"  class="btn btn-default">${change_password}</button>
+                            <button type="submit" id="edit-button" class="btn btn-default">${save_changes}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div>
     </div>
 </div>
-<%--</div>--%>
-
 
 </body>
 </html>

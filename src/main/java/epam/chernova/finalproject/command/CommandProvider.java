@@ -34,6 +34,7 @@ public class CommandProvider {
         commands.put(CommandName.DELETE_ADMIN,new DeleteAdmin());
         commands.put(CommandName.ADD_ADMIN,new AddAdmin());
         commands.put(CommandName.SHOW_ORDER_ADMIN,new ShowOrderAdmin());
+        commands.put(CommandName.EDIT_PROFILE,new EditProfile());
 
 
 
