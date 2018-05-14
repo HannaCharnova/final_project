@@ -1,6 +1,7 @@
 package epam.chernova.finalproject.command.impl.forward;
 
 import epam.chernova.finalproject.command.ICommand;
+import epam.chernova.finalproject.entity.Account;
 import epam.chernova.finalproject.entity.Order;
 import epam.chernova.finalproject.entity.OrderProduct;
 import epam.chernova.finalproject.entity.Product;
@@ -25,23 +26,19 @@ public class ClientProfile implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Command: ClientProfile started.");
-//        try {
-//            int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
-//            List<Order> orders = serviceFactory.getOrderService().findAllOrdersByClientId(idClient);
-//            List<OrderProduct> orderProducts = serviceFactory.getOrderProductService().findOrderProductsByClientId(idClient);
-//            List<Product> products = serviceFactory.getProductService().findAllProducts();
-//            request.setAttribute("orders", orders);
-//            request.setAttribute("order_products",orderProducts);
-//            request.setAttribute("products", products);
+        try {
+            int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
+            Account account = serviceFactory.getAccountService().findAccountByClientId(idClient);
+            request.setAttribute("account", account);
+            System.out.println((Account)request.getAttribute("account"));
             request.getSession().setAttribute("pageCommand", PageNameRedirect.PROFILE.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
             rewrite(request);
-//        } catch (ServiceException e) {
-//            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
-//            pageName = pageName.ERROR;
-//        }
-//
-//        LOGGER.log(Level.INFO, "Command: ClientProfile finished.");
+        } catch (ServiceException e) {
+            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
+            pageName = pageName.ERROR;
+        }
+        LOGGER.log(Level.INFO, "Command: ClientProfile finished.");
         return pageName.getPath();
 
     }

@@ -16,6 +16,9 @@
 <fmt:message bundle="${loc}" key="local.sentence.your_profile" var="your_profile"/>
 <fmt:message bundle="${loc}" key="local.sentence.save_changes" var="save_changes"/>
 <fmt:message bundle="${loc}" key="local.sentence.change_password_word" var="change_password_word"/>
+<fmt:message bundle="${loc}" key="local.sentence.add_account_btn" var="add_account_btn"/>
+<fmt:message bundle="${loc}" key="local.sentence.your_account" var="your_account"/>
+<fmt:message bundle="${loc}" key="local.sentence.account_number" var="account_number"/>
 
 
 <html>
@@ -110,8 +113,11 @@
                             </div>
 
                             <div id="flex-btn">
-                                <button type="submit" class="btn btn-default">${registrate}</button>
-                                <button type="button" class="btn btn-default" id="changepassword">${change_password_word}</button>
+                                <c:if test="${account==null}">
+                                    <button type="submit" class="btn btn-default">${add_account_btn}</button>
+                                </c:if>
+                                <button type="button" class="btn btn-default"
+                                        id="changepassword">${change_password_word}</button>
                                 <button type="submit" id="edit-button" class="btn btn-default">${save_changes}</button>
                             </div>
                         </form>
@@ -119,8 +125,67 @@
                 </div><!-- /.row -->
             </div><!-- /.container -->
         </div>
+
+
+        <c:choose>
+            <c:when test="${account!=null}">
+            <div class="modal-content" style="width: 750px;margin:0 0 0 -100px;">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <form id="account-form" class="form-horizontal form-horizontal-profile" method="post"
+                                  action="/epam.by/edit_profile">
+
+                                <span class="heading">${your_account}</span>
+
+                                <div class="form-group">
+                                    <span class="profile-span">${account_number}</span>
+                                    <input type="text" class="form-control has-border" id="account-login"
+                                           value="${client.login}" disabled="disabled" name="login_profile">
+                                </div>
+
+                                    <%--<div class="form-group">--%>
+                                    <%--<span class="profile-span">${surname}</span>--%>
+                                    <%--<input type="text" class="form-control has-border" id="profile-surname"--%>
+                                    <%--placeholder=${surname} name="surname" value="${client.surname}">--%>
+                                    <%--<span class="cd-error-message" id="surname-profile-span">${surname_mistake}</span>--%>
+                                    <%--</div>--%>
+
+                                    <%--<div class="form-group">--%>
+                                    <%--<span class="profile-span">${name}</span>--%>
+                                    <%--<input type="text" class="form-control has-border" id="profile-name"--%>
+                                    <%--placeholder=${name} name="name" value="${client.name}">--%>
+                                    <%--<span class="cd-error-message" id="name-profile-span">${name_mistake}</span>--%>
+
+                                    <%--</div>--%>
+
+                                    <%--<div class="form-group">--%>
+                                    <%--<span class="profile-span">${email}</span>--%>
+                                    <%--<input type="email" class="form-control has-border" id="profile-email"--%>
+                                    <%--placeholder=${email} value="${client.email}" name="email">--%>
+                                    <%--<span class="cd-error-message" id="email-profile-span">${email_mistake}</span>--%>
+
+                                    <%--</div>--%>
+
+                                    <%--<div id="flex-btn">--%>
+                                    <%--<c:if test="${account}==null">--%>
+                                    <%--<button type="submit" class="btn btn-default">${add_account_btn}</button>--%>
+                                    <%--</c:if>--%>
+                                <button type="button" class="btn btn-default"
+                                        id="changepassword">${change_password_word}</button>
+                                    <%--<button type="submit" id="edit-button" class="btn btn-default">${save_changes}</button>--%>
+                                    <%--</div>--%>
+                            </form>
+                        </div>
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </div>
+            </c:when>
+        </c:choose>
     </div>
 </div>
+
 
 </body>
 </html>
