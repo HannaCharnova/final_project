@@ -23,5 +23,8 @@ public interface IProductDao extends AbstractDao {
 
     void addProduct(String type, String nameEn, String nameRu, double cost, double weight, String imagePath) throws DaoException;
 
+    Product findProductByNameAndId(String nameEn, String nameRu, int idProduct) throws DaoException;
+
+    void editProduct(int idProduct, String type, String nameEn, String nameRu, double cost, double weight, String imagePath) throws DaoException;
 
 }

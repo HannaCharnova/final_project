@@ -198,7 +198,7 @@ public class AdministratorDao implements IAdministratorDao {
     }
 
     @Override
-    public Administrator changePassword(int idAdin, String password) throws DaoException {
+    public Administrator changePassword(int idAdmin, String password) throws DaoException {
         LOGGER.log(Level.DEBUG, "Administrator DAO: start changePassword");
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
@@ -206,9 +206,10 @@ public class AdministratorDao implements IAdministratorDao {
         try {
             statement = connection.prepareStatement(CHANGE_PASSWORD);
             statement.setString(1, password);
-            statement.setInt(2, idAdin);
+            statement.setInt(2, idAdmin);
             if (statement.executeUpdate() != 0) {
-                return findAdministratorById(idAdin);
+                System.out.println(findAdministratorById(idAdmin));
+                return findAdministratorById(idAdmin);
             }
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);
@@ -254,7 +255,7 @@ public class AdministratorDao implements IAdministratorDao {
         try {
             statement = connection.prepareStatement(FIND_BY_ID_AND_PASSWORD);
             statement.setInt(1, idAdmin);
-            statement.setString(1, oldPassword);
+            statement.setString(2, oldPassword);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
                 administrator = createAdminByResultSet(resultSet);

@@ -22,7 +22,9 @@ public class ProductDao implements IProductDao {
     private static final String FIND_PRODUCT_BY_ID = "SELECT * FROM menu WHERE idproduct=?";
     private static final String DELETE_PRODUCT = "UPDATE cafe.menu SET cafe.menu.exist = 0 WHERE cafe.menu.idproduct = ?";
     private static final String FIND_PRODUCT_BY_NAME = "SELECT * FROM menu WHERE menu.name_en=? OR menu.name_ru=?";
+    private static final String FIND_PRODUCT_BY_NAME_AND_ID = "SELECT * FROM menu WHERE (menu.name_en=? OR menu.name_ru=?) AND menu.idproduct!=?";
     private static final String ADD_PRODUCT = "INSERT INTO menu (name_en,name_ru,type,cost,weight,image_path,exist) VALUES (?,?,?,?,?,?,1)";
+    private static final String EDIT_PRODUCT = "UPDATE cafe.menu SET cafe.menu.name_en = ?,cafe.menu.name_ru=?,cafe.menu.type=?,cafe.menu.cost=?,cafe.menu.weight=?,cafe.menu.image_path=? WHERE cafe.menu.idproduct = ?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
 
     @Override
@@ -139,6 +141,58 @@ public class ProductDao implements IProductDao {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "Product Dao: finish addProduct");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+    }
+
+    @Override
+    public Product findProductByNameAndId(String nameEn, String nameRu, int idProduct) throws DaoException {
+        LOGGER.log(Level.DEBUG, "ProductDAO: Start findProductByNameAndId.");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        Product product=null;
+        try {
+            statement = connection.prepareStatement(FIND_PRODUCT_BY_NAME_AND_ID);
+            statement.setString(1, nameEn);
+            statement.setString(2, nameRu);
+            statement.setInt(3, idProduct);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                product=createProductByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } finally {
+            LOGGER.log(Level.DEBUG, "ProductDAO: Finish findProductByNameAndId.");
+            connectionPool.putBack(connection, resultSet, statement);
+        }
+        System.out.println(product);
+        return product;
+    }
+
+    @Override
+    public void editProduct(int idProduct, String type, String nameEn, String nameRu, double cost, double weight, String imagePath) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Product Dao: start editProduct");
+        Connection connection = connectionPool.getConnection();
+        ResultSet resultSet = null;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(EDIT_PRODUCT);
+            statement.setString(1, nameEn);
+            statement.setString(2, nameRu);
+            statement.setString(3, type);
+            statement.setDouble(4, cost);
+            statement.setDouble(5, weight);
+            statement.setString(6, imagePath);
+            statement.setInt(7, idProduct);
+            if (statement.executeUpdate() != 0) {
+                return;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Product Dao: finish editProduct");
             connectionPool.putBack(connection, resultSet, statement);
         }
     }

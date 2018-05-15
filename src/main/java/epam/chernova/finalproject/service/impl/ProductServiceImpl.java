@@ -79,6 +79,31 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public Product findProductByNameAndId(String nameEn, String nameRu, int idProduct) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: Start findProductByNameAndId");
+        try {
+            LOGGER.log(Level.DEBUG, "Product Service: Finish findProductByNameAndId");
+            return daoFactory.getProductDao().findProductByNameAndId(nameEn, nameRu,idProduct);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public void editProduct(int idProduct, String type, String nameEn, String nameRu, double cost, double weight, String imagePath) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Product Service: start editProduct");
+        try {
+            if (Validator.isNull(type, nameEn, nameRu, cost, weight, imagePath) && Validator.isEmptyString(type, nameEn, nameRu, imagePath) && Validator.matchProductName(nameEn,nameRu)) {
+                daoFactory.getProductDao().editProduct(idProduct,type, nameEn, nameRu, cost, weight, imagePath);
+                LOGGER.log(Level.DEBUG, "Product Service: end editProduct");
+            }
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
 
     @Override
     public List<Product> findProductByType(String productType) throws ServiceException {

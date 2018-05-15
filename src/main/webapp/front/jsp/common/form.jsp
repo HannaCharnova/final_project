@@ -370,7 +370,7 @@
 
                     <div class="col-md-6">
                         <form id="change-product-form" class="form-horizontal form-horizontal-reg" method="post"
-                              action="/epam.by/edit_product">
+                              action="/epam.by/edit_product?idProduct=${product.idProduct}">
 
                             <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
                             <span class="heading">${changing_product}</span>
@@ -395,27 +395,27 @@
 
                             <div class="form-group">
                                 <input type="text" class="form-control has-border" id="nameEnch"
-                                       placeholder=${name_en} name="nameEn">
+                                       placeholder=${name_en} name="nameEn" value="${product.nameEn}">
                                 <span class="cd-error-message" id="name-en-ch">${product_name_mistake}</span>
                             </div>
 
                             <div class="form-group">
                                 <input type="text" class="form-control has-border" id="nameRuch"
-                                       placeholder=${name_ru} name="nameRu">
+                                       placeholder=${name_ru} name="nameRu" value="${product.nameRu}">
                                 <span class="cd-error-message" id="name-ru-ch">${product_name_mistake}</span>
 
                             </div>
 
                             <div class="form-group">
                                 <input type="text" class="form-control has-border" id="costch"
-                                       placeholder=${cost} name="cost">
+                                       placeholder=${cost} name="cost" value="${product.cost}">
                                 <span class="cd-error-message" id="cost-span-ch">${cost_mistake}</span>
 
                             </div>
 
                             <div class="form-group">
                                 <input type="text" class="form-control has-border" id="weightch"
-                                       placeholder=${weight} name="weight">
+                                       placeholder=${weight} name="weight" value="${product.weight}">
                                 <span class="cd-error-message" id="weight-span-ch">${weight_mistake}</span>
 
                             </div>
@@ -424,7 +424,7 @@
                                 <p>
                                     <label for="image" class="control-label" style="float: left">${choose_image}</label>
                                 </p>
-                                <input type="file" accept=".png, .jpg, .jpeg" style="float: right" name="image" id="imagech" required>
+                                <input type="file" accept=".png, .jpg, .jpeg" value="${product.imagePath}" style="float: right" name="image" id="imagech" required>
                                 <span class="cd-error-message" id="image-span-ch">${image_mistake}</span>
 
                             </div>

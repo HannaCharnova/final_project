@@ -17,9 +17,11 @@ public interface ProductService {
 
     void deleteProduct(int idProduct) throws ServiceException;
 
-    Product findProductByName(String nameEn,String nameRu) throws ServiceException;
+    Product findProductByName(String nameEn, String nameRu) throws ServiceException;
 
-    void addProduct(String type,String nameEn,String nameRu,double cost,double weight,String imagePath) throws ServiceException;
+    void addProduct(String type, String nameEn, String nameRu, double cost, double weight, String imagePath) throws ServiceException;
 
+    Product findProductByNameAndId(String nameEn, String nameRu, int idProduct) throws ServiceException;
 
+    void editProduct(int idProduct, String type, String nameEn, String nameRu, double cost, double weight, String imagePath) throws ServiceException;
 }

@@ -9,6 +9,7 @@
 <fmt:message bundle="${loc}" key="local.word.delete_product" var="delete_product"/>
 <fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
 <fmt:message bundle="${loc}" key="local.word.g" var="g"/>
+<fmt:message bundle="${loc}" key="local.word.change_product_word" var="change_product_word"/>
 
 <style>
     <%@include file="/front/css/productlist.css" %>
@@ -40,7 +41,7 @@
                                         <small>${cost}: ${product.cost} BYN</small>
                                         <small>${weight}: ${product.weight} ${g}</small>
                                         <div id="flex-btn-product" style="width: 480px;">
-                                        <small><button type="button" class="btn btn-default" id="changeproduct">${change_product}</button></small>
+                                        <small><button type="button" class="btn btn-default" id="changeproduct">${change_product_word}</button></small>
                                         <small><button type="submit" class="btn btn-default">${delete_product}</button></small>
                                         </div>
                                     </h4>

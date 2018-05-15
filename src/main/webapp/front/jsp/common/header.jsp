@@ -15,6 +15,7 @@
 <fmt:message bundle="${loc}" key="local.word.clients_show" var="clients_show"/>
 <fmt:message bundle="${loc}" key="local.word.admins_show" var="admins_show"/>
 <fmt:message bundle="${loc}" key="local.word.orders_show" var="orders_show"/>
+<fmt:message bundle="${loc}" key="local.sentence.change_password_word" var="change_password_word"/>
 
 
 
@@ -68,6 +69,7 @@
                                 <li><a href="/epam.by/show_admin">${admins_show}</a></li>
                                 <li><a href="/epam.by/show_order_admin">${orders_show}</a></li>
                                 <li class="divider"></li>
+                                <li><a id="changepassword">${change_password_word}</a></li>
                                 <li><a href="/epam.by/sign_out">${sign_out}</a></li>
                             </ul>
                     </ul>

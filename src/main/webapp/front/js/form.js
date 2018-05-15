@@ -216,7 +216,7 @@ $(document).ready(function () {
         }
     });
 
-    $('form#срфтпу-product-form').on('click', function (e) {
+    $('form#change-product-form').on('click', function (e) {
 
         var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\\-\\s\\`]+)$');
         var name_enReg = new RegExp('^([A-Z]{1}[a-zA-Z-\\s\\-\\`]+)$');

@@ -40,10 +40,12 @@ public class ChangePassword implements ICommand {
             } else {
                 int idAdmin = ((Administrator) request.getSession().getAttribute("admin")).getIdUser();
                 if (serviceFactory.getAdministratorService().findAdministratorByIdAndPassword(idAdmin, oldPassword) != null) {
-                    Administrator administrator = serviceFactory.getAdministratorService().changePassword(idAdmin, oldPassword);
+                    System.out.println("old correct");
+                    Administrator administrator = serviceFactory.getAdministratorService().changePassword(idAdmin, newPassword);
                     request.getSession().setAttribute("admin", administrator);
                     diagnoseChangePassword(request);
                 } else {
+                    System.out.println("old incorrect");
                     diagnoseWrongOldPassword(request);
                 }
             }
