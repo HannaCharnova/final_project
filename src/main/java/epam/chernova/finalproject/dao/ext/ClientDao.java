@@ -21,12 +21,12 @@ public class ClientDao implements IClientDao {
     private static final String FIND_USER_BY_LOGIN = "SELECT * FROM user  WHERE user.login =?";
     private static final String FIND_BY_EMAIL = "SELECT * FROM client  JOIN user ON user.iduser=client.user_iduser  WHERE client.email =?";
     private static final String ADD_USER = "INSERT INTO user (login,password,role) VALUES (?,?,?)";
-    private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email) VALUES (?,?,?,?)";
+    private static final String ADD_CLIENT = "INSERT INTO client (user_iduser,name,surname,email,address) VALUES (?,?,?,?,?)";
     private static final String FIND_ALL_CLIENTS = "SELECT * FROM client JOIN user ON user.iduser=client.user_iduser";
     private static final String FIND_BY_ID = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.iduser =?";
     private static final String UNBAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 0 WHERE cafe.client.user_iduser = ?";
     private static final String BAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 1 WHERE cafe.client.user_iduser = ?";
-    private static final String EDIT_CLIENT = "UPDATE cafe.client SET cafe.client.surname = ?,cafe.client.name = ?,cafe.client.email = ? WHERE cafe.client.user_iduser = ?";
+    private static final String EDIT_CLIENT = "UPDATE cafe.client SET cafe.client.surname = ?,cafe.client.name = ?,cafe.client.email = ?,cafe.client.address=? WHERE cafe.client.user_iduser = ?";
     private static final String CHECK_BAN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE client.user_iduser =? AND client.ban=1";
     private static final String CHANGE_PASSWORD = "UPDATE cafe.user SET cafe.user.password = ? WHERE cafe.user.iduser = ?";
     private ConnectionPool connectionPool = ConnectionPool.getInstance();
@@ -45,16 +45,7 @@ public class ClientDao implements IClientDao {
             statement.setString(2, password);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
-                client = new Client();
-                client.setIdUser(resultSet.getInt("user_iduser"));
-                client.setLogin(resultSet.getString("user.login"));
-                client.setPassword(resultSet.getString("user.password"));
-                client.setName(resultSet.getString("name"));
-                client.setSurname(resultSet.getString("surname"));
-                client.setEmail(resultSet.getString("email"));
-                client.setPoint(resultSet.getDouble("point"));
-                client.setBan(resultSet.getBoolean("ban"));
-                client.setRole(resultSet.getBoolean("user.role"));
+                client = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);
@@ -76,16 +67,7 @@ public class ClientDao implements IClientDao {
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
-                client = new Client();
-                client.setIdUser(resultSet.getInt("user_iduser"));
-                client.setLogin(resultSet.getString("user.login"));
-                client.setPassword(resultSet.getString("user.password"));
-                client.setName(resultSet.getString("name"));
-                client.setSurname(resultSet.getString("surname"));
-                client.setEmail(resultSet.getString("email"));
-                client.setPoint(resultSet.getDouble("point"));
-                client.setBan(resultSet.getBoolean("ban"));
-                client.setRole(resultSet.getBoolean("user.role"));
+                client = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);
@@ -141,7 +123,7 @@ public class ClientDao implements IClientDao {
     }
 
     @Override
-    public Client addClient(int idUser, String login, String name, String surname, String email) throws DaoException {
+    public Client addClient(int idUser, String login, String name, String surname, String email,String address) throws DaoException {
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
         PreparedStatement statement = null;
@@ -152,6 +134,8 @@ public class ClientDao implements IClientDao {
             statement.setString(2, name);
             statement.setString(3, surname);
             statement.setString(4, email);
+            statement.setString(5, address);
+
             if (statement.executeUpdate() != 0) {
                 return findClientByLogin(login);
             }
@@ -298,7 +282,7 @@ public class ClientDao implements IClientDao {
     }
 
     @Override
-    public Client editClient(int idClient, String surname, String name, String email) throws DaoException {
+    public Client editClient(int idClient, String surname, String name, String email,String address) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start editClient");
         Connection connection = connectionPool.getConnection();
         ResultSet resultSet = null;
@@ -308,7 +292,8 @@ public class ClientDao implements IClientDao {
             statement.setString(1, surname);
             statement.setString(2, name);
             statement.setString(3, email);
-            statement.setInt(4, idClient);
+            statement.setString(4, address);
+            statement.setInt(5, idClient);
             if (statement.executeUpdate() != 0) {
                 return findClientById(idClient);
             }
@@ -378,6 +363,7 @@ public class ClientDao implements IClientDao {
             client.setPoint(resultSet.getDouble("point"));
             client.setBan(resultSet.getBoolean("ban"));
             client.setRole(resultSet.getBoolean("user.role"));
+            client.setAddress(resultSet.getString("address"));
         } catch (SQLException e) {
             throw new DaoException("Exception while executing SQL query", e);
         }

@@ -142,6 +142,14 @@
                             </div>
 
                             <div class="form-group">
+                                <input type="text" class="form-control has-border" id="address"
+                                       placeholder=${address_word} name="address">
+                                <span class="cd-error-message" id="address-up-span">${address_mistake}</span>
+
+                            </div>
+
+
+                            <div class="form-group">
                                 <input type="text" class="form-control has-border" id="login"
                                        placeholder=${login} name="login_up">
                                 <span class="cd-error-message" id="login-up-span">${login_mistake}</span>

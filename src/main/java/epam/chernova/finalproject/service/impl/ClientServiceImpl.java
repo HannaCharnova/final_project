@@ -38,17 +38,17 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client signUp(String login, String password, String name, String surname, String email) throws ServiceException {
+    public Client signUp(String login, String password, String name, String surname, String email,String address) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Client Service: Sign up started");
         Client client = null;
         User user = null;
         try {
-            if (Validator.isNull(login, password, name, surname, email) && Validator.isEmptyString(login, password, name, surname, email) && Validator.matchProperName(name, surname) && Validator.matchLogin(login) && Validator.matchPassword(password) && Validator.matchEmail(email)) {
+            if (Validator.isNull(login, password, name, surname, email,address) && Validator.isEmptyString(login, password, name, surname, email,address) && Validator.matchProperName(name, surname) && Validator.matchLogin(login) && Validator.matchPassword(password) && Validator.matchEmail(email)) {
 //            password = Hasher.sha1Hash(password);
                 if (daoFactory.getAdministratorDao().findAdministratorByLogin(login) == null) {
                     user = daoFactory.getClientDao().addUser(login, password);
                     if (user != null) {
-                        client = daoFactory.getClientDao().addClient(user.getIdUser(), login, name, surname, email);
+                        client = daoFactory.getClientDao().addClient(user.getIdUser(), login, name, surname, email,address);
                     }
                 }
             }
@@ -140,11 +140,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client editClient(int idClient, String surname, String name, String email) throws ServiceException {
+    public Client editClient(int idClient, String surname, String name, String email,String address) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ClientService: Start editClient");
         try {
             LOGGER.log(Level.DEBUG, "ClientService: Finish editClient");
-            return daoFactory.getClientDao().editClient(idClient, surname, name, email);
+            return daoFactory.getClientDao().editClient(idClient, surname, name, email,address);
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }

@@ -11,27 +11,30 @@ public class Client extends User implements Serializable, Cloneable {
     private String email;
     private double point;
     private boolean ban;
+    private String address;
 
     public Client() {
         super();
     }
 
-    public Client(int idClient, String login, String password, String name, String surname, String email, double point, boolean ban, boolean role) {
+    public Client(int idClient, String login, String password, String name, String surname, String email, double point, boolean ban, boolean role, String address) {
         super(idClient, login, password, role);
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.point = point;
         this.ban = ban;
+        this.address = address;
     }
 
-    public Client(String login, String password, String name, String surname, String email, double point, boolean ban, boolean role) {
+    public Client(String login, String password, String name, String surname, String email, double point, boolean ban, boolean role, String address) {
         super(login, password, role);
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.point = point;
         this.ban = ban;
+        this.address = address;
     }
 
     public Client(String login, String password, String name, String surname, String email, boolean role) {
@@ -39,6 +42,14 @@ public class Client extends User implements Serializable, Cloneable {
         this.name = name;
         this.surname = surname;
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getName() {
@@ -102,31 +113,34 @@ public class Client extends User implements Serializable, Cloneable {
     }
 
     @Override
-    public String toString() {
-        return super.toString() + "Client{" +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", email='" + email + '\'' +
-                ", point=" + point +
-                ", ban=" + ban +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         Client client = (Client) o;
         return Double.compare(client.point, point) == 0 &&
                 ban == client.ban &&
                 Objects.equals(name, client.name) &&
                 Objects.equals(surname, client.surname) &&
-                Objects.equals(email, client.email);
+                Objects.equals(email, client.email) &&
+                Objects.equals(address, client.address);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, surname, email, point, ban);
+        return Objects.hash(super.hashCode(), name, surname, email, point, ban, address);
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", point=" + point +
+                ", ban=" + ban +
+                ", address='" + address + '\'' +
+                '}';
     }
 }

@@ -37,6 +37,7 @@ public class PayOrder implements ICommand {
                     if (account.getCredit() > totalCost) {
                         serviceFactory.getAccountService().payOrder(idClient, totalCost);
                         serviceFactory.getOrderService().payOrder(idOrder);
+                        diagnoseSuccessfulPayment(request);
                     } else {
                         diagnoseLackOfMoney(request);
                     }
@@ -82,6 +83,15 @@ public class PayOrder implements ICommand {
             request.getSession().setAttribute("error_data", "You havn't got the account. Register the account in your profile or pay in cash .");
         }
     }
+
+    private static void diagnoseSuccessfulPayment(HttpServletRequest request) {
+        if (request.getSession().getAttribute("locale").equals("ru")) {
+            request.getSession().setAttribute("error_data", "Заказ успешно зарегистрирован. Доставка будет осуществлена в течение часа");
+        } else {
+            request.getSession().setAttribute("error_data", "Your order was successfully registered. Delivery will be done during an hour.");
+        }
+    }
+
 
 
 }

@@ -77,6 +77,7 @@ $(document).ready(function () {
         var name = $('input#name').val();
         var surname = $('input#surname').val();
         var email = $('input#email').val();
+        var email = $('input#address').val();
 
         var $numberCorrectField = 0;
 
@@ -139,7 +140,19 @@ $(document).ready(function () {
             }
         }
 
-        if ($numberCorrectField != 5) {
+        if (address.length > 10 && address != '' ) {
+            $('input#address').css('border-color', 'green');
+            $('input#address').removeClass('has-error').next('span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (address.length != 0) {
+                $('input#address').css('border-color', 'red');
+                $('input#address').addClass('has-error').next('span').addClass('is-visible');
+            }
+        }
+
+
+        if ($numberCorrectField != 6) {
             e.preventDefault();
         }
     });
@@ -437,6 +450,7 @@ $(document).ready(function () {
         var name = $('input#profile-name').val();
         var surname = $('input#profile-surname').val();
         var email = $('input#profile-email').val();
+        var address = $('input#profile-address').val();
 
         var $numberCorrectField = 0;
 
@@ -476,7 +490,19 @@ $(document).ready(function () {
             }
         }
 
-        if ($numberCorrectField != 3) {
+        if (address.length > 10 && address != '') {
+            $('input#profile-address').css('border-color', 'green');
+            $('input#profile-address').removeClass('has-error').next('span#address-profile-span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (address.length != 0) {
+                $('input#profile-address').css('border-color', 'red');
+                $('input#profile-address').addClass('has-error').next('span#address-profile-span').addClass('is-visible');
+            }
+        }
+
+
+        if ($numberCorrectField != 4) {
             e.preventDefault();
         }
     });

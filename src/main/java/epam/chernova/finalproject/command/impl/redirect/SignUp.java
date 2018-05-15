@@ -26,6 +26,7 @@ public class SignUp implements ICommand {
         String password = request.getParameter("password_up");
         String email = request.getParameter("email");
         String name = request.getParameter("name");
+        String address = request.getParameter("address");
         String surname = request.getParameter("surname");
         try {
             if (clientService.findClientByEmail(email) != null) {
@@ -34,7 +35,7 @@ public class SignUp implements ICommand {
                 if (clientService.findClientByLogin(login) != null) {
                     diagnoseCommonLogin(request);
                 } else {
-                    client =clientService.signUp(login, password, name, surname, email);
+                    client =clientService.signUp(login, password, name, surname, email,address);
                     if(client==null){
                         diagnoseCommonLogin(request);
                     }

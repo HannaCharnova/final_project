@@ -27,19 +27,20 @@ public class EditProfile implements ICommand {
         String email = request.getParameter("email");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
+        String address = request.getParameter("address");
         String clientEmail = ((Client) request.getSession().getAttribute("client")).getEmail();
         int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
         try {
             if (!clientEmail.equals(email)) {
                 System.out.println(serviceFactory.getClientService().findClientByEmail(email));
                 if (serviceFactory.getClientService().findClientByEmail(email) == null) {
-                    client = serviceFactory.getClientService().editClient(idClient, surname, name, email);
+                    client = serviceFactory.getClientService().editClient(idClient, surname, name, email,address);
                     request.getSession().setAttribute("client", client);
                 } else {
                     diagnoseCommonEmail(request);
                 }
             } else {
-                client = serviceFactory.getClientService().editClient(idClient, surname, name, email);
+                client = serviceFactory.getClientService().editClient(idClient, surname, name, email,address);
                 request.getSession().setAttribute("client", client);
             }
             response.sendRedirect(SessionElements.getPageCommand(request));

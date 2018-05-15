@@ -29,6 +29,7 @@ CREATE TABLE `client` (
   `point` decimal(3,1) DEFAULT NULL COMMENT 'Баллы лояльности, которые начисляются клиенту автоматически в случае предварительного совершения заказа, либо снимаются в случае, если клиент не забирает готовый заказ',
   `ban` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Статус клиента в системе, т.е. клиент может быть либо забанен, либо разбанен. По умолчанию при регистрации бан у клиента отсутствует',
   `user_iduser` int(10) unsigned NOT NULL,
+  `address` varchar(45) NOT NULL,
   PRIMARY KEY (`user_iduser`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   UNIQUE KEY `user_iduser_UNIQUE` (`user_iduser`),
@@ -43,7 +44,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES ('Екатерина','Букатова','bukatova@gmail.com',NULL,0,7),('Винцаревич','Владислав','vintsarevich@gmail.com',NULL,0,8),('Тимур','Анашкин','anachkin@gmail.com',NULL,1,9),('Никита','Аробей','arobey@gmail.com',NULL,0,10),('Руслан','Баланович','balanovich@gmail.com',NULL,0,11),('Иван','Будаев','budaev@gmail.com',NULL,0,12),('Оксана','Бурнос','burnos@gmail.com',NULL,0,13),('Яна','Голодюк','goloduk@gmail.com',NULL,0,14),('Вероника','Григорьева','grigorieva@gmail.com',NULL,0,15),('Дмитрий','Волощук','voloshuk@gmail.com',NULL,0,16),('Вероника','Марченко','marchenko@gmail.com',NULL,0,17),('Андрей','Марковский','markovskiy@gmal.com',NULL,0,18),('Екатерина','Макаревич','makarevich@gmail.com',NULL,0,19),('Анастасия','Михмель','mihmel@gmail.com',NULL,0,20),('Егор','Олешкевич','oleshkevich@gmail.com',NULL,0,21),('Анастасия','Потапчук','potapchuk@gmail.com',NULL,0,22),('Арина','Делендик','delendik@gmail.com',NULL,0,23),('Евгений','Гулинский','gulinski@gmail.com',NULL,0,24),('Кирилл','Лосиков','losikov@gmail.com',NULL,0,25),('Иван','Подгайский','podgaiski@gmail.com',NULL,0,26),('Артем','Лайша','laisha@gmail.com',NULL,0,27),('Иван','Стефанович','stefanovich@gmail.com',NULL,0,28),('Вероника','Симоненко','simonenko@gmail.com',NULL,0,29),('Андрей','Кравцов','kravcov@gmail.com',NULL,0,30),('Олег','Радкевич','radkevich@gmail.com',NULL,0,31),('Petr','Petrov','petrov@gmail.com',NULL,0,51);
+INSERT INTO `client` VALUES ('Екатерина','Букатова','bukatova@gmail.com',NULL,0,7,'ул.Крупской,д.51,кв 56'),('Винцаревич','Владислав','vintsarevich@gmail.com',NULL,0,8,'ул.Крупской,д.51,кв 56'),('Тимур','Анашкин','anachkin@gmail.com',NULL,0,9,'ул.Крупской,д.51,кв 56'),('Никита','Аробей','arobey@gmail.com',NULL,0,10,'ул.Крупской,д.51,кв 56'),('Руслан','Баланович','balanovich@gmail.com',NULL,0,11,'ул.Крупской,д.51,кв 56'),('Иван','Будаев','budaev@gmail.com',NULL,0,12,'ул.Крупской,д.51,кв 56'),('Оксана','Бурнос','burnos@gmail.com',NULL,0,13,'ул.Крупской,д.51,кв 56'),('Яна','Голодюк','goloduk@gmail.com',NULL,0,14,'ул.Крупской,д.51,кв 56'),('Вероника','Григорьева','grigorieva@gmail.com',NULL,0,15,'ул.Крупской,д.51,кв 56'),('Дмитрий','Волощук','voloshuk@gmail.com',NULL,0,16,'ул.Крупской,д.51,кв 56'),('Вероника','Марченко','marchenko@gmail.com',NULL,0,17,'ул.Крупской,д.51,кв 56'),('Андрей','Марковский','markovskiy@gmal.com',NULL,0,18,'ул.Крупской,д.51,кв 56'),('Екатерина','Макаревич','makarevich@gmail.com',NULL,0,19,'ул.Крупской,д.51,кв 56'),('Анастасия','Михмель','mihmel@gmail.com',NULL,0,20,'ул.Крупской,д.51,кв 56'),('Егор','Олешкевич','oleshkevich@gmail.com',NULL,0,21,'ул.Крупской,д.51,кв 56'),('Анастасия','Потапчук','potapchuk@gmail.com',NULL,0,22,'ул.Крупской,д.51,кв 56'),('Арина','Делендик','delendik@gmail.com',NULL,0,23,'ул.Крупской,д.51,кв 56'),('Евгений','Гулинский','gulinski@gmail.com',NULL,0,24,'ул.Крупской,д.51,кв 56'),('Кирилл','Лосиков','losikov@gmail.com',NULL,0,25,'ул.Крупской,д.51,кв 56'),('Иван','Подгайский','podgaiski@gmail.com',NULL,0,26,'ул.Крупской,д.51,кв 56'),('Артемка','Лайша','laisha@gmail.com',NULL,0,27,'ул.Крупской,д.51,кв 30'),('Иван','Стефанович','stefanovich@gmail.com',NULL,0,28,'ул.Крупской,д.51,кв 56'),('Вероника','Симоненко','simonenko@gmail.com',NULL,0,29,'ул.Крупской,д.51,кв 56'),('Андрей','Кравцов','kravcov@gmail.com',NULL,0,30,'ул.Крупской,д.51,кв 56'),('Олег','Радкевич','radkevich@gmail.com',NULL,0,31,'ул.Крупской,д.51,кв 56'),('Petr','Petrov','petrov@gmail.com',NULL,0,51,'ул.Крупской,д.51,кв 56');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-13 17:15:01
+-- Dump completed on 2018-05-16  0:16:45

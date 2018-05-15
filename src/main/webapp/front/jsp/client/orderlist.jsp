@@ -48,6 +48,7 @@
                                                 <span class="qa-message-what"></span>
                                                 <span class="qa-message-when">
  <span class="qa-message-when-data">${order.date}</span>
+
  </span>
                                                 <span class="qa-message-who">
  <span class="qa-message-who-pad">${total_cost} </span>

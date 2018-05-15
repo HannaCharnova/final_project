@@ -21,6 +21,8 @@
 <fmt:message bundle="${loc}" key="local.sentence.account_number" var="account_number"/>
 <fmt:message bundle="${loc}" key="local.sentence.account_credit" var="account_credit"/>
 <fmt:message bundle="${loc}" key="local.sentence.delete_account_word" var="delete_account_word"/>
+<fmt:message bundle="${loc}" key="local.sentence.address_mistake" var="address_mistake"/>
+<fmt:message bundle="${loc}" key="local.word.address_word" var="address_word"/>
 
 
 <html>
@@ -111,6 +113,14 @@
                                 <input type="email" class="form-control has-border" id="profile-email"
                                        placeholder=${email} value="${client.email}" name="email">
                                 <span class="cd-error-message" id="email-profile-span">${email_mistake}</span>
+
+                            </div>
+
+                            <div class="form-group">
+                                <span class="profile-span">${address_word}</span>
+                                <input type="text" class="form-control has-border" id="profile-address"
+                                       placeholder=${address_word} value="${client.address}" name="address">
+                                <span class="cd-error-message" id="address-profile-span">${address_mistake}</span>
 
                             </div>
 

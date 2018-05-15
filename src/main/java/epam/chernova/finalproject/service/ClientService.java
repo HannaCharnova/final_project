@@ -8,7 +8,7 @@ import java.util.List;
 public interface ClientService {
     Client signIn(String login, String password) throws ServiceException;
 
-    Client signUp(String login, String password, String name, String surname, String email) throws ServiceException;
+    Client signUp(String login, String password, String name, String surname, String email,String address) throws ServiceException;
 
     Client findClientByLogin(String login);
 
@@ -24,7 +24,7 @@ public interface ClientService {
 
     boolean checkBan(int idClient) throws ServiceException;
 
-    Client editClient(int idClient, String surname, String name, String email) throws ServiceException;
+    Client editClient(int idClient, String surname, String name, String email,String address) throws ServiceException;
 
     Client changePassword(int idClient, String password) throws ServiceException;
 

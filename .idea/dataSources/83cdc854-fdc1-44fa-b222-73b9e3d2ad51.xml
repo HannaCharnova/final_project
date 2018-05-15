@@ -976,37 +976,43 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="236" parent="209" name="email_UNIQUE">
+    <column id="236" parent="209" name="address">
+      <Position>7</Position>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="237" parent="209" name="email_UNIQUE">
       <ColNames>email</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="237" parent="209" name="user_iduser_UNIQUE">
+    <index id="238" parent="209" name="user_iduser_UNIQUE">
       <ColNames>user_iduser</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="238" parent="209" name="fk_client_user1_idx">
+    <index id="239" parent="209" name="fk_client_user1_idx">
       <ColNames>user_iduser</ColNames>
     </index>
-    <key id="239" parent="209" name="PRIMARY">
+    <key id="240" parent="209" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_iduser</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="240" parent="209" name="email_UNIQUE">
+    <key id="241" parent="209" name="email_UNIQUE">
       <ColNames>email</ColNames>
       <UnderlyingIndexName>email_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="241" parent="209" name="user_iduser_UNIQUE">
+    <key id="242" parent="209" name="user_iduser_UNIQUE">
       <ColNames>user_iduser</ColNames>
       <UnderlyingIndexName>user_iduser_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="242" parent="209" name="fk_client_user1">
+    <foreign-key id="243" parent="209" name="fk_client_user1">
       <ColNames>user_iduser</ColNames>
       <RefSchemaName>cafe</RefSchemaName>
       <RefTableName>user</RefTableName>
       <RefColNames>iduser</RefColNames>
     </foreign-key>
-    <column id="243" parent="210" name="idproduct">
+    <column id="244" parent="210" name="idproduct">
       <Position>1</Position>
       <Comment>Синтетический ключ, который играет роль уникального идентификатора каждого блюда</Comment>
       <DataType>int(10) unsigned|0</DataType>
@@ -1014,61 +1020,60 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="244" parent="210" name="name_en">
+    <column id="245" parent="210" name="name_en">
       <Position>2</Position>
       <Comment>Наименование блюда</Comment>
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="245" parent="210" name="cost">
+    <column id="246" parent="210" name="cost">
       <Position>3</Position>
       <Comment>Стоимость одной порции блюда</Comment>
       <DataType>double unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="246" parent="210" name="type">
+    <column id="247" parent="210" name="type">
       <Position>4</Position>
       <Comment>Тип блюда, т.е. первое, второе, десерт, алкогольный/безалкогольный напиток и пр.</Comment>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="247" parent="210" name="weight">
+    <column id="248" parent="210" name="weight">
       <Position>5</Position>
       <Comment>Вес одной порции блюда</Comment>
       <DataType>double unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="248" parent="210" name="image_path">
+    <column id="249" parent="210" name="image_path">
       <Position>6</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
-      <Collation>latin1_swedish_ci</Collation>
     </column>
-    <column id="249" parent="210" name="name_ru">
+    <column id="250" parent="210" name="name_ru">
       <Position>7</Position>
       <Comment>Наименование блюда</Comment>
       <DataType>varchar(70)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="250" parent="210" name="exist">
+    <column id="251" parent="210" name="exist">
       <Position>8</Position>
       <DataType>tinyint(4)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="251" parent="210" name="PRIMARY">
+    <key id="252" parent="210" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idproduct</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="252" parent="211" name="idorder">
+    <column id="253" parent="211" name="idorder">
       <Position>1</Position>
       <Comment>Синтетический ключ, который играет роль уникального идентификатора каждого заказа</Comment>
       <DataType>int(10) unsigned|0</DataType>
@@ -1076,7 +1081,7 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="253" parent="211" name="total_cost">
+    <column id="254" parent="211" name="total_cost">
       <Position>2</Position>
       <Comment>Итоговая стоимость заказа с учетом всех бонусов клиента и подсчета стоимости всех входящих в заказ блюд</Comment>
       <DataType>double|0</DataType>
@@ -1084,93 +1089,93 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="254" parent="211" name="date">
+    <column id="255" parent="211" name="date">
       <Position>3</Position>
       <Comment>Указывающаяся клиентом дата, к которой заказ должен быть готов</Comment>
       <DataType>date|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="255" parent="211" name="client_user_iduser">
+    <column id="256" parent="211" name="client_user_iduser">
       <Position>4</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="256" parent="211" name="status">
+    <column id="257" parent="211" name="status">
       <Position>5</Position>
       <DataType>tinyint(4)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="257" parent="211" name="idorder_UNIQUE">
+    <index id="258" parent="211" name="idorder_UNIQUE">
       <ColNames>idorder</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="258" parent="211" name="fk_order_client1_idx">
+    <index id="259" parent="211" name="fk_order_client1_idx">
       <ColNames>client_user_iduser</ColNames>
     </index>
-    <key id="259" parent="211" name="PRIMARY">
+    <key id="260" parent="211" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idorder</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="260" parent="211" name="idorder_UNIQUE">
+    <key id="261" parent="211" name="idorder_UNIQUE">
       <ColNames>idorder</ColNames>
       <UnderlyingIndexName>idorder_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="261" parent="211" name="fk_order_client1">
+    <foreign-key id="262" parent="211" name="fk_order_client1">
       <ColNames>client_user_iduser</ColNames>
       <RefSchemaName>cafe</RefSchemaName>
       <RefTableName>client</RefTableName>
       <RefColNames>user_iduser</RefColNames>
     </foreign-key>
-    <column id="262" parent="212" name="order_idorder">
+    <column id="263" parent="212" name="order_idorder">
       <Position>1</Position>
       <Comment>Внешний ключ, по которому заказ связывается с перечнем продуктов из меню, которые добавлены в данный заказ</Comment>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="263" parent="212" name="product_idproduct">
+    <column id="264" parent="212" name="product_idproduct">
       <Position>2</Position>
       <Comment>Внешний ключ, по которому продукты из меню связываются с заказом, в который они добавлены</Comment>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="264" parent="212" name="quantity">
+    <column id="265" parent="212" name="quantity">
       <Position>3</Position>
       <DataType>int(10) unsigned|0</DataType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="265" parent="212" name="fk_order_has_product_order1_idx">
+    <index id="266" parent="212" name="fk_order_has_product_order1_idx">
       <ColNames>order_idorder</ColNames>
     </index>
-    <index id="266" parent="212" name="fk_order_has_product_product1_idx">
+    <index id="267" parent="212" name="fk_order_has_product_product1_idx">
       <ColNames>product_idproduct</ColNames>
     </index>
-    <key id="267" parent="212" name="PRIMARY">
+    <key id="268" parent="212" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>order_idorder
 product_idproduct</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="268" parent="212" name="fk_order_has_product_order1">
+    <foreign-key id="269" parent="212" name="fk_order_has_product_order1">
       <ColNames>order_idorder</ColNames>
       <RefSchemaName>cafe</RefSchemaName>
       <RefTableName>order</RefTableName>
       <RefColNames>idorder</RefColNames>
     </foreign-key>
-    <foreign-key id="269" parent="212" name="fk_order_has_product_product1">
+    <foreign-key id="270" parent="212" name="fk_order_has_product_product1">
       <ColNames>product_idproduct</ColNames>
       <RefSchemaName>cafe</RefSchemaName>
       <RefTableName>menu</RefTableName>
       <RefColNames>idproduct</RefColNames>
     </foreign-key>
-    <column id="270" parent="213" name="idreview">
+    <column id="271" parent="213" name="idreview">
       <Position>1</Position>
       <Comment>Синтетический ключ, который играет роль уникального идентификатора каждого клиентского отзыва</Comment>
       <DataType>int(10) unsigned|0</DataType>
@@ -1178,85 +1183,85 @@ product_idproduct</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="271" parent="213" name="review_text">
+    <column id="272" parent="213" name="review_text">
       <Position>2</Position>
       <Comment>Поле, в котором клиент хранит текстовый отзыв о выполнении заказа</Comment>
       <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <column id="272" parent="213" name="mark">
+    <column id="273" parent="213" name="mark">
       <Position>3</Position>
       <Comment>Оценка, которую клиент выставляет заказу</Comment>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="273" parent="213" name="order_idorder">
+    <column id="274" parent="213" name="order_idorder">
       <Position>4</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="274" parent="213" name="fk_review_order1_idx">
+    <index id="275" parent="213" name="fk_review_order1_idx">
       <ColNames>order_idorder</ColNames>
     </index>
-    <key id="275" parent="213" name="PRIMARY">
+    <key id="276" parent="213" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idreview</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="276" parent="213" name="fk_review_order1">
+    <foreign-key id="277" parent="213" name="fk_review_order1">
       <ColNames>order_idorder</ColNames>
       <RefSchemaName>cafe</RefSchemaName>
       <RefTableName>order</RefTableName>
       <RefColNames>idorder</RefColNames>
     </foreign-key>
-    <column id="277" parent="214" name="iduser">
+    <column id="278" parent="214" name="iduser">
       <Position>1</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="214" name="login">
+    <column id="279" parent="214" name="login">
       <Position>2</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <column id="279" parent="214" name="password">
+    <column id="280" parent="214" name="password">
       <Position>3</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
       <Collation>utf8_general_ci</Collation>
     </column>
-    <column id="280" parent="214" name="role">
+    <column id="281" parent="214" name="role">
       <Position>4</Position>
       <DataType>tinyint(4)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="281" parent="214" name="iduser_UNIQUE">
+    <index id="282" parent="214" name="iduser_UNIQUE">
       <ColNames>iduser</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="282" parent="214" name="login_UNIQUE">
+    <index id="283" parent="214" name="login_UNIQUE">
       <ColNames>login</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="283" parent="214" name="PRIMARY">
+    <key id="284" parent="214" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>iduser</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="284" parent="214" name="iduser_UNIQUE">
+    <key id="285" parent="214" name="iduser_UNIQUE">
       <ColNames>iduser</ColNames>
       <UnderlyingIndexName>iduser_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="285" parent="214" name="login_UNIQUE">
+    <key id="286" parent="214" name="login_UNIQUE">
       <ColNames>login</ColNames>
       <UnderlyingIndexName>login_UNIQUE</UnderlyingIndexName>
     </key>

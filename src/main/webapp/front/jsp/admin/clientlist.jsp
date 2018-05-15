@@ -11,6 +11,7 @@
 <fmt:message bundle="${loc}" key="local.word.banned" var="banned"/>
 <fmt:message bundle="${loc}" key="local.word.ban_client" var="ban_client"/>
 <fmt:message bundle="${loc}" key="local.word.unban_client" var="unban_client"/>
+<fmt:message bundle="${loc}" key="local.word.address_word" var="address_word"/>
 
 <head>
     <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2015/bootstrap3/bootstrap.min.css"/>
@@ -88,6 +89,8 @@
                                             <div class="asker-meta">
                                                 <span class="qa-message-when-data">${login}: ${client.login}</span><br>
                                                 <span class="qa-message-when-data">${email}: ${client.email} </span><br>
+                                                <span class="qa-message-when-data">${address_word}: ${client.address} </span><br>
+
                                                 <c:choose>
                                                     <c:when test="${client.ban eq 'false'}">
                                                         <span class="qa-message-when-data">${status_word}: ${not_banned}</span>
