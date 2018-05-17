@@ -1,16 +1,12 @@
 package epam.chernova.finalproject.service.impl;
 
 
-import epam.chernova.finalproject.dao.ext.ClientDao;
 import epam.chernova.finalproject.entity.User;
 import epam.chernova.finalproject.entity.ext.Administrator;
-import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
-import epam.chernova.finalproject.exception.ValidatorException;
 import epam.chernova.finalproject.factory.DaoFactory;
 import epam.chernova.finalproject.service.AdministratorService;
-import epam.chernova.finalproject.service.ClientService;
 import epam.chernova.finalproject.util.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -117,6 +113,4 @@ public class AdministratorServiceImpl implements AdministratorService {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
-
-
 }
