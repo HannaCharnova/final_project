@@ -2,7 +2,7 @@ package epam.chernova.finalproject.service.impl;
 
 
 import epam.chernova.finalproject.entity.User;
-import epam.chernova.finalproject.entity.ext.Administrator;
+import epam.chernova.finalproject.entity.Administrator;
 import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.DaoFactory;
@@ -20,18 +20,19 @@ public class AdministratorServiceImpl implements AdministratorService {
     private static DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public Administrator signIn(String login, String password) {
-        LOGGER.log(Level.DEBUG, "Administrator Service: start SignIn");
+    public Administrator signIn(String login, String password) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Administrator Service: start SignInCommand");
+        Administrator administrator=null;
         try {
-            Validator.isNull(login, password);
-            Validator.isEmptyString(login, password);
-            Validator.matchLogin(login);
-            Validator.matchPassword(password);
-            LOGGER.log(Level.DEBUG, "Administrator Service: end SignIn");
-            return daoFactory.getAdministratorDao().signIn(login, password);
+            if (Validator.isNull(login, password) && Validator.isEmptyString(login, password) && Validator.matchLogin(login) && Validator.matchPassword(password)) {
+                administrator = daoFactory.getAdministratorDao().signIn(login, password);
+            }
         } catch (DaoException e) {
-            return null;
+            System.out.println("from service");
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+        LOGGER.log(Level.DEBUG, "Administrator Service: end SignInCommand");
+        return administrator;
     }
 
     @Override
@@ -108,7 +109,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         LOGGER.log(Level.DEBUG, "AdministratorService: Start findAdministratorByIdAndPassword");
         try {
             LOGGER.log(Level.DEBUG, "AdministratorService: Finish findAdministratorByIdAndPassword");
-            return daoFactory.getAdministratorDao().findAdministratorByIdAndPassword(idAdmin,oldPassword);
+            return daoFactory.getAdministratorDao().findAdministratorByIdAndPassword(idAdmin, oldPassword);
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }

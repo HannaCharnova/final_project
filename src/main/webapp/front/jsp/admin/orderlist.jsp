@@ -4,7 +4,7 @@
 <jsp:useBean class="epam.chernova.finalproject.entity.Order" scope="page" id="order"/>
 <jsp:useBean class="epam.chernova.finalproject.entity.Product" scope="page" id="product"/>
 <jsp:useBean class="epam.chernova.finalproject.entity.OrderProduct" scope="page" id="orderProduct"/>
-<jsp:useBean class="epam.chernova.finalproject.entity.ext.Client" scope="page" id="client"/>
+<jsp:useBean class="epam.chernova.finalproject.entity.Client" scope="page" id="client"/>
 
 <fmt:setLocale scope="session" value="${locale}"/>
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
@@ -16,6 +16,7 @@
 <fmt:message bundle="${loc}" key="local.word.open" var="open"/>
 <fmt:message bundle="${loc}" key="local.word.status_word" var="status_word"/>
 <fmt:message bundle="${loc}" key="local.word.client_word" var="client_word"/>
+<fmt:message bundle="${loc}" key="local.word.close_order_word" var="close_order_word"/>
 
 <style>
     <%@include file="/front/css/orderlist.css" %>
@@ -33,22 +34,34 @@
                     <div class="message-item">
                         <div class="message-inner">
                             <div class="message-head clearfix">
-                                    <%--<form action="/epam.by/pay_for_order?idOrder=${order.idOrder}" method="post">--%>
                                 <div class="user-detail">
+
+
                                     <h5 class="handle">${order_word} ${order.idOrder} </h5>
+
                                     <c:forEach var="client" items="${clients}">
-                                        <c:choose>
-                                            <c:when test="${order.idClient==client.idUser}">
-                                                <h5 class="handle">${client_word} :${client.surname} ${client.name}</h5>
-                                            </c:when>
-                                        </c:choose>
+                                        <form action="/epam.by/close_order?idOrder=${order.idOrder}&idClient=${client.idUser}"
+                                              method="post">
+                                            <c:choose>
+                                                <c:when test="${order.idClient==client.idUser}">
+                                                    <h5 class="handle">${client_word}
+                                                        :${client.surname} ${client.name}</h5>
+                                                    <c:if test="${order.status eq 'true'}">
+                                                        <button type="submit" id="delete-admin-button" class="btn-right"
+                                                                class="btn btn-default">${close_order_word}</button>
+                                                    </c:if>
+                                                </c:when>
+                                            </c:choose>
+                                        </form>
                                     </c:forEach>
+
+
                                     <c:choose>
                                         <c:when test="${order.status eq 'true'}">
-                                            <h5 class="handle">${status_word}: ${has_been_paid} </h5>
+                                            <h5 class="handle">${status_word}: ${open} </h5>
                                         </c:when>
                                         <c:otherwise>
-                                            <h5 class="handle">${status_word}: ${open} </h5>
+                                            <h5 class="handle">${status_word}: ${has_been_paid} </h5>
                                         </c:otherwise>
                                     </c:choose>
 
@@ -66,8 +79,8 @@
  </span>
                                         </div>
                                     </div>
+
                                 </div>
-                                    <%--</form>--%>
                             </div>
 
                             <div class="qa-message-content">

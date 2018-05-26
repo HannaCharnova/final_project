@@ -13,14 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class DeleteAccount implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(DeleteAccount.class);
+public class DeleteAccountCommand implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(DeleteAccountCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command:Start DeleteAccount");
+        LOGGER.log(Level.INFO, "Command:Start DeleteAccountCommand");
         int idAccount;
         try {
             idAccount = Integer.parseInt(request.getParameter("idAccount"));
@@ -31,7 +31,7 @@ public class DeleteAccount implements ICommand {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
             pageName = PageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Command:Finish DeleteAccount");
+        LOGGER.log(Level.INFO, "Command:Finish DeleteAccountCommand");
         return pageName.getPath();
     }
 

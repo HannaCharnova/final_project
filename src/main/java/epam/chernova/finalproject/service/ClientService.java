@@ -1,6 +1,6 @@
 package epam.chernova.finalproject.service;
 
-import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.entity.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public interface ClientService {
 
     Client signUp(String login, String password, String name, String surname, String email,String address) throws ServiceException;
 
-    Client findClientByLogin(String login);
+    Client findClientByLogin(String login) throws ServiceException;
 
     Client findClientByEmail(String email) throws ServiceException;
 

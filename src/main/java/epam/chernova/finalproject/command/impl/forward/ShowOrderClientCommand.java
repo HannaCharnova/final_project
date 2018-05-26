@@ -4,7 +4,7 @@ import epam.chernova.finalproject.command.ICommand;
 import epam.chernova.finalproject.entity.Order;
 import epam.chernova.finalproject.entity.OrderProduct;
 import epam.chernova.finalproject.entity.Product;
-import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.entity.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.util.SessionElements;
@@ -17,19 +17,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowClient implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(ShowClient.class);
+public class ShowOrderClientCommand implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(ShowOrderClientCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private PageName pageName = PageName.CLIENTS;
+    private PageName pageName = PageName.ORDERS;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command: ShowClient started.");
+        LOGGER.log(Level.INFO, "Command: ShowOrderClientCommand started.");
         try {
-            List<Client> clients = serviceFactory.getClientService().findAllClients();
-            request.setAttribute("clients", clients);
-            System.out.println(request.getAttribute("clients"));
-            request.getSession().setAttribute("pageCommand", PageNameRedirect.CLIENTS.getPath());
+            int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
+            List<Order> orders = serviceFactory.getOrderService().findAllOrdersByClientId(idClient);
+            List<OrderProduct> orderProducts = serviceFactory.getOrderProductService().findOrderProductsByClientId(idClient);
+            List<Product> products = serviceFactory.getProductService().findAllProducts();
+            request.setAttribute("orders", orders);
+            request.setAttribute("order_products",orderProducts);
+            request.setAttribute("products", products);
+            request.getSession().setAttribute("pageCommand", PageNameRedirect.ORDERS_CLIENT.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
             rewrite(request);
         } catch (ServiceException e) {
@@ -37,7 +41,7 @@ public class ShowClient implements ICommand {
             pageName = pageName.ERROR;
         }
 
-        LOGGER.log(Level.INFO, "Command: ShowClient finished.");
+        LOGGER.log(Level.INFO, "Command: ShowOrderClientCommand finished.");
         return pageName.getPath();
 
     }

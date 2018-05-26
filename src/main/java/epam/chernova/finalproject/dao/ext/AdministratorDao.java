@@ -3,8 +3,8 @@ package epam.chernova.finalproject.dao.ext;
 import epam.chernova.finalproject.connectionpool.ConnectionPool;
 import epam.chernova.finalproject.dao.IAdministratorDao;
 import epam.chernova.finalproject.entity.User;
-import epam.chernova.finalproject.entity.ext.Administrator;
-import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.entity.Administrator;
+import epam.chernova.finalproject.exception.ConnectionPoolException;
 import epam.chernova.finalproject.exception.DaoException;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -27,77 +27,77 @@ public class AdministratorDao implements IAdministratorDao {
     private static final String ADD_ADMIN = "INSERT INTO cafe.admin (user_iduser,is_main) VALUES (?,?)";
     private static final String CHANGE_PASSWORD = "UPDATE cafe.user SET cafe.user.password = ? WHERE cafe.user.iduser = ?";
     private static final String FIND_BY_ID = "SELECT * FROM admin JOIN user ON admin.user_iduser=user.iduser WHERE user.iduser =?";
-    private ConnectionPool connectionPool = ConnectionPool.getInstance();
+    private ConnectionPool connectionPool;
+    private Connection connection;
+    private ResultSet resultSet;
+    private PreparedStatement statement;
 
 
     @Override
     public Administrator signIn(String login, String password) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Client Dao: start SignIn");
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
+        LOGGER.log(Level.DEBUG, "Administrator Dao: start signIn");
         Administrator administrator = null;
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD);
             statement.setString(1, login);
             statement.setString(2, password);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
-                administrator = new Administrator();
-                administrator.setIdUser(resultSet.getInt("user_iduser"));
-                administrator.setLogin(resultSet.getString("user.login"));
-                administrator.setPassword(resultSet.getString("user.password"));
-                administrator.setMain(resultSet.getBoolean("is_main"));
+                administrator = createAdminByResultSet(resultSet);
             }
-        } catch (SQLException e) {
-            throw new DaoException("Exception while executing SQL query", e);
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
-            connectionPool.putBack(connection, resultSet, statement);
+            LOGGER.log(Level.DEBUG, "Administrator Dao: finish signIn");
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
-        LOGGER.log(Level.DEBUG, "Administrator Dao: finish SignIn");
         return administrator;
     }
 
     @Override
     public Administrator findAdministratorByLogin(String login) throws DaoException {
         LOGGER.log(Level.DEBUG, "AdministratorDao: start findAdministratorByLogin");
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
+        Administrator administrator = null;
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(FIND_ADMIN_BY_LOGIN);
             statement.setString(1, login);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
-                return createAdminByResultSet(resultSet);
+                administrator = createAdminByResultSet(resultSet);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "AdministratorDao: finish findAdministratorByLogin");
-            connectionPool.putBack(connection, resultSet, statement);
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
-        return null;
+        return administrator;
     }
 
     @Override
     public List<Administrator> findAllAdministrators() throws DaoException {
         LOGGER.log(Level.DEBUG, "Administrator DAO: start findAllAdministrators");
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
         List<Administrator> administrators = new ArrayList<>();
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(FIND_ALL_ADMINS);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 administrators.add(createAdminByResultSet(resultSet));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "Administrator DAO: finish findAllAdministrators");
-            connectionPool.putBack(connection, resultSet, statement);
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
         return administrators;
 
@@ -105,79 +105,76 @@ public class AdministratorDao implements IAdministratorDao {
 
     @Override
     public void deleteAdministrator(int idAdmin) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
         LOGGER.log(Level.DEBUG, "Administrator DAO: start deleteAdministrator");
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(DELETE_ADMIN);
             statement.setInt(1, idAdmin);
             if (statement.executeUpdate() != 0) {
                 return;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "Administrator DAO: finish deleteAdministrator");
-            connectionPool.putBack(connection, resultSet, statement);
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
-
     }
 
 
     @Override
     public void deleteUser(int idAdmin) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
         LOGGER.log(Level.DEBUG, "Administrator DAO: start deleteUser");
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(DELETE_USER);
             statement.setInt(1, idAdmin);
             if (statement.executeUpdate() != 0) {
                 return;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "Administrator DAO: finish deleteUser");
-            connectionPool.putBack(connection, resultSet, statement);
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
 
     }
 
     @Override
     public User addUser(String login, String password) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
         LOGGER.log(Level.DEBUG, "Administrator DAO: start addUser");
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(ADD_USER);
             statement.setString(1, login);
             statement.setString(2, password);
             statement.setInt(3, 1);
             if (statement.executeUpdate() != 0) {
-                System.out.println(findUserByLogin(login));
                 return findUserByLogin(login);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "Administrator DAO: finish addUser");
-            connectionPool.putBack(connection, resultSet, statement);
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
         return null;
-
     }
 
     @Override
     public User findUserByLogin(String login) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
+        LOGGER.log(Level.DEBUG, "Administrator DAO: start findUserByLogin");
         User user = null;
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(FIND_USER_BY_LOGIN);
             statement.setString(1, login);
             resultSet = statement.executeQuery();
@@ -189,10 +186,12 @@ public class AdministratorDao implements IAdministratorDao {
                 user.setRole(resultSet.getBoolean("role"));
                 System.out.println(user);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
-            connectionPool.putBack(connection, resultSet, statement);
+            LOGGER.log(Level.DEBUG, "Administrator DAO: finish findUserByLogin");
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
         return user;
     }
@@ -200,22 +199,21 @@ public class AdministratorDao implements IAdministratorDao {
     @Override
     public Administrator changePassword(int idAdmin, String password) throws DaoException {
         LOGGER.log(Level.DEBUG, "Administrator DAO: start changePassword");
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(CHANGE_PASSWORD);
             statement.setString(1, password);
             statement.setInt(2, idAdmin);
             if (statement.executeUpdate() != 0) {
-                System.out.println(findAdministratorById(idAdmin));
                 return findAdministratorById(idAdmin);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "Administrator DAO: finish changePassword");
-            connectionPool.putBack(connection, resultSet, statement);
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
         return null;
 
@@ -225,22 +223,22 @@ public class AdministratorDao implements IAdministratorDao {
     public Administrator findAdministratorById(int idAdmin) throws DaoException {
         LOGGER.log(Level.DEBUG, "Administrator DAO: start findAdministratorById");
         Administrator administrator = null;
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(FIND_BY_ID);
             statement.setInt(1, idAdmin);
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
                 administrator = createAdminByResultSet(resultSet);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
-            connectionPool.putBack(connection, resultSet, statement);
+            LOGGER.log(Level.DEBUG, "Administrator DAO: finish findAdministratorById");
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
-        LOGGER.log(Level.DEBUG, "Administrator DAO: finish findAdministratorById");
         return administrator;
 
     }
@@ -249,10 +247,9 @@ public class AdministratorDao implements IAdministratorDao {
     public Administrator findAdministratorByIdAndPassword(int idAdmin, String oldPassword) throws DaoException {
         LOGGER.log(Level.DEBUG, "Administrator DAO: start findAdministratorByIdAndPassword");
         Administrator administrator = null;
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(FIND_BY_ID_AND_PASSWORD);
             statement.setInt(1, idAdmin);
             statement.setString(2, oldPassword);
@@ -260,23 +257,23 @@ public class AdministratorDao implements IAdministratorDao {
             if (resultSet.first()) {
                 administrator = createAdminByResultSet(resultSet);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         } finally {
-            connectionPool.putBack(connection, resultSet, statement);
+            LOGGER.log(Level.DEBUG, "Administrator DAO: finish findAdministratorByIdAndPassword");
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
-        LOGGER.log(Level.DEBUG, "Administrator DAO: finish findAdministratorByIdAndPassword");
         return administrator;
     }
 
 
     @Override
-    public Administrator addAdministrator(int idUser,String login) throws DaoException {
-        Connection connection = connectionPool.getConnection();
-        ResultSet resultSet = null;
-        PreparedStatement statement = null;
+    public Administrator addAdministrator(int idUser, String login) throws DaoException {
         LOGGER.log(Level.DEBUG, "Administrator DAO: start addAdministrator");
         try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(ADD_ADMIN);
             statement.setInt(1, idUser);
             statement.setInt(2, 0);
@@ -284,11 +281,12 @@ public class AdministratorDao implements IAdministratorDao {
                 System.out.println(findAdministratorByLogin(login));
                 return findAdministratorByLogin(login);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while client executing SQL query", e);
         } finally {
             LOGGER.log(Level.DEBUG, "Administrator DAO: finish addAdministrator");
-            connectionPool.putBack(connection, resultSet, statement);
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
         }
         return null;
 
@@ -304,28 +302,8 @@ public class AdministratorDao implements IAdministratorDao {
             administrator.setMain(resultSet.getBoolean("is_main"));
             administrator.setRole(resultSet.getBoolean("user.role"));
         } catch (SQLException e) {
-            throw new DaoException("Exception while executing SQL query",e);
+            throw new DaoException("Exception while executing SQL query", e);
         }
         return administrator;
-    }
-
-
-
-    @Override
-    public void close(ResultSet resultSet, Statement statement) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (statement != null) {
-            try {
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
     }
 }

@@ -1,7 +1,6 @@
 package epam.chernova.finalproject.command.impl.redirect;
 
 import epam.chernova.finalproject.command.ICommand;
-import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.util.SessionElements;
@@ -14,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class RemoveBasketProduct implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(RemoveBasketProduct.class);
+public class RemoveBasketProductCommand implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(RemoveBasketProductCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 

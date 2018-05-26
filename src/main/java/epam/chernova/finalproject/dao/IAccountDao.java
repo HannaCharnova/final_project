@@ -13,6 +13,8 @@ public interface IAccountDao extends AbstractDao {
 
     void payOrder(int idClient, double totalCost) throws DaoException;
 
+    void payPartOrder(int idClient) throws DaoException;
+
     void deleteAccount(int idAccount) throws DaoException;
 
     Account findAccountByNumber(String accountNumber) throws DaoException;

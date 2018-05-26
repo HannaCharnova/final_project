@@ -1,11 +1,7 @@
 package epam.chernova.finalproject.command.impl.forward;
 
 import epam.chernova.finalproject.command.ICommand;
-import epam.chernova.finalproject.entity.Account;
-import epam.chernova.finalproject.entity.Order;
-import epam.chernova.finalproject.entity.OrderProduct;
-import epam.chernova.finalproject.entity.Product;
-import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.entity.Administrator;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.util.SessionElements;
@@ -18,27 +14,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ClientProfile implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(ClientProfile.class);
+public class ShowAdminCommand implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(ShowAdminCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private PageName pageName = PageName.PROFILE;
+    private PageName pageName = PageName.ADMINS;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command: ClientProfile started.");
+        LOGGER.log(Level.INFO, "Command: ShowAdminCommand started.");
         try {
-            int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
-            Account account = serviceFactory.getAccountService().findAccountByClientId(idClient);
-            request.setAttribute("account", account);
-            System.out.println((Account)request.getAttribute("account"));
-            request.getSession().setAttribute("pageCommand", PageNameRedirect.PROFILE.getPath());
+            List<Administrator> administrators = serviceFactory.getAdministratorService().findAllAdministrators();
+            request.setAttribute("admins", administrators);
+
+            System.out.println(request.getAttribute("admins"));
+            request.getSession().setAttribute("pageCommand", PageNameRedirect.ADMINS.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
             rewrite(request);
         } catch (ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             pageName = pageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Command: ClientProfile finished.");
+        LOGGER.log(Level.INFO, "Command: ShowAdminCommand finished.");
         return pageName.getPath();
 
     }

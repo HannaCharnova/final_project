@@ -1,12 +1,9 @@
 package epam.chernova.finalproject.command.impl.redirect;
 
 import epam.chernova.finalproject.command.ICommand;
-import epam.chernova.finalproject.entity.Product;
-import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.service.AdministratorService;
 import epam.chernova.finalproject.service.ClientService;
-import epam.chernova.finalproject.service.ProductService;
 import epam.chernova.finalproject.util.SessionElements;
 import epam.chernova.finalproject.webenum.PageName;
 import org.apache.log4j.Level;
@@ -16,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-public class AddAdmin implements ICommand {
+public class AddAdminCommand implements ICommand {
 
-    private static final Logger LOGGER = Logger.getLogger(AddAdmin.class);
+    private static final Logger LOGGER = Logger.getLogger(AddAdminCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 

@@ -5,9 +5,7 @@ public enum DBparameter {
     USER("db.user"),
     PASSWORD("db.password"),
     URL("db.url"),
-    POOL_SIZE("db.poolsize"),
-    WAITING_TIME("db.waitingtime");
-
+    POOL_SIZE("db.poolsize");
     private String value;
 
     DBparameter(String value) {

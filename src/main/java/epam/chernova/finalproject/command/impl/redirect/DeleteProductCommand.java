@@ -13,34 +13,38 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class DeleteAdmin implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(DeleteAdmin.class);
+public class DeleteProductCommand implements ICommand {
+
+    private static final Logger LOGGER = Logger.getLogger(DeleteProductCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command:Start DeleteAdmin");
-        int idAdmin;
+        LOGGER.log(Level.INFO, "Command:Start delete product");
+        int idProduct;
         try {
-            idAdmin = Integer.parseInt(request.getParameter("idAdmin"));
-            serviceFactory.getAdministratorService().deleteAdministrator(idAdmin);
-            diagnoseDeleteAdmin(request);
+            idProduct = Integer.parseInt(request.getParameter("idProduct"));
+            if (serviceFactory.getOrderProductService().checkActiveOrderProduct(idProduct)) {
+                diagnoseDeleteError(request);
+            } else {
+                serviceFactory.getProductService().deleteProduct(idProduct);
+            }
             response.sendRedirect(SessionElements.getPageCommand(request));
         } catch (IOException |
                 ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
             pageName = PageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Command:Finish DeleteAdmin");
+        LOGGER.log(Level.INFO, "Command:Finish delete product");
         return pageName.getPath();
     }
 
-    private static void diagnoseDeleteAdmin(HttpServletRequest request) {
+    private static void diagnoseDeleteError(HttpServletRequest request) {
         if (request.getSession().getAttribute("locale").equals("ru")) {
-            request.getSession().setAttribute("error_data", "Администратор удален.");
+            request.getSession().setAttribute("error_data", "Данный продукт присутствует в открытом заказе одного из клиентов. Удаление невозможно.");
         } else {
-            request.getSession().setAttribute("error_data", "Administrator has been deleted.");
+            request.getSession().setAttribute("error_data", "This product exist in the active client's order. It's impossible to delete this product now.");
         }
     }
 

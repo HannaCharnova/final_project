@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class SignOut implements ICommand {
+public class SignOutCommand implements ICommand {
 
-    private static final Logger LOGGER = Logger.getLogger(SignOut.class);
+    private static final Logger LOGGER = Logger.getLogger(SignOutCommand.class);
     private PageName jspPageName = PageName.ERROR;
 
     @Override

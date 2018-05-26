@@ -1,8 +1,7 @@
 package epam.chernova.finalproject.command.impl.redirect;
 
 import epam.chernova.finalproject.command.ICommand;
-import epam.chernova.finalproject.entity.ext.Administrator;
-import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.entity.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.util.SessionElements;
@@ -12,17 +11,16 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-public class EditProfile implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(EditProfile.class);
+public class EditProfileCommand implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(EditProfileCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command:Start EditProfile");
+        LOGGER.log(Level.INFO, "Command:Start EditProfileCommand");
         Client client = null;
         String email = request.getParameter("email");
         String name = request.getParameter("name");
@@ -49,7 +47,7 @@ public class EditProfile implements ICommand {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
             pageName = PageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Command:Finish EditProfile");
+        LOGGER.log(Level.INFO, "Command:Finish EditProfileCommand");
         return pageName.getPath();
     }
 

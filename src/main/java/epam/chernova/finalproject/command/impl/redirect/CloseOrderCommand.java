@@ -2,7 +2,7 @@ package epam.chernova.finalproject.command.impl.redirect;
 
 import epam.chernova.finalproject.command.ICommand;
 import epam.chernova.finalproject.entity.Account;
-import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.entity.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.util.SessionElements;
@@ -15,22 +15,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class PayOrder implements ICommand {
+public class CloseOrderCommand implements ICommand {
 
-    private static final Logger LOGGER = Logger.getLogger(PayOrder.class);
+    private static final Logger LOGGER = Logger.getLogger(CloseOrderCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.ORDERS;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command:Start pay order");
-        int idClient, idOrder;
+        LOGGER.log(Level.INFO, "Command:Start CloseOrderCommand");
+        int idOrder,idClient;
         double totalCost;
         Account account;
         try {
             idOrder = Integer.parseInt(request.getParameter("idOrder"));
+            idClient = Integer.parseInt(request.getParameter("idClient"));
+            System.out.println(idClient+" "+idOrder);
             totalCost = (serviceFactory.getOrderService().findOrderByOrderId(idOrder)).getTotalCost();
-            idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
             if (totalCost != 0) {
                 if (serviceFactory.getAccountService().findAccountByClientId(idClient) != null) {
                     account = serviceFactory.getAccountService().findAccountByClientId(idClient);
@@ -39,32 +40,32 @@ public class PayOrder implements ICommand {
                         serviceFactory.getOrderService().payOrder(idOrder);
                         diagnoseSuccessfulPayment(request);
                     } else {
-                        diagnoseLackOfMoney(request);
-                    }
+                        serviceFactory.getAccountService().payPartOrder(idClient);
+                        serviceFactory.getOrderService().payOrder(idOrder);
 
+                        diagnosePartPayment(request);
+                    }
                 } else {
-                    diagnoseNoAccount(request);
+                    serviceFactory.getOrderService().payOrder(idOrder);
+                    diagnosePaymentByCash(request);
                 }
             } else {
                 diagnoseEmptyOrder(request);
             }
             response.sendRedirect(SessionElements.getPageCommand(request));
-        } catch (IOException |
-                ServiceException e)
-
-        {
+        } catch (IOException | ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
             pageName = PageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Command:Finish pay order");
+        LOGGER.log(Level.INFO, "Command:Finish CloseOrderCommand");
         return pageName.getPath();
     }
 
-    private static void diagnoseLackOfMoney(HttpServletRequest request) {
+    private static void diagnosePartPayment(HttpServletRequest request) {
         if (request.getSession().getAttribute("locale").equals("ru")) {
-            request.getSession().setAttribute("error_data", "На вашем счету недостаточно средств для оплаты заказа. Пополните счет либо оплатите заказ наличными.");
+            request.getSession().setAttribute("error_data", "Заказ оплачен наличным и безналичным расчетом.");
         } else {
-            request.getSession().setAttribute("error_data", "There is no enough money on your account for paying for this order. Replenish your account or pay in cash.");
+            request.getSession().setAttribute("error_data", "The order was paid by cash and by card.");
         }
     }
 
@@ -76,19 +77,19 @@ public class PayOrder implements ICommand {
         }
     }
 
-    private static void diagnoseNoAccount(HttpServletRequest request) {
+    private static void diagnosePaymentByCash(HttpServletRequest request) {
         if (request.getSession().getAttribute("locale").equals("ru")) {
-            request.getSession().setAttribute("error_data", "У вас нет счета. Зарегистрируйте его в личном кабинете либо оплатите заказ наличными.");
+            request.getSession().setAttribute("error_data", "Заказ оплачен наличными и закрыт.");
         } else {
-            request.getSession().setAttribute("error_data", "You havn't got the account. Register the account in your profile or pay in cash .");
+            request.getSession().setAttribute("error_data", "The order was paid by cash and closed.");
         }
     }
 
     private static void diagnoseSuccessfulPayment(HttpServletRequest request) {
         if (request.getSession().getAttribute("locale").equals("ru")) {
-            request.getSession().setAttribute("error_data", "Заказ успешно зарегистрирован. Доставка будет осуществлена в течение часа");
+            request.getSession().setAttribute("error_data", "Заказ успешно оплачен и закрыт.");
         } else {
-            request.getSession().setAttribute("error_data", "Your order was successfully registered. Delivery will be done during an hour.");
+            request.getSession().setAttribute("error_data", "Order was successfully paid and closed.");
         }
     }
 

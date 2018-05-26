@@ -2,12 +2,9 @@ package epam.chernova.finalproject.service.impl;
 
 
 import epam.chernova.finalproject.entity.Product;
-import epam.chernova.finalproject.entity.ext.Administrator;
-import epam.chernova.finalproject.entity.ext.Client;
 import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.DaoFactory;
-import epam.chernova.finalproject.service.AdministratorService;
 import epam.chernova.finalproject.service.ProductService;
 import epam.chernova.finalproject.util.Validator;
 import org.apache.log4j.Level;

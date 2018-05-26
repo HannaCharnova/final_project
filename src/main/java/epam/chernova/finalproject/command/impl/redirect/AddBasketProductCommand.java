@@ -1,8 +1,7 @@
 package epam.chernova.finalproject.command.impl.redirect;
 
 import epam.chernova.finalproject.command.ICommand;
-import epam.chernova.finalproject.entity.ext.Client;
-import epam.chernova.finalproject.exception.DaoException;
+import epam.chernova.finalproject.entity.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.util.SessionElements;
@@ -13,12 +12,11 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 
-public class AddBasketProduct implements ICommand {
+public class AddBasketProductCommand implements ICommand {
 
-    private static final Logger LOGGER = Logger.getLogger(AddBasketProduct.class);
+    private static final Logger LOGGER = Logger.getLogger(AddBasketProductCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 

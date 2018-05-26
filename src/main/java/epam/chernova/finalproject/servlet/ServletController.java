@@ -2,8 +2,11 @@ package epam.chernova.finalproject.servlet;
 
 
 import epam.chernova.finalproject.command.CommandProvider;
+import epam.chernova.finalproject.command.ICloseDBCommand;
 import epam.chernova.finalproject.command.ICommand;
+import epam.chernova.finalproject.command.impl.CloseDBCommand;
 import epam.chernova.finalproject.connectionpool.ConnectionPool;
+import epam.chernova.finalproject.exception.ConnectionPoolException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -19,13 +22,19 @@ import java.io.IOException;
         urlPatterns = "/epam.by/*")
 
 public class ServletController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
     private final static Logger LOGGER = Logger.getLogger(ServletController.class);
     private final static CommandProvider commandProvider = CommandProvider.getInstance();
     private static ConnectionPool connectionPool;
 
     @Override
     public void init() {
-//        connectionPool = ConnectionPool.getInstance();
+//        try {
+//            connectionPool = ConnectionPool.getInstance();
+//        }catch (ConnectionPoolException e) {
+//            LOGGER.log(Level.FATAL, "Error while initializing ConnectionPool");
+//            throw new RuntimeException();
+//        }
     }
 
     @Override
@@ -50,6 +59,7 @@ public class ServletController extends HttpServlet {
 
     @Override
     public void destroy() {
-
+        ICloseDBCommand command = new CloseDBCommand();
+        command.closeDB();
     }
 }

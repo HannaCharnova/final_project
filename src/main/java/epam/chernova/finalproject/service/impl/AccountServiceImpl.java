@@ -43,6 +43,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public void payPartOrder(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "AccountService: Start payPartOrder");
+        try {
+            daoFactory.getAccountDao().payPartOrder(idClient);
+            LOGGER.log(Level.DEBUG, "AccountService: Finish payPartOrder");
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+    @Override
     public void deleteAccount(int idAccount) throws ServiceException {
         LOGGER.log(Level.DEBUG, "AccountService: Start deleteAccount");
         try {

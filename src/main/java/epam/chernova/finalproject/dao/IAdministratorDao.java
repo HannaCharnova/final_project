@@ -1,10 +1,8 @@
 package epam.chernova.finalproject.dao;
 
 import epam.chernova.finalproject.entity.User;
-import epam.chernova.finalproject.entity.ext.Administrator;
-import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.entity.Administrator;
 import epam.chernova.finalproject.exception.DaoException;
-import epam.chernova.finalproject.exception.ServiceException;
 
 import java.util.List;
 

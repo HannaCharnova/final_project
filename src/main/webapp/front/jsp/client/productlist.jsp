@@ -12,7 +12,7 @@
     <%@include file="/front/css/productlist.css" %>
 </style>
 
-<div class="container">
+<div class="order-container">
     <div class="row">
 
         <c:choose>

@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ChangeLocale implements ICommand{
-    private static final Logger LOGGER = Logger.getLogger(ChangeLocale.class);
+public class ChangeLocaleCommand implements ICommand{
+    private static final Logger LOGGER = Logger.getLogger(ChangeLocaleCommand.class);
     private PageName pageName = PageName.INDEX;
 
 

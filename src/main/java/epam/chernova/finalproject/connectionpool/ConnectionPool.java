@@ -1,38 +1,36 @@
 package epam.chernova.finalproject.connectionpool;
 
+import epam.chernova.finalproject.exception.ConnectionPoolException;
 import epam.chernova.finalproject.webenum.DBparameter;
 import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.MissingResourceException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class ConnectionPool {
+public class ConnectionPool implements ICloseConnectionPool {
+    private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
     private static ConnectionPool instance;
     private static AtomicBoolean instanceCreated = new AtomicBoolean();
     private static Lock instanceLock = new ReentrantLock();
-    private static Lock connectionLock = new ReentrantLock();
 
     private BlockingQueue<Connection> connections;
     private BlockingQueue<Connection> givenConnections;
-    private int waitingTime;
 
 
-    private ConnectionPool() {
-        DBResourceManager dbResourceManager = DBResourceManager.getInstance();
-        String driver = dbResourceManager.getValue(DBparameter.DRIVER.getValue());
-        String user = dbResourceManager.getValue(DBparameter.USER.getValue());
-        String url = dbResourceManager.getValue(DBparameter.URL.getValue());
-        String password = dbResourceManager.getValue(DBparameter.PASSWORD.getValue());
+    private ConnectionPool() throws ConnectionPoolException {
         try {
+            DBResourceManager dbResourceManager = DBResourceManager.getInstance();
+            String driver = dbResourceManager.getValue(DBparameter.DRIVER.getValue());
+            String user = dbResourceManager.getValue(DBparameter.USER.getValue());
+            String url = dbResourceManager.getValue(DBparameter.URL.getValue());
+            String password = dbResourceManager.getValue(DBparameter.PASSWORD.getValue());
             int poolSize = Integer.parseInt(dbResourceManager.getValue(DBparameter.POOL_SIZE.getValue()));
-            waitingTime = Integer.parseInt(dbResourceManager.getValue(DBparameter.WAITING_TIME.getValue()));
             Class.forName(driver);
             connections = new ArrayBlockingQueue<>(poolSize);
             givenConnections = new ArrayBlockingQueue<>(poolSize);
@@ -40,13 +38,17 @@ public class ConnectionPool {
                 connections.add(DriverManager.getConnection(url, user, password));
             }
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.FATAL, "Driver load exception: " + e);
+            throw new ConnectionPoolException("Driver load exception: " + e);
+        } catch (MissingResourceException e) {
+            LOGGER.log(Level.FATAL, "Error of upload config: " + e);
+            throw new ConnectionPoolException("Error of upload config: " + e);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new ConnectionPoolException("Error of upload config: " + e);
         }
     }
 
-    public static ConnectionPool getInstance() {
+    public static ConnectionPool getInstance() throws ConnectionPoolException {
         if (!instanceCreated.get()) {
             try {
                 instanceLock.lock();
@@ -64,20 +66,16 @@ public class ConnectionPool {
     public Connection getConnection() {
         Connection connection;
         try {
-            if (connectionLock.tryLock(waitingTime, TimeUnit.SECONDS)) {
-                connection = connections.poll();
-                givenConnections.add(connection);
-                return connection;
-            }
+            connection = connections.take();
+            givenConnections.add(connection);
+            return connection;
         } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            connectionLock.unlock();
+            Thread.currentThread().interrupt();
         }
         return null;
     }
 
-    public void putBack(Connection connection, ResultSet resultSet, Statement statement) {
+    public void putBackConnection(Connection connection) {
         if (connection != null) {
             connections.add(connection);
             givenConnections.remove(connection);
@@ -86,20 +84,12 @@ public class ConnectionPool {
     }
 
     public void releasePool() {
-        while (!givenConnections.isEmpty()) {
-            try {
-                Connection connection = givenConnections.take();
-                connection.close();
-            } catch (InterruptedException | SQLException e) {
-                e.printStackTrace();
-            }
-        }
         while (!connections.isEmpty()) {
             try {
                 Connection connection = connections.take();
                 connection.close();
             } catch (InterruptedException | SQLException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.ERROR, "Can't close connection" + e);
             }
         }
     }

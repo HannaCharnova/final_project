@@ -2,24 +2,20 @@ package epam.chernova.finalproject.command.impl.redirect;
 
 import epam.chernova.finalproject.command.ICommand;
 import epam.chernova.finalproject.entity.Product;
-import epam.chernova.finalproject.entity.ext.Client;
-import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.service.ProductService;
 import epam.chernova.finalproject.util.SessionElements;
 import epam.chernova.finalproject.webenum.PageName;
-import epam.chernova.finalproject.webenum.PageNameRedirect;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 
-public class AddProduct implements ICommand {
+public class AddProductCommand implements ICommand {
 
-    private static final Logger LOGGER = Logger.getLogger(AddProduct.class);
+    private static final Logger LOGGER = Logger.getLogger(AddProductCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 

@@ -13,15 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class BanClient implements ICommand {
+public class BanClientCommand implements ICommand {
 
-    private static final Logger LOGGER = Logger.getLogger(BanClient.class);
+    private static final Logger LOGGER = Logger.getLogger(BanClientCommand.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private PageName pageName = PageName.INDEX;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command:Start BanClient");
+        LOGGER.log(Level.INFO, "Command:Start BanClientCommand");
         int idClient;
         try {
             idClient = Integer.parseInt(request.getParameter("idClient"));
@@ -38,7 +38,7 @@ public class BanClient implements ICommand {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
             pageName = PageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Command:Finish BanClient");
+        LOGGER.log(Level.INFO, "Command:Finish BanClientCommand");
         return pageName.getPath();
     }
 

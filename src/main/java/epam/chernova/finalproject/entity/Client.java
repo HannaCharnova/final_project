@@ -1,6 +1,4 @@
-package epam.chernova.finalproject.entity.ext;
-
-import epam.chernova.finalproject.entity.User;
+package epam.chernova.finalproject.entity;
 
 import java.io.Serializable;
 import java.util.Objects;

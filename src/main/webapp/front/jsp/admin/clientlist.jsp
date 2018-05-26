@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean class="epam.chernova.finalproject.entity.ext.Client" scope="page" id="client"/>
+<jsp:useBean class="epam.chernova.finalproject.entity.Client" scope="page" id="client"/>
 <fmt:setLocale scope="session" value="${locale}"/>
 <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
 <fmt:message bundle="${loc}" key="local.word.email" var="email"/>

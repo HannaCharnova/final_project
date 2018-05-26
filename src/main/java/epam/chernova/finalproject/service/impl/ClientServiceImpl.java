@@ -3,7 +3,7 @@ package epam.chernova.finalproject.service.impl;
 
 import epam.chernova.finalproject.dao.ext.ClientDao;
 import epam.chernova.finalproject.entity.User;
-import epam.chernova.finalproject.entity.ext.Client;
+import epam.chernova.finalproject.entity.Client;
 import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.DaoFactory;
@@ -22,7 +22,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client signIn(String login, String password) throws ServiceException {
-        LOGGER.log(Level.DEBUG, "Client Service: start SignIn");
+        LOGGER.log(Level.DEBUG, "Client Service: start SignInCommand");
         Client client = null;
         try {
             if (Validator.isNull(login, password) && Validator.isEmptyString(login, password) && Validator.matchLogin(login) && Validator.matchPassword(password)) {
@@ -31,7 +31,7 @@ public class ClientServiceImpl implements ClientService {
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Client Service: end SignIn");
+        LOGGER.log(Level.DEBUG, "Client Service: end SignInCommand");
         return client;
     }
 
@@ -53,18 +53,18 @@ public class ClientServiceImpl implements ClientService {
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Client Service: finish SignUp");
+        LOGGER.log(Level.DEBUG, "Client Service: finish SignUpCommand");
         return client;
     }
 
     @Override
-    public Client findClientByLogin(String login) {
+    public Client findClientByLogin(String login) throws ServiceException {
         ClientDao clientDao = daoFactory.getClientDao();
         Client client = null;
         try {
             client = clientDao.findClientByLogin(login);
         } catch (DaoException e) {
-            LOGGER.log(Level.ERROR, "");
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
         return client;
     }

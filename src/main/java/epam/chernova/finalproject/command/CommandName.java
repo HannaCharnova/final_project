@@ -1,29 +1,41 @@
 package epam.chernova.finalproject.command;
 
 public enum CommandName {
-    WRONG_REQUEST,
-    SIGN_IN,
-    SIGN_UP,
-    INDEX,
-    CHANGE_LOCALE,
-    FIND_BY_TYPE,
-    SIGN_OUT,
-    ADD_PRODUCT_BASKET,
-    REMOVE_PRODUCT_BASKET,
-    SHOW_ORDER_CLIENT,
-    PAY_FOR_ORDER,
-    CLIENT_PROFILE,
-    DELETE_PRODUCT,
-    ADD_PRODUCT,
-    SHOW_CLIENT,
-    BAN_CLIENT,
-    SHOW_ADMIN,
-    DELETE_ADMIN,
-    ADD_ADMIN,
-    SHOW_ORDER_ADMIN,
-    EDIT_PROFILE,
-    CHANGE_PASSWORD,
-    ADD_ACCOUNT,
-    DELETE_ACCOUNT,
-    EDIT_PRODUCT;
+    WRONG_REQUEST("all"),
+    SIGN_IN("all"),
+    SIGN_UP("all"),
+    INDEX("all"),
+    CHANGE_LOCALE("all"),
+    FIND_BY_TYPE("all"),
+    SIGN_OUT("all"),
+    ADD_PRODUCT_BASKET("client"),
+    REMOVE_PRODUCT_BASKET("client"),
+    SHOW_ORDER_CLIENT("client"),
+    PAY_FOR_ORDER("client"),
+    CLIENT_PROFILE("client"),
+    DELETE_PRODUCT("admin"),
+    ADD_PRODUCT("admin"),
+    SHOW_CLIENT("admin"),
+    BAN_CLIENT("admin"),
+    SHOW_ADMIN("admin"),
+    DELETE_ADMIN("admin"),
+    ADD_ADMIN("admin"),
+    SHOW_ORDER_ADMIN("admin"),
+    EDIT_PROFILE("client"),
+    CHANGE_PASSWORD("all"),
+    ADD_ACCOUNT("client"),
+    DELETE_ACCOUNT("client"),
+    EDIT_PRODUCT("admin"),
+    CLOSE_ORDER("admin");
+
+    private String role;
+
+    CommandName(String role) {
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
 }

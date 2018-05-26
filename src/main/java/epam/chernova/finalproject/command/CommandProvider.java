@@ -15,30 +15,31 @@ public class CommandProvider {
 
     public CommandProvider() {
 
-        commands.put(CommandName.SIGN_IN,new SignIn());
-        commands.put(CommandName.SIGN_UP,new SignUp());
-        commands.put(CommandName.INDEX,new Index());
-        commands.put(CommandName.CHANGE_LOCALE,new ChangeLocale());
-        commands.put(CommandName.FIND_BY_TYPE,new FindByType());
-        commands.put(CommandName.SIGN_OUT,new SignOut());
-        commands.put(CommandName.ADD_PRODUCT_BASKET,new AddBasketProduct());
-        commands.put(CommandName.SHOW_ORDER_CLIENT,new ShowOrderClient());
-        commands.put(CommandName.REMOVE_PRODUCT_BASKET,new RemoveBasketProduct());
-        commands.put(CommandName.PAY_FOR_ORDER,new PayOrder());
-        commands.put(CommandName.CLIENT_PROFILE,new ClientProfile());
-        commands.put(CommandName.DELETE_PRODUCT,new DeleteProduct());
-        commands.put(CommandName.ADD_PRODUCT,new AddProduct());
-        commands.put(CommandName.SHOW_CLIENT,new ShowClient());
-        commands.put(CommandName.BAN_CLIENT,new BanClient());
-        commands.put(CommandName.SHOW_ADMIN,new ShowAdmin());
-        commands.put(CommandName.DELETE_ADMIN,new DeleteAdmin());
-        commands.put(CommandName.ADD_ADMIN,new AddAdmin());
-        commands.put(CommandName.SHOW_ORDER_ADMIN,new ShowOrderAdmin());
-        commands.put(CommandName.EDIT_PROFILE,new EditProfile());
-        commands.put(CommandName.CHANGE_PASSWORD,new ChangePassword());
-        commands.put(CommandName.DELETE_ACCOUNT,new DeleteAccount());
-        commands.put(CommandName.ADD_ACCOUNT,new AddAccount());
-        commands.put(CommandName.EDIT_PRODUCT,new EditProduct());
+        commands.put(CommandName.SIGN_IN,new SignInCommand());
+        commands.put(CommandName.SIGN_UP,new SignUpCommand());
+        commands.put(CommandName.INDEX,new IndexCommand());
+        commands.put(CommandName.CHANGE_LOCALE,new ChangeLocaleCommand());
+        commands.put(CommandName.FIND_BY_TYPE,new FindByTypeCommand());
+        commands.put(CommandName.SIGN_OUT,new SignOutCommand());
+        commands.put(CommandName.ADD_PRODUCT_BASKET,new AddBasketProductCommand());
+        commands.put(CommandName.SHOW_ORDER_CLIENT,new ShowOrderClientCommand());
+        commands.put(CommandName.REMOVE_PRODUCT_BASKET,new RemoveBasketProductCommand());
+        commands.put(CommandName.PAY_FOR_ORDER,new PayOrderCommand());
+        commands.put(CommandName.CLIENT_PROFILE,new ClientProfileCommand());
+        commands.put(CommandName.DELETE_PRODUCT,new DeleteProductCommand());
+        commands.put(CommandName.ADD_PRODUCT,new AddProductCommand());
+        commands.put(CommandName.SHOW_CLIENT,new ShowClientCommand());
+        commands.put(CommandName.BAN_CLIENT,new BanClientCommand());
+        commands.put(CommandName.SHOW_ADMIN,new ShowAdminCommand());
+        commands.put(CommandName.DELETE_ADMIN,new DeleteAdminCommand());
+        commands.put(CommandName.ADD_ADMIN,new AddAdminCommand());
+        commands.put(CommandName.SHOW_ORDER_ADMIN,new ShowOrderAdminCommand());
+        commands.put(CommandName.EDIT_PROFILE,new EditProfileCommand());
+        commands.put(CommandName.CHANGE_PASSWORD,new ChangePasswordCommand());
+        commands.put(CommandName.DELETE_ACCOUNT,new DeleteAccountCommand());
+        commands.put(CommandName.ADD_ACCOUNT,new AddAccountCommand());
+        commands.put(CommandName.EDIT_PRODUCT,new EditProductCommand());
+        commands.put(CommandName.CLOSE_ORDER,new CloseOrderCommand());
     }
 
     public static CommandProvider getInstance() {

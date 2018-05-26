@@ -47,7 +47,7 @@
 <fmt:message bundle="${loc}" key="local.word.account_number_mistake" var="account_number_mistake"/>
 <fmt:message bundle="${loc}" key="local.word.changing_product" var="changing_product"/>
 <fmt:message bundle="${loc}" key="local.word.change_product_word" var="change_product_word"/>
-
+<fmt:message bundle="${loc}" key="local.word.address_word" var="address_word"/>
 
 <head>
     <meta charset=utf-8">
