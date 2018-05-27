@@ -25,6 +25,7 @@ public class ClientDao implements IClientDao {
     private static final String FIND_ALL_CLIENTS = "SELECT * FROM client JOIN user ON user.iduser=client.user_iduser";
     private static final String FIND_BY_ID = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE user.iduser =?";
     private static final String UNBAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 0 WHERE cafe.client.user_iduser = ?";
+    private static final String ADD_POINTS = "UPDATE cafe.client SET cafe.client.point = ? WHERE cafe.client.user_iduser = ?";
     private static final String BAN_CLIENT = "UPDATE cafe.client SET cafe.client.ban = 1 WHERE cafe.client.user_iduser = ?";
     private static final String EDIT_CLIENT = "UPDATE cafe.client SET cafe.client.surname = ?,cafe.client.name = ?,cafe.client.email = ?,cafe.client.address=? WHERE cafe.client.user_iduser = ?";
     private static final String CHECK_BAN = "SELECT * FROM client JOIN user ON client.user_iduser=user.iduser WHERE client.user_iduser =? AND client.ban=1";
@@ -40,21 +41,24 @@ public class ClientDao implements IClientDao {
         LOGGER.log(Level.DEBUG, "Client Dao: start SignIn");
         Client client = null;
         try {
-            connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD);
-            statement.setString(1, login);
-            statement.setString(2, password);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                client = createClientByResultSet(resultSet);
+
+                connectionPool = ConnectionPool.getInstance();
+                connection = connectionPool.getConnection();
+            try {
+                statement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD);
+                statement.setString(1, login);
+                statement.setString(2, password);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    client = createClientByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client Dao: finish SignIn");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client Dao: finish SignIn");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return client;
     }
@@ -243,6 +247,28 @@ public class ClientDao implements IClientDao {
             close(resultSet, statement);
             connectionPool.putBackConnection(connection);
         }
+    }
+
+    @Override
+    public Client addPoints(int idClient, double point) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start addPoints");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(ADD_POINTS);
+            statement.setDouble(1, point);
+            statement.setDouble(2, idClient);
+            if (statement.executeUpdate() != 0) {
+                return findClientById(idClient);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        } finally {
+            LOGGER.log(Level.DEBUG, "Client DAO: finish addPoints");
+            close(resultSet, statement);
+            connectionPool.putBackConnection(connection);
+        }
+        return null;
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface IClientDao extends AbstractDao {
 
     User addUser(String login, String password) throws DaoException;
 
-    Client addClient(int idUser,String login,String name, String surname, String email,String address) throws DaoException;
+    Client addClient(int idUser, String login, String name, String surname, String email, String address) throws DaoException;
 
     User findUserByLogin(String login) throws DaoException;
 
@@ -25,14 +25,16 @@ public interface IClientDao extends AbstractDao {
 
     void unbanClient(int idClient) throws DaoException;
 
+    Client addPoints(int idClient,double point) throws DaoException;
+
     void banClient(int idClient) throws DaoException;
 
     boolean checkBan(int idClient) throws DaoException;
 
-    Client editClient(int idClient,String surname,String name,String email,String address) throws DaoException;
+    Client editClient(int idClient, String surname, String name, String email, String address) throws DaoException;
 
     Client changePassword(int idClient, String password) throws DaoException;
 
-    Client findClientByIdAndPassword(int idClient,String oldPassword) throws DaoException;
+    Client findClientByIdAndPassword(int idClient, String oldPassword) throws DaoException;
 
 }

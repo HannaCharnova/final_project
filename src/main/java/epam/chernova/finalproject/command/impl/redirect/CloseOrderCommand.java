@@ -25,24 +25,24 @@ public class CloseOrderCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Command:Start CloseOrderCommand");
         int idOrder,idClient;
-        double totalCost;
+        double totalCost,point;
         Account account;
         try {
             idOrder = Integer.parseInt(request.getParameter("idOrder"));
             idClient = Integer.parseInt(request.getParameter("idClient"));
             System.out.println(idClient+" "+idOrder);
             totalCost = (serviceFactory.getOrderService().findOrderByOrderId(idOrder)).getTotalCost();
+            point = ((Client) request.getSession().getAttribute("client")).getPoint();
             if (totalCost != 0) {
                 if (serviceFactory.getAccountService().findAccountByClientId(idClient) != null) {
                     account = serviceFactory.getAccountService().findAccountByClientId(idClient);
                     if (account.getCredit() > totalCost) {
-                        serviceFactory.getAccountService().payOrder(idClient, totalCost);
+                        serviceFactory.getAccountService().payOrder(idClient, totalCost,point);
                         serviceFactory.getOrderService().payOrder(idOrder);
                         diagnoseSuccessfulPayment(request);
                     } else {
                         serviceFactory.getAccountService().payPartOrder(idClient);
                         serviceFactory.getOrderService().payOrder(idOrder);
-
                         diagnosePartPayment(request);
                     }
                 } else {

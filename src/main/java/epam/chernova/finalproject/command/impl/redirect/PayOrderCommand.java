@@ -26,17 +26,22 @@ public class PayOrderCommand implements ICommand {
         LOGGER.log(Level.INFO, "Command:Start pay order");
         int idClient, idOrder;
         double totalCost;
+        double point;
         Account account;
+        Client client;
         try {
             idOrder = Integer.parseInt(request.getParameter("idOrder"));
             totalCost = (serviceFactory.getOrderService().findOrderByOrderId(idOrder)).getTotalCost();
             idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
+            point = ((Client) request.getSession().getAttribute("client")).getPoint();
             if (totalCost != 0) {
                 if (serviceFactory.getAccountService().findAccountByClientId(idClient) != null) {
                     account = serviceFactory.getAccountService().findAccountByClientId(idClient);
                     if (account.getCredit() > totalCost) {
-                        serviceFactory.getAccountService().payOrder(idClient, totalCost);
+                        serviceFactory.getAccountService().payOrder(idClient, totalCost,point);
                         serviceFactory.getOrderService().payOrder(idOrder);
+                        client=serviceFactory.getClientService().addPoints(idClient,totalCost-point);
+                        request.getSession().setAttribute("client",client);
                         diagnoseSuccessfulPayment(request);
                     } else {
                         diagnoseLackOfMoney(request);
@@ -91,7 +96,6 @@ public class PayOrderCommand implements ICommand {
             request.getSession().setAttribute("error_data", "Your order was successfully registered. Delivery will be done during an hour.");
         }
     }
-
 
 
 }

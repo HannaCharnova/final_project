@@ -32,7 +32,7 @@ CREATE TABLE `order` (
   UNIQUE KEY `idorder_UNIQUE` (`idorder`),
   KEY `fk_order_client1_idx` (`client_user_iduser`),
   CONSTRAINT `fk_order_client1` FOREIGN KEY (`client_user_iduser`) REFERENCES `client` (`user_iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COMMENT='Таблица предназначена для хранения информации о клиентских заказах';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1 COMMENT='Таблица предназначена для хранения информации о клиентских заказах';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,37.4,'2018-05-07',7,0),(2,47.8,'2018-05-09',22,1),(3,61.8,'2018-05-11',30,0),(4,16.5,'2018-05-09',7,0),(5,39,'2018-05-11',22,0),(6,4.3,'2018-05-09',16,0),(7,3350,'2018-05-09',16,1),(9,15.8,'2018-05-13',7,1),(10,15.8,'2018-05-14',27,0),(12,4.3,'2018-05-15',27,1);
+INSERT INTO `order` VALUES (1,37.4,'2018-05-07',7,0),(2,47.8,'2018-05-09',22,1),(3,61.8,'2018-05-11',30,0),(4,16.5,'2018-05-09',7,0),(5,39,'2018-05-11',22,0),(6,4.3,'2018-05-09',16,0),(7,3350,'2018-05-09',16,0),(9,41.6,'2018-05-13',7,0),(10,15.8,'2018-05-14',27,0),(12,4.3,'2018-05-15',27,1),(13,8.6,'2018-05-27',12,0),(14,16.5,'2018-05-27',7,0),(15,20.799999999999997,'2018-05-27',7,0);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-16  0:16:45
+-- Dump completed on 2018-05-27 13:05:51

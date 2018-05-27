@@ -1197,25 +1197,25 @@ product_idproduct</ColNames>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="274" parent="213" name="order_idorder">
+    <column id="274" parent="213" name="client_user_iduser">
       <Position>4</Position>
       <DataType>int(10) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="275" parent="213" name="fk_review_order1_idx">
-      <ColNames>order_idorder</ColNames>
+    <index id="275" parent="213" name="fk_review_client1_idx">
+      <ColNames>client_user_iduser</ColNames>
     </index>
     <key id="276" parent="213" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>idreview</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="277" parent="213" name="fk_review_order1">
-      <ColNames>order_idorder</ColNames>
+    <foreign-key id="277" parent="213" name="fk_review_client1">
+      <ColNames>client_user_iduser</ColNames>
       <RefSchemaName>cafe</RefSchemaName>
-      <RefTableName>order</RefTableName>
-      <RefColNames>idorder</RefColNames>
+      <RefTableName>client</RefTableName>
+      <RefColNames>user_iduser</RefColNames>
     </foreign-key>
     <column id="278" parent="214" name="iduser">
       <Position>1</Position>

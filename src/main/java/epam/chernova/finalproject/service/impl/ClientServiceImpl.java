@@ -150,6 +150,23 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client addPoints(int idClient,double totalCost) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ClientService: Start addPoints");
+        try {
+            LOGGER.log(Level.DEBUG, "ClientService: Finish addPoints");
+            String points=String.valueOf(totalCost);
+            points=points.substring(0,2);
+            System.out.println(points);
+            double point=Double.parseDouble(points)/10;
+            System.out.println(point);
+            return daoFactory.getClientDao().addPoints(idClient,point);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+
+    }
+
+    @Override
     public Client changePassword(int idClient, String password) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ClientService: Start changePassword");
         try {

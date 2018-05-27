@@ -11,6 +11,7 @@ public class ServiceFactory {
     private OrderService orderService = new OrderServiceImpl();
     private OrderProductService orderProductService = new OrderProductServiceImpl();
     private AccountService accountService = new AccountServiceImpl();
+    private ReviewService reviewService = new ReviewServiceImpl();
 
 
     public static ServiceFactory getInstance() {
@@ -41,4 +42,7 @@ public class ServiceFactory {
         return accountService;
     }
 
+    public ReviewService getReviewService() {
+        return reviewService;
+    }
 }

@@ -1,4 +1,6 @@
 //Валидация формы входа
+var idOrder;
+
 $(document).ready(function () {
     $("#signin").click(function () {
         $("#sign_in").modal({backdrop: true});
@@ -22,8 +24,9 @@ $(document).ready(function () {
         $("#add_admin").modal({backdrop: true});
     });
     $("#addproduct").click(function () {
-        $("#add_product").modal({backdrop: true});
+        $("#add_account").modal({backdrop: true});
     });
+
 
     $('form#sign-in-form').on('click', function (e) {
 
@@ -77,7 +80,7 @@ $(document).ready(function () {
         var name = $('input#name').val();
         var surname = $('input#surname').val();
         var email = $('input#email').val();
-        var email = $('input#address').val();
+        var address = $('input#address').val();
 
         var $numberCorrectField = 0;
 
@@ -140,7 +143,7 @@ $(document).ready(function () {
             }
         }
 
-        if (address.length > 10 && address != '' ) {
+        if (address.length > 10 && address != '') {
             $('input#address').css('border-color', 'green');
             $('input#address').removeClass('has-error').next('span').removeClass('is-visible');
             $numberCorrectField++;
@@ -534,3 +537,8 @@ $(document).ready(function () {
     });
 
 });
+
+function viewAddReview(id) {
+    $("#add_review").modal({backdrop: true});
+}
+

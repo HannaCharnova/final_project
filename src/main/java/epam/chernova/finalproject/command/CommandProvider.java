@@ -40,6 +40,7 @@ public class CommandProvider {
         commands.put(CommandName.ADD_ACCOUNT,new AddAccountCommand());
         commands.put(CommandName.EDIT_PRODUCT,new EditProductCommand());
         commands.put(CommandName.CLOSE_ORDER,new CloseOrderCommand());
+        commands.put(CommandName.ADD_REVIEW,new AddReviewCommand());
     }
 
     public static CommandProvider getInstance() {

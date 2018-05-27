@@ -12,6 +12,8 @@
 <fmt:message bundle="${loc}" key="local.word.has_been_paid" var="has_been_paid"/>
 <fmt:message bundle="${loc}" key="local.word.pay" var="pay"/>
 <fmt:message bundle="${loc}" key="local.word.not_exist" var="not_exist"/>
+<fmt:message bundle="${loc}" key="local.word.status_word" var="status_word"/>
+<fmt:message bundle="${loc}" key="local.word.make_review_word" var="make_review_word"/>
 
 <style>
     <%@include file="/front/css/orderlist.css" %>
@@ -38,8 +40,8 @@
                                                         class="btn btn-default">${pay}</button>
                                             </c:when>
                                             <c:otherwise>
-                                                <button type="submit" disabled="disabled" class="btn-right"
-                                                        class="btn btn-default">${has_been_paid}</button>
+                                                <button type="button"  class="btn-right"
+                                                        class="btn btn-default" onclick="viewAddReview(${order.idOrder})">${make_review_word}</button>
                                             </c:otherwise>
                                         </c:choose>
 
@@ -53,7 +55,10 @@
                                                 <span class="qa-message-who">
  <span class="qa-message-who-pad">${total_cost} </span>
  <span class="qa-message-who-data">${order.totalCost}</span>
- </span>
+ </span><br>
+                                                <c:if test="${order.status eq 'true'}">
+                                                <span class="qa-message-who-pad">${status_word}:${has_been_paid}</span>
+                                                </c:if>
                                             </div>
                                         </div>
                                     </div>

@@ -18,7 +18,6 @@
 <fmt:message bundle="${loc}" key="local.sentence.change_password_word" var="change_password_word"/>
 
 
-
 <html>
 <head>
     <meta charset=utf-8"/>
@@ -76,6 +75,10 @@
                 </c:when>
                 <c:when test="${role==2}">
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#" ><img class="img-circle"
+                                                                   src="/front/image/star.png"
+                                                                   alt="USER" width="20"/> ${client.point}</a>
+                        </li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                aria-expanded="false"><img class="img-circle"

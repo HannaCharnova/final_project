@@ -31,10 +31,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void payOrder(int idClient, double totalCost) throws ServiceException {
+    public void payOrder(int idClient, double totalCost,double point) throws ServiceException {
         LOGGER.log(Level.DEBUG, "AccountService: Start payOrder");
         try {
-            daoFactory.getAccountDao().payOrder(idClient,totalCost);
+            daoFactory.getAccountDao().payOrder(idClient,totalCost-point);
             LOGGER.log(Level.DEBUG, "AccountService: Finish payOrder");
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
