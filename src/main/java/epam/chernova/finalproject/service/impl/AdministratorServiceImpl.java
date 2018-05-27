@@ -7,6 +7,7 @@ import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.DaoFactory;
 import epam.chernova.finalproject.service.AdministratorService;
+import epam.chernova.finalproject.util.Hasher;
 import epam.chernova.finalproject.util.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -78,8 +79,8 @@ public class AdministratorServiceImpl implements AdministratorService {
         User user = null;
         try {
             if (Validator.isNull(login, password) && Validator.isEmptyString(login, password) && Validator.matchLogin(login) && Validator.matchPassword(password)) {
-//            password = Hasher.sha1Hash(password);
                 user = daoFactory.getAdministratorDao().addUser(login, password);
+                System.out.println(user);
                 if (user != null) {
                     administrator = daoFactory.getAdministratorDao().addAdministrator(user.getIdUser(), login);
                 }

@@ -5,6 +5,7 @@ import epam.chernova.finalproject.entity.Administrator;
 import epam.chernova.finalproject.entity.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
+import epam.chernova.finalproject.util.Hasher;
 import epam.chernova.finalproject.util.SessionElements;
 import epam.chernova.finalproject.webenum.PageName;
 import org.apache.log4j.Level;
@@ -26,10 +27,13 @@ public class ChangePasswordCommand implements ICommand {
         LOGGER.log(Level.INFO, "Command:Start ChangePasswordCommand");
         String newPassword = (String) request.getParameter("password-new");
         String oldPassword = (String) request.getParameter("password-old");
+        oldPassword = Hasher.sha1Hash(oldPassword);
         try {
             if ((int) request.getSession().getAttribute("role") == 2) {
                 int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
                 if (serviceFactory.getClientService().findClientByIdAndPassword(idClient, oldPassword) != null) {
+                    newPassword = Hasher.sha1Hash(newPassword);
+                    System.out.println(newPassword);
                     Client client = serviceFactory.getClientService().changePassword(idClient, newPassword);
                     request.getSession().setAttribute("client", client);
                     diagnoseChangePassword(request);
@@ -39,12 +43,12 @@ public class ChangePasswordCommand implements ICommand {
             } else {
                 int idAdmin = ((Administrator) request.getSession().getAttribute("admin")).getIdUser();
                 if (serviceFactory.getAdministratorService().findAdministratorByIdAndPassword(idAdmin, oldPassword) != null) {
-                    System.out.println("old correct");
+                    newPassword = Hasher.sha1Hash(newPassword);
+                    System.out.println(newPassword);
                     Administrator administrator = serviceFactory.getAdministratorService().changePassword(idAdmin, newPassword);
                     request.getSession().setAttribute("admin", administrator);
                     diagnoseChangePassword(request);
                 } else {
-                    System.out.println("old incorrect");
                     diagnoseWrongOldPassword(request);
                 }
             }

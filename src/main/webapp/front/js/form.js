@@ -24,7 +24,7 @@ $(document).ready(function () {
         $("#add_admin").modal({backdrop: true});
     });
     $("#addproduct").click(function () {
-        $("#add_account").modal({backdrop: true});
+        $("#add_product").modal({backdrop: true});
     });
 
 
@@ -32,7 +32,7 @@ $(document).ready(function () {
 
 // Запрещаем стандартное поведение для кнопки submit
         var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
-        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{5,}');
         var $form_modal = $('.cd-user-modal');
         var $form_sign_in = $form_modal.find('#sign_in');
         var $numberCorrectField = 0;
@@ -73,7 +73,7 @@ $(document).ready(function () {
         var name_surnameReg = new RegExp("^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}]+)$|^([A-Z]{1}[a-z]+)$");
         var emailReg = new RegExp("^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$");
         var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
-        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{5,}');
 
         var password = $('input#password').val();
         var login = $('input#login').val();
@@ -305,7 +305,7 @@ $(document).ready(function () {
 
     $('form#add-admin-form').on('click', function (e) {
         var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
-        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{5,}');
 
         var password = $('input#passwordAdmin').val();
         var repassword = $('input#repasswordAdmin').val();
@@ -373,7 +373,7 @@ $(document).ready(function () {
     });
 
     $('form#change-password-form').on('click', function (e) {
-        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{5,}');
 
         var oldpassword = $('input#passwordOld').val();
         var newpassword = $('input#passwordNew').val();
@@ -542,3 +542,10 @@ function viewAddReview(id) {
     $("#add_review").modal({backdrop: true});
 }
 
+function showEditProduct(id) {
+    $("#change_product").modal({backdrop: true});
+    // $("#nameEnch").val=nameEn;
+    $("#changeproductid").val(id);
+    alert(id);
+
+}

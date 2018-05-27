@@ -41,6 +41,7 @@ public class CommandProvider {
         commands.put(CommandName.EDIT_PRODUCT,new EditProductCommand());
         commands.put(CommandName.CLOSE_ORDER,new CloseOrderCommand());
         commands.put(CommandName.ADD_REVIEW,new AddReviewCommand());
+        commands.put(CommandName.SHOW_REVIEWS,new ShowReviewsCommand());
     }
 
     public static CommandProvider getInstance() {

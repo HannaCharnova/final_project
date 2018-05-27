@@ -129,7 +129,7 @@ qa-message-when-data {
 
 }
 
-#add-admin-button {
+.add-admin-button {
     position: inherit;
     margin-left: 50%;
     width: 200px;

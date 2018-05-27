@@ -5,6 +5,7 @@ import epam.chernova.finalproject.entity.Administrator;
 import epam.chernova.finalproject.entity.Client;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.ServiceFactory;
+import epam.chernova.finalproject.util.Hasher;
 import epam.chernova.finalproject.util.SessionElements;
 import epam.chernova.finalproject.webenum.PageName;
 import org.apache.log4j.Level;
@@ -25,39 +26,29 @@ public class SignInCommand implements ICommand {
         LOGGER.log(Level.INFO, "Command: Sign in started.");
         String login = request.getParameter("login_in");
         String password = request.getParameter("password_in");
-        boolean role;
-        if (request.getParameter("check")!=null) {
-            role = true;
-        } else {
-            role = false;
-        }
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             diagnoseIncorrectSignIn(request);
             return pageName.getPath();
         }
+        password = Hasher.sha1Hash(password);
         try {
-            if (role) {
-                Administrator administrator = serviceFactory.getAdministratorService().signIn(login, password);
-                if (administrator != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("role", 1);
-                    session.setAttribute("admin", administrator);
-                    LOGGER.log(Level.INFO, "Successful sign in account as administrator " + administrator.getLogin());
-                    response.sendRedirect(SessionElements.getPageCommand(request));
-                } else {
-                    diagnoseIncorrectSignIn(request);
-                    response.sendRedirect(SessionElements.getPageCommand(request));
-                }
+            Administrator administrator = serviceFactory.getAdministratorService().signIn(login, password);
+            if (administrator != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("role", 1);
+                session.setAttribute("admin", administrator);
+                LOGGER.log(Level.INFO, "Successful sign in account as administrator " + administrator.getLogin());
+                response.sendRedirect(SessionElements.getPageCommand(request));
             } else {
                 Client client = serviceFactory.getClientService().signIn(login, password);
                 if (client != null) {
-                    if(!serviceFactory.getClientService().checkBan(client.getIdUser())) {
+                    if (!serviceFactory.getClientService().checkBan(client.getIdUser())) {
                         HttpSession session = request.getSession();
                         session.setAttribute("role", 2);
                         session.setAttribute("client", client);
                         LOGGER.log(Level.INFO, "Successful sign in account as client " + client.getLogin());
                         response.sendRedirect(SessionElements.getPageCommand(request));
-                    }else{
+                    } else {
                         diagnoseClientBan(request);
                         response.sendRedirect(SessionElements.getPageCommand(request));
                     }

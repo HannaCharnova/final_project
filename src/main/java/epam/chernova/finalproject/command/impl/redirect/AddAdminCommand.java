@@ -4,6 +4,7 @@ import epam.chernova.finalproject.command.ICommand;
 import epam.chernova.finalproject.factory.ServiceFactory;
 import epam.chernova.finalproject.service.AdministratorService;
 import epam.chernova.finalproject.service.ClientService;
+import epam.chernova.finalproject.util.Hasher;
 import epam.chernova.finalproject.util.SessionElements;
 import epam.chernova.finalproject.webenum.PageName;
 import org.apache.log4j.Level;
@@ -26,11 +27,11 @@ public class AddAdminCommand implements ICommand {
         AdministratorService administratorService = serviceFactory.getAdministratorService();
         String login = request.getParameter("login-admin");
         String password = request.getParameter("password-admin");
-        System.out.println(login+password);
         try {
             if (clientService.findClientByLogin(login) != null || administratorService.findAdministratorByLogin(login) != null) {
                 diagnoseCommonLogin(request);
             } else {
+                password = Hasher.sha1Hash(password);
                 administratorService.addAdministrator(login,password);
             }
             response.sendRedirect(SessionElements.getPageCommand(request));

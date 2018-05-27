@@ -100,11 +100,6 @@
 
                             </div>
                             <div class="form-group">
-                                <div class="main-checkbox">
-                                    <input type="checkbox" id="checkbox1" name="check"/>
-                                    <label for="checkbox1"></label>
-                                </div>
-                                <span class="text">${administrator}</span>
                                 <button type="submit" id="signin-button" class="btn btn-default">${enter}</button>
                             </div>
                         </form>
@@ -278,13 +273,13 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control has-border" id="passwordAdmin"
+                                <input type="password" class="form-control has-border" id="passwordAdmin"
                                        placeholder=${password} name="password-admin">
                                 <span class="cd-error-message" id="password-admin">${password_mistake}</span>
                             </div>
 
                             <div class="form-group">
-                                <input type="text" class="form-control has-border" id="repasswordAdmin"
+                                <input type="password" class="form-control has-border" id="repasswordAdmin"
                                        placeholder=${repassword} name="repassword-admin">
                                 <span class="cd-error-message" id="repassword-admin">${password_mistake}</span>
                                 <span class="cd-error-message" id="repassword-confirm">${repassword_mistake}</span>
@@ -385,7 +380,7 @@
 
                     <div class="col-md-6">
                         <form id="change-product-form" class="form-horizontal form-horizontal-reg" method="post"
-                              action="/epam.by/edit_product?idProduct=${product.idProduct}">
+                              action="/epam.by/edit_product?idProduct=${idProduct}">
 
                             <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
                             <span class="heading">${changing_product}</span>
@@ -410,7 +405,7 @@
 
                             <div class="form-group">
                                 <input type="text" class="form-control has-border" id="nameEnch"
-                                       placeholder=${name_en} name="nameEn" value="${product.nameEn}">
+                                       placeholder=${name_en} name="nameEn">
                                 <span class="cd-error-message" id="name-en-ch">${product_name_mistake}</span>
                             </div>
 
@@ -434,7 +429,7 @@
                                 <span class="cd-error-message" id="weight-span-ch">${weight_mistake}</span>
 
                             </div>
-
+                            <input id="changeproductid" type="text" name="id" style="visibility: hidden">
                             <div class="form-group">
                                 <p>
                                     <label for="image" class="control-label" style="float: left">${choose_image}</label>
@@ -472,22 +467,33 @@
 
                             <div class="form-group">
                                 <textarea rows="10" cols="45" class="form-control has-border" id="inputReview"
-                                          placeholder=${your_review} name="review" style="height: 150px;padding-top: 6px"></textarea>
+                                          placeholder=${your_review} name="review"
+                                          style="height: 150px;padding-top: 6px"></textarea>
                                 <span class="cd-error-message" id="review-span">${review_mistake}</span>
 
                             </div>
                             <div class="form-group help">
                                 <div class="stars">
-                                    <input class="star-rating__input" id="star-rating-5" type="radio" name="rating5" value="5">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5" title="5 out of 5 stars"></label>
-                                    <input class="star-rating__input" id="star-rating-4" type="radio" name="rating4" value="4">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4" title="4 out of 5 stars"></label>
-                                    <input class="star-rating__input" id="star-rating-3" type="radio" name="rating3" value="3">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3" title="3 out of 5 stars"></label>
-                                    <input class="star-rating__input" id="star-rating-2" type="radio" name="rating2" value="2">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2" title="2 out of 5 stars"></label>
-                                    <input class="star-rating__input" id="star-rating-1" type="radio" name="rating1" value="1">
-                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1" title="1 out of 5 stars"></label>                                </div>
+                                    <input class="star-rating__input" id="star-rating-5" type="radio" name="rating5"
+                                           value="5">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5"
+                                           title="5 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="star-rating-4" type="radio" name="rating4"
+                                           value="4">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4"
+                                           title="4 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="star-rating-3" type="radio" name="rating3"
+                                           value="3">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3"
+                                           title="3 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="star-rating-2" type="radio" name="rating2"
+                                           value="2">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2"
+                                           title="2 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="star-rating-1" type="radio" name="rating1"
+                                           value="1">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1"
+                                           title="1 out of 5 stars"></label></div>
                             </div>
                             <button type="submit" class="btn btn-default">${make_review_word}</button>
                         </form>

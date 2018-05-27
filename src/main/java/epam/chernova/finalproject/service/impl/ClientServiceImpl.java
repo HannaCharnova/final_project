@@ -8,6 +8,7 @@ import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.DaoFactory;
 import epam.chernova.finalproject.service.ClientService;
+import epam.chernova.finalproject.util.Hasher;
 import epam.chernova.finalproject.util.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -42,7 +43,7 @@ public class ClientServiceImpl implements ClientService {
         User user = null;
         try {
             if (Validator.isNull(login, password, name, surname, email,address) && Validator.isEmptyString(login, password, name, surname, email,address) && Validator.matchProperName(name, surname) && Validator.matchLogin(login) && Validator.matchPassword(password) && Validator.matchEmail(email)) {
-//            password = Hasher.sha1Hash(password);
+                password = Hasher.sha1Hash(password);
                 if (daoFactory.getAdministratorDao().findAdministratorByLogin(login) == null) {
                     user = daoFactory.getClientDao().addUser(login, password);
                     if (user != null) {

@@ -42,8 +42,8 @@ public class ClientDao implements IClientDao {
         Client client = null;
         try {
 
-                connectionPool = ConnectionPool.getInstance();
-                connection = connectionPool.getConnection();
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
             try {
                 statement = connection.prepareStatement(FIND_BY_LOGIN_AND_PASSWORD);
                 statement.setString(1, login);
@@ -70,18 +70,20 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_CLIENT_BY_LOGIN);
-            statement.setString(1, login);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                client = createClientByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_CLIENT_BY_LOGIN);
+                statement.setString(1, login);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    client = createClientByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client Dao: finish findClientByLogin");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client Dao: finish findClientByLogin");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return client;
     }
@@ -92,18 +94,20 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_BY_EMAIL);
-            statement.setString(1, email);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                return createClientByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_BY_EMAIL);
+                statement.setString(1, email);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    return createClientByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish findClientByEmail");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish findClientByEmail");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
     }
@@ -114,44 +118,49 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(ADD_USER);
-            statement.setString(1, login);
-            statement.setString(2, password);
-            statement.setInt(3, 0);
-            if (statement.executeUpdate() != 0) {
-                return findUserByLogin(login);
+            try {
+                statement = connection.prepareStatement(ADD_USER);
+                statement.setString(1, login);
+                statement.setString(2, password);
+                statement.setInt(3, 0);
+                if (statement.executeUpdate() != 0) {
+                    return findUserByLogin(login);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish addUser");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while user executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish addUser");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
     }
 
     @Override
-    public Client addClient(int idUser, String login, String name, String surname, String email, String address) throws DaoException {
+    public Client addClient(int idUser, String login, String name, String surname, String email, String address) throws
+            DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start addClient");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(ADD_CLIENT);
-            statement.setInt(1, idUser);
-            statement.setString(2, name);
-            statement.setString(3, surname);
-            statement.setString(4, email);
-            statement.setString(5, address);
-            if (statement.executeUpdate() != 0) {
-                return findClientByLogin(login);
+            try {
+                statement = connection.prepareStatement(ADD_CLIENT);
+                statement.setInt(1, idUser);
+                statement.setString(2, name);
+                statement.setString(3, surname);
+                statement.setString(4, email);
+                statement.setString(5, address);
+                if (statement.executeUpdate() != 0) {
+                    return findClientByLogin(login);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish addClient");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while client executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish addClient");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
     }
@@ -163,22 +172,24 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_USER_BY_LOGIN);
-            statement.setString(1, login);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                user = new User();
-                user.setIdUser(resultSet.getInt("iduser"));
-                user.setLogin(resultSet.getString("user.login"));
-                user.setPassword(resultSet.getString("user.password"));
-                user.setRole(resultSet.getBoolean("user.role"));
+            try {
+                statement = connection.prepareStatement(FIND_USER_BY_LOGIN);
+                statement.setString(1, login);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    user = new User();
+                    user.setIdUser(resultSet.getInt("iduser"));
+                    user.setLogin(resultSet.getString("user.login"));
+                    user.setPassword(resultSet.getString("user.password"));
+                    user.setRole(resultSet.getBoolean("user.role"));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish findUserByLogin");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish findUserByLogin");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return user;
     }
@@ -190,17 +201,19 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ALL_CLIENTS);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                clients.add(createClientByResultSet(resultSet));
+            try {
+                statement = connection.prepareStatement(FIND_ALL_CLIENTS);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    clients.add(createClientByResultSet(resultSet));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish findAllClients");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish findAllClients");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return clients;
     }
@@ -212,18 +225,20 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_BY_ID);
-            statement.setInt(1, idClient);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                client = createClientByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_BY_ID);
+                statement.setInt(1, idClient);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    client = createClientByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish findClientById");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish findClientById");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return client;
 
@@ -235,17 +250,19 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(UNBAN_CLIENT);
-            statement.setInt(1, idClient);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(UNBAN_CLIENT);
+                statement.setInt(1, idClient);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish unbanClient");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish unbanClient");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
     }
 
@@ -255,18 +272,20 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(ADD_POINTS);
-            statement.setDouble(1, point);
-            statement.setDouble(2, idClient);
-            if (statement.executeUpdate() != 0) {
-                return findClientById(idClient);
+            try {
+                statement = connection.prepareStatement(ADD_POINTS);
+                statement.setDouble(1, point);
+                statement.setDouble(2, idClient);
+                if (statement.executeUpdate() != 0) {
+                    return findClientById(idClient);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish addPoints");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish addPoints");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
     }
@@ -277,17 +296,19 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(BAN_CLIENT);
-            statement.setInt(1, idClient);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(BAN_CLIENT);
+                statement.setInt(1, idClient);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish banClient");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish banClient");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
     }
 
@@ -297,44 +318,49 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(CHECK_BAN);
-            statement.setInt(1, idClient);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                return true;
+            try {
+                statement = connection.prepareStatement(CHECK_BAN);
+                statement.setInt(1, idClient);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    return true;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish checkBan");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish checkBan");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return false;
 
     }
 
     @Override
-    public Client editClient(int idClient, String surname, String name, String email, String address) throws DaoException {
+    public Client editClient(int idClient, String surname, String name, String email, String address) throws
+            DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start editClient");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(EDIT_CLIENT);
-            statement.setString(1, surname);
-            statement.setString(2, name);
-            statement.setString(3, email);
-            statement.setString(4, address);
-            statement.setInt(5, idClient);
-            if (statement.executeUpdate() != 0) {
-                return findClientById(idClient);
+            try {
+                statement = connection.prepareStatement(EDIT_CLIENT);
+                statement.setString(1, surname);
+                statement.setString(2, name);
+                statement.setString(3, email);
+                statement.setString(4, address);
+                statement.setInt(5, idClient);
+                if (statement.executeUpdate() != 0) {
+                    return findClientById(idClient);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish editClient");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish editClient");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
     }
@@ -345,18 +371,20 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(CHANGE_PASSWORD);
-            statement.setString(1, password);
-            statement.setInt(2, idClient);
-            if (statement.executeUpdate() != 0) {
-                return findClientById(idClient);
+            try {
+                statement = connection.prepareStatement(CHANGE_PASSWORD);
+                statement.setString(1, password);
+                statement.setInt(2, idClient);
+                if (statement.executeUpdate() != 0) {
+                    return findClientById(idClient);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish changePassword");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish changePassword");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
     }
@@ -368,19 +396,21 @@ public class ClientDao implements IClientDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_CLIENT_BY_ID_AND_PASSWORD);
-            statement.setInt(1, idClient);
-            statement.setString(2, oldPassword);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                client = createClientByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_CLIENT_BY_ID_AND_PASSWORD);
+                statement.setInt(1, idClient);
+                statement.setString(2, oldPassword);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    client = createClientByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish findClientByIdAndPassword");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Client DAO: finish findClientByIdAndPassword");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return client;
     }

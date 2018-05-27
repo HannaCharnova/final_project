@@ -34,19 +34,21 @@ public class OrderProductDao implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(ADD_ORDER_PRODUCT);
-            statement.setInt(1, idOrder);
-            statement.setInt(2, idProduct);
-            statement.setInt(3, quantity);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(ADD_ORDER_PRODUCT);
+                statement.setInt(1, idOrder);
+                statement.setInt(2, idProduct);
+                statement.setInt(3, quantity);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish addOrderProduct");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish addOrderProduct");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
     }
 
@@ -56,18 +58,20 @@ public class OrderProductDao implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(REMOVE_ORDER_PRODUCT);
-            statement.setInt(1, idOrder);
-            statement.setInt(2, idProduct);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(REMOVE_ORDER_PRODUCT);
+                statement.setInt(1, idOrder);
+                statement.setInt(2, idProduct);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish removeOrderProduct");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish removeOrderProduct");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
     }
 
@@ -78,18 +82,20 @@ public class OrderProductDao implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ORDER_PRODUCT_BY_CLIENT_ID);
-            statement.setInt(1, idClient);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                orderProducts.add(createOrderProductByResultSet(resultSet));
+            try {
+                statement = connection.prepareStatement(FIND_ORDER_PRODUCT_BY_CLIENT_ID);
+                statement.setInt(1, idClient);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    orderProducts.add(createOrderProductByResultSet(resultSet));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProductDAO: finish findActiveOrderByClientId");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderProductDAO: finish findActiveOrderByClientId");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return orderProducts;
 
@@ -102,17 +108,19 @@ public class OrderProductDao implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ALL_ORDER_PRODUCT);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                orderProducts.add(createOrderProductByResultSet(resultSet));
+            try {
+                statement = connection.prepareStatement(FIND_ALL_ORDER_PRODUCT);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    orderProducts.add(createOrderProductByResultSet(resultSet));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProductDAO: finish findAllOrderProducts");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderProductDAO: finish findAllOrderProducts");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return orderProducts;
 
@@ -125,18 +133,20 @@ public class OrderProductDao implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ORDER_PRODUCT_BY_PRODUCT_ID);
-            statement.setInt(1, idProduct);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                return true;
+            try {
+                statement = connection.prepareStatement(FIND_ORDER_PRODUCT_BY_PRODUCT_ID);
+                statement.setInt(1, idProduct);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    return true;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish checkActiveOrderProduct");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish checkActiveOrderProduct");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return false;
     }
@@ -147,19 +157,21 @@ public class OrderProductDao implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_PRODUCT_IN_ACTIVE_ORDER);
-            statement.setInt(1, idProduct);
-            statement.setInt(2, idOrder);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                return createOrderProductByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_PRODUCT_IN_ACTIVE_ORDER);
+                statement.setInt(1, idProduct);
+                statement.setInt(2, idOrder);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    return createOrderProductByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish checkProductInActiveOrder");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish checkProductInActiveOrder");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
     }
@@ -170,19 +182,21 @@ public class OrderProductDao implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(ADD_ORDER_PRODUCT_QUANTITY);
-            statement.setInt(1, quantity);
-            statement.setInt(2, idProduct);
-            statement.setInt(3, idOrder);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(ADD_ORDER_PRODUCT_QUANTITY);
+                statement.setInt(1, quantity);
+                statement.setInt(2, idProduct);
+                statement.setInt(3, idOrder);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish addOrderProductQuantity");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish addOrderProductQuantity");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
     }
 

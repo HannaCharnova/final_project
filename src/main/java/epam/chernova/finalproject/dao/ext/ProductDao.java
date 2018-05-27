@@ -36,18 +36,20 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ALL_PRODUCTS);
-            resultSet = statement.executeQuery();
-            products = new ArrayList<>();
-            while (resultSet.next()) {
-                products.add(createProductByResultSet(resultSet));
+            try {
+                statement = connection.prepareStatement(FIND_ALL_PRODUCTS);
+                resultSet = statement.executeQuery();
+                products = new ArrayList<>();
+                while (resultSet.next()) {
+                    products.add(createProductByResultSet(resultSet));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "ProductDAO: Finish get all products");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "ProductDAO: Finish get all products");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return products;
     }
@@ -59,18 +61,20 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_EXIST_PRODUCTS);
-            resultSet = statement.executeQuery();
-            products = new ArrayList<>();
-            while (resultSet.next()) {
-                products.add(createProductByResultSet(resultSet));
+            try {
+                statement = connection.prepareStatement(FIND_EXIST_PRODUCTS);
+                resultSet = statement.executeQuery();
+                products = new ArrayList<>();
+                while (resultSet.next()) {
+                    products.add(createProductByResultSet(resultSet));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "ProductDAO: Finish find exist products");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "ProductDAO: Finish find exist products");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return products;
     }
@@ -81,17 +85,19 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(DELETE_PRODUCT);
-            statement.setInt(1, idProduct);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(DELETE_PRODUCT);
+                statement.setInt(1, idProduct);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish deleteProduct");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish deleteProduct");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
 
     }
@@ -103,19 +109,21 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_PRODUCT_BY_NAME);
-            statement.setString(1, nameEn);
-            statement.setString(2, nameRu);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                product = createProductByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_PRODUCT_BY_NAME);
+                statement.setString(1, nameEn);
+                statement.setString(2, nameRu);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    product = createProductByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "ProductDAO: Finish find product by name.");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "ProductDAO: Finish find product by name.");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         System.out.println(product);
         return product;
@@ -129,22 +137,24 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(ADD_PRODUCT);
-            statement.setString(1, nameEn);
-            statement.setString(2, nameRu);
-            statement.setString(3, type);
-            statement.setDouble(4, cost);
-            statement.setDouble(5, weight);
-            statement.setString(6, imagePath);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(ADD_PRODUCT);
+                statement.setString(1, nameEn);
+                statement.setString(2, nameRu);
+                statement.setString(3, type);
+                statement.setDouble(4, cost);
+                statement.setDouble(5, weight);
+                statement.setString(6, imagePath);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Product Dao: finish addProduct");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Product Dao: finish addProduct");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
     }
 
@@ -155,20 +165,22 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_PRODUCT_BY_NAME_AND_ID);
-            statement.setString(1, nameEn);
-            statement.setString(2, nameRu);
-            statement.setInt(3, idProduct);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                product = createProductByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_PRODUCT_BY_NAME_AND_ID);
+                statement.setString(1, nameEn);
+                statement.setString(2, nameRu);
+                statement.setInt(3, idProduct);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    product = createProductByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "ProductDAO: Finish findProductByNameAndId.");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "ProductDAO: Finish findProductByNameAndId.");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return product;
     }
@@ -180,23 +192,25 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(EDIT_PRODUCT);
-            statement.setString(1, nameEn);
-            statement.setString(2, nameRu);
-            statement.setString(3, type);
-            statement.setDouble(4, cost);
-            statement.setDouble(5, weight);
-            statement.setString(6, imagePath);
-            statement.setInt(7, idProduct);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(EDIT_PRODUCT);
+                statement.setString(1, nameEn);
+                statement.setString(2, nameRu);
+                statement.setString(3, type);
+                statement.setDouble(4, cost);
+                statement.setDouble(5, weight);
+                statement.setString(6, imagePath);
+                statement.setInt(7, idProduct);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Product Dao: finish editProduct");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Product Dao: finish editProduct");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
     }
 
@@ -208,19 +222,21 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_PRODUCT_BY_TYPE);
-            statement.setString(1, productType);
-            resultSet = statement.executeQuery();
-            products = new ArrayList<>();
-            while (resultSet.next()) {
-                products.add(createProductByResultSet(resultSet));
+            try {
+                statement = connection.prepareStatement(FIND_PRODUCT_BY_TYPE);
+                statement.setString(1, productType);
+                resultSet = statement.executeQuery();
+                products = new ArrayList<>();
+                while (resultSet.next()) {
+                    products.add(createProductByResultSet(resultSet));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "ProductDAO: Finish find product by type.");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "ProductDAO: Finish find product by type.");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return products;
 
@@ -233,19 +249,21 @@ public class ProductDao implements IProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_PRODUCT_BY_ID);
-            statement.setInt(1, idProduct);
-            resultSet = statement.executeQuery();
-            product = new Product();
-            while (resultSet.next()) {
-                product = createProductByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_PRODUCT_BY_ID);
+                statement.setInt(1, idProduct);
+                resultSet = statement.executeQuery();
+                product = new Product();
+                while (resultSet.next()) {
+                    product = createProductByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "ProductDAO: Finish find product by id.");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "ProductDAO: Finish find product by id.");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return product;
 

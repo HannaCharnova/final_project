@@ -8,7 +8,8 @@ public enum PageNameRedirect {
     ORDERS_ADMIN("/epam.by/show_order_admin"),
     CLIENTS("/epam.by/show_client"),
     ADMINS("/epam.by/show_admin"),
-    PROFILE("/epam.by/client_profile");
+    PROFILE("/epam.by/client_profile"),
+    REVIEWS("/epam.by/show_reviews");
 
     private String path;
 

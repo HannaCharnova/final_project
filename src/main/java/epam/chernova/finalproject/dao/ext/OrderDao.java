@@ -33,18 +33,20 @@ public class OrderDao implements IOrderDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ACTIVE_ORDER_BY_CLIENT_ID);
-            statement.setInt(1, idClient);
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                return createOrderByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_ACTIVE_ORDER_BY_CLIENT_ID);
+                statement.setInt(1, idClient);
+                resultSet = statement.executeQuery();
+                if (resultSet.first()) {
+                    return createOrderByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Order DAO: finish findActiveOrderByClientId");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Order DAO: finish findActiveOrderByClientId");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
     }
@@ -55,18 +57,20 @@ public class OrderDao implements IOrderDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(EDIT_ORDER_COST);
-            statement.setDouble(1, deltaTotalCost);
-            statement.setInt(2, idOrder);
-            if (statement.executeUpdate() != 0) {
-                return true;
+            try {
+                statement = connection.prepareStatement(EDIT_ORDER_COST);
+                statement.setDouble(1, deltaTotalCost);
+                statement.setInt(2, idOrder);
+                if (statement.executeUpdate() != 0) {
+                    return true;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Order DAO: finish editOrderCost");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query order editing", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Order DAO: finish editOrderCost");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return false;
     }
@@ -77,17 +81,19 @@ public class OrderDao implements IOrderDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(ADD_ORDER);
-            statement.setInt(1, idClient);
-            if (statement.executeUpdate() != 0) {
-                return true;
+            try {
+                statement = connection.prepareStatement(ADD_ORDER);
+                statement.setInt(1, idClient);
+                if (statement.executeUpdate() != 0) {
+                    return true;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Order DAO: finish addOrder");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query order adding", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Order DAO: finish addOrder");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return false;
     }
@@ -99,19 +105,21 @@ public class OrderDao implements IOrderDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ORDERS_BY_CLIENT_ID);
-            statement.setInt(1, idClient);
-            resultSet = statement.executeQuery();
-            orders = new ArrayList<>();
-            while (resultSet.next()) {
-                orders.add(createOrderByResultSet(resultSet));
+            try {
+                statement = connection.prepareStatement(FIND_ORDERS_BY_CLIENT_ID);
+                statement.setInt(1, idClient);
+                resultSet = statement.executeQuery();
+                orders = new ArrayList<>();
+                while (resultSet.next()) {
+                    orders.add(createOrderByResultSet(resultSet));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderDao: Finish findAllOrdersByClientId.");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderDao: Finish findAllOrdersByClientId.");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return orders;
 
@@ -124,18 +132,20 @@ public class OrderDao implements IOrderDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ALL_ORDERS);
-            resultSet = statement.executeQuery();
-            orders = new ArrayList<>();
-            while (resultSet.next()) {
-                orders.add(createOrderByResultSet(resultSet));
+            try {
+                statement = connection.prepareStatement(FIND_ALL_ORDERS);
+                resultSet = statement.executeQuery();
+                orders = new ArrayList<>();
+                while (resultSet.next()) {
+                    orders.add(createOrderByResultSet(resultSet));
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderDao: Finish findAllOrders.");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderDao: Finish findAllOrders.");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return orders;
 
@@ -148,18 +158,20 @@ public class OrderDao implements IOrderDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(FIND_ORDER_BY_ORDER_ID);
-            statement.setInt(1, idOrder);
-            resultSet = statement.executeQuery();
-            while (resultSet.first()) {
-                return createOrderByResultSet(resultSet);
+            try {
+                statement = connection.prepareStatement(FIND_ORDER_BY_ORDER_ID);
+                statement.setInt(1, idOrder);
+                resultSet = statement.executeQuery();
+                while (resultSet.first()) {
+                    return createOrderByResultSet(resultSet);
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderDao: Finish findOrderByOrderId.");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
-        } finally {
-            LOGGER.log(Level.DEBUG, "OrderDao: Finish findOrderByOrderId.");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
         return null;
 
@@ -171,17 +183,19 @@ public class OrderDao implements IOrderDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(PAY_ORDER);
-            statement.setInt(1, idOrder);
-            if (statement.executeUpdate() != 0) {
-                return;
+            try {
+                statement = connection.prepareStatement(PAY_ORDER);
+                statement.setInt(1, idOrder);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "Order DAO: finish payOrder");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
             }
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query order adding", e);
-        } finally {
-            LOGGER.log(Level.DEBUG, "Order DAO: finish payOrder");
-            close(resultSet, statement);
-            connectionPool.putBackConnection(connection);
         }
     }
 

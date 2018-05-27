@@ -59,7 +59,7 @@
 <div class="order-container">
     <c:choose>
         <c:when test="${admin.main eq 'true'}">
-            <button type="button" id="add-admin-button" class="btn btn-default" id="addadmin">${add_admin_word}</button>
+            <button type="button" class="add-admin-button" class="btn btn-default" id="addadmin">${add_admin_word}</button>
         </c:when>
     </c:choose>
 

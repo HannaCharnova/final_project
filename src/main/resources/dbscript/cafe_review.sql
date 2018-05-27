@@ -26,11 +26,11 @@ CREATE TABLE `review` (
   `idreview` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Синтетический ключ, который играет роль уникального идентификатора каждого клиентского отзыва',
   `review_text` text CHARACTER SET utf8 COMMENT 'Поле, в котором клиент хранит текстовый отзыв о выполнении заказа',
   `mark` int(10) unsigned NOT NULL COMMENT 'Оценка, которую клиент выставляет заказу',
-  `order_idorder` int(10) unsigned NOT NULL,
+  `client_user_iduser` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idreview`),
-  KEY `fk_review_order1_idx` (`order_idorder`),
-  CONSTRAINT `fk_review_order1` FOREIGN KEY (`order_idorder`) REFERENCES `order` (`idorder`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 COMMENT='Таблица предназначена для хранения информации о клиентских отзывах на их заказы';
+  KEY `fk_review_client1_idx` (`client_user_iduser`),
+  CONSTRAINT `fk_review_client1` FOREIGN KEY (`client_user_iduser`) REFERENCES `client` (`user_iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COMMENT='Таблица предназначена для хранения информации о клиентских отзывах на их заказы';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT INTO `review` VALUES (1,'Отличная доставка и вкусные блюда',9,3),(2,'Блюдо остыло',6,2);
+INSERT INTO `review` VALUES (1,'Отличная доставка и вкусные блюда',3,11),(2,'Блюдо остыло',1,13),(7,'Очень быстро доставлено',4,7),(8,'ghvjgh',5,18),(9,'Всё понравилось',3,7);
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-27 13:05:51
+-- Dump completed on 2018-05-27 23:42:31

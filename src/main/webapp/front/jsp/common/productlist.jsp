@@ -19,7 +19,7 @@
                         <div class="box">
                             <div class="pic">
                                 <img src="/front/image/menu/${product.imagePath}"
-                                     alt=""/>
+                                     alt="" style="height: 380px"/>
                             </div>
                             <div class="over-layer">
                                 <h4 class="post">

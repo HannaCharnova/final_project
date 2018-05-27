@@ -27,7 +27,8 @@ public enum CommandName {
     DELETE_ACCOUNT("client"),
     EDIT_PRODUCT("admin"),
     CLOSE_ORDER("admin"),
-    ADD_REVIEW("client");
+    ADD_REVIEW("client"),
+    SHOW_REVIEWS("all");
 
     private String role;
 

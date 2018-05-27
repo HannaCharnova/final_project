@@ -10,7 +10,9 @@
 <fmt:message bundle="${loc}" key="local.word.add_product" var="add_product"/>
 <fmt:message bundle="${loc}" key="local.word.g" var="g"/>
 <fmt:message bundle="${loc}" key="local.word.change_product_word" var="change_product_word"/>
-
+<script>
+    <%@include file="/front/js/form.js" %>
+</script>
 <style>
     <%@include file="/front/css/productlist.css" %>
 </style>
@@ -26,7 +28,7 @@
                             <div class="box">
                                 <div class="pic">
                                     <img src="/front/image/menu/${product.imagePath}"
-                                         alt=""/>
+                                         alt="" style="height: 380px"/>
                                 </div>
                                 <div class="over-layer">
                                     <h4 class="post">
@@ -40,10 +42,10 @@
                                         </c:choose>
                                         <small>${cost}: ${product.cost} BYN</small>
                                         <small>${weight}: ${product.weight} ${g}</small>
-                                        <div id="flex-btn-product" style="width: 480px;">
-                                        <small><button type="button" class="btn btn-default" id="changeproduct">${change_product_word}</button></small>
+                                        <%--<div id="flex-btn-product" style="width: 480px;">--%>
+                                        <%--<small><button type="button" class="btn btn-default" onclick="showEditProduct(${product.idProduct})">${change_product_word}</button></small>--%>
                                         <small><button type="submit" class="btn btn-default">${delete_product}</button></small>
-                                        </div>
+                                        <%--</div>--%>
                                     </h4>
                                 </div>
                             </div>

@@ -30,9 +30,9 @@ public class CloseOrderCommand implements ICommand {
         try {
             idOrder = Integer.parseInt(request.getParameter("idOrder"));
             idClient = Integer.parseInt(request.getParameter("idClient"));
-            System.out.println(idClient+" "+idOrder);
             totalCost = (serviceFactory.getOrderService().findOrderByOrderId(idOrder)).getTotalCost();
-            point = ((Client) request.getSession().getAttribute("client")).getPoint();
+            point = (serviceFactory.getClientService().findClientById(idClient)).getPoint();
+            System.out.println(point);
             if (totalCost != 0) {
                 if (serviceFactory.getAccountService().findAccountByClientId(idClient) != null) {
                     account = serviceFactory.getAccountService().findAccountByClientId(idClient);

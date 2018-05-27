@@ -16,6 +16,7 @@
 <fmt:message bundle="${loc}" key="local.word.admins_show" var="admins_show"/>
 <fmt:message bundle="${loc}" key="local.word.orders_show" var="orders_show"/>
 <fmt:message bundle="${loc}" key="local.sentence.change_password_word" var="change_password_word"/>
+<fmt:message bundle="${loc}" key="local.sentence.reviews_word" var="reviews_word"/>
 
 
 <html>
@@ -116,6 +117,7 @@
 
                 </li>
                 <li><a href="/epam.by/index">${home}</a></li>
+                <li><a href="/epam.by/show_reviews">${reviews_word}</a></li>
             </ul>
 
             <c:choose>
