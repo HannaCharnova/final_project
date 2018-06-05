@@ -27,30 +27,41 @@ public class ChangePasswordCommand implements ICommand {
         LOGGER.log(Level.INFO, "Command:Start ChangePasswordCommand");
         String newPassword = (String) request.getParameter("password-new");
         String oldPassword = (String) request.getParameter("password-old");
+        String renewPassword = (String) request.getParameter("repassword-new");
         oldPassword = Hasher.sha1Hash(oldPassword);
         try {
-            if ((int) request.getSession().getAttribute("role") == 2) {
-                int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
-                if (serviceFactory.getClientService().findClientByIdAndPassword(idClient, oldPassword) != null) {
-                    newPassword = Hasher.sha1Hash(newPassword);
-                    System.out.println(newPassword);
-                    Client client = serviceFactory.getClientService().changePassword(idClient, newPassword);
-                    request.getSession().setAttribute("client", client);
-                    diagnoseChangePassword(request);
+            if (newPassword.equals(renewPassword)) {
+                if ((int) request.getSession().getAttribute("role") == 2) {
+                    int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
+                    if (serviceFactory.getClientService().findClientByIdAndPassword(idClient, oldPassword) != null) {
+                        newPassword = Hasher.sha1Hash(newPassword);
+                        Client client = serviceFactory.getClientService().changePassword(idClient, newPassword);
+                        if (client != null) {
+                            request.getSession().setAttribute("client", client);
+                            diagnoseChangePassword(request);
+                        } else {
+                            diagnoseWrongPassword(request);
+                        }
+                    } else {
+                        diagnoseWrongOldPassword(request);
+                    }
                 } else {
-                    diagnoseWrongOldPassword(request);
+                    int idAdmin = ((Administrator) request.getSession().getAttribute("admin")).getIdUser();
+                    if (serviceFactory.getAdministratorService().findAdministratorByIdAndPassword(idAdmin, oldPassword) != null) {
+                        newPassword = Hasher.sha1Hash(newPassword);
+                        Administrator administrator = serviceFactory.getAdministratorService().changePassword(idAdmin, newPassword);
+                        if (administrator != null) {
+                            request.getSession().setAttribute("admin", administrator);
+                            diagnoseChangePassword(request);
+                        } else {
+                            diagnoseWrongPassword(request);
+                        }
+                    } else {
+                        diagnoseWrongOldPassword(request);
+                    }
                 }
             } else {
-                int idAdmin = ((Administrator) request.getSession().getAttribute("admin")).getIdUser();
-                if (serviceFactory.getAdministratorService().findAdministratorByIdAndPassword(idAdmin, oldPassword) != null) {
-                    newPassword = Hasher.sha1Hash(newPassword);
-                    System.out.println(newPassword);
-                    Administrator administrator = serviceFactory.getAdministratorService().changePassword(idAdmin, newPassword);
-                    request.getSession().setAttribute("admin", administrator);
-                    diagnoseChangePassword(request);
-                } else {
-                    diagnoseWrongOldPassword(request);
-                }
+                diagnoseWrongNewPassword(request);
             }
             response.sendRedirect(SessionElements.getPageCommand(request));
         } catch (IOException |
@@ -70,6 +81,15 @@ public class ChangePasswordCommand implements ICommand {
         }
     }
 
+    private static void diagnoseWrongNewPassword(HttpServletRequest request) {
+        if (request.getSession().getAttribute("locale").equals("ru")) {
+            request.getSession().setAttribute("error_data", "Пароль не совпадают.");
+        } else {
+            request.getSession().setAttribute("error_data", "Passwords are not the same.");
+        }
+    }
+
+
     private static void diagnoseWrongOldPassword(HttpServletRequest request) {
         if (request.getSession().getAttribute("locale").equals("ru")) {
             request.getSession().setAttribute("error_data", "Старый пароль введен неверно.");
@@ -77,5 +97,14 @@ public class ChangePasswordCommand implements ICommand {
             request.getSession().setAttribute("error_data", "Old password is wrong.");
         }
     }
+
+    private static void diagnoseWrongPassword(HttpServletRequest request) {
+        if (request.getSession().getAttribute("locale").equals("ru")) {
+            request.getSession().setAttribute("error_data", "Ошибка смены пароля.");
+        } else {
+            request.getSession().setAttribute("error_data", "Change password error.");
+        }
+    }
+
 
 }

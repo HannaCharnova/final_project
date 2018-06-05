@@ -25,16 +25,9 @@ public class ServletController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private final static Logger LOGGER = Logger.getLogger(ServletController.class);
     private final static CommandProvider commandProvider = CommandProvider.getInstance();
-    private static ConnectionPool connectionPool;
 
     @Override
     public void init() {
-//        try {
-//            connectionPool = ConnectionPool.getInstance();
-//        }catch (ConnectionPoolException e) {
-//            LOGGER.log(Level.FATAL, "Error while initializing ConnectionPool");
-//            throw new RuntimeException();
-//        }
     }
 
     @Override

@@ -23,13 +23,12 @@ public class AdministratorServiceImpl implements AdministratorService {
     @Override
     public Administrator signIn(String login, String password) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Administrator Service: start SignInCommand");
-        Administrator administrator=null;
+        Administrator administrator = null;
         try {
             if (Validator.isNull(login, password) && Validator.isEmptyString(login, password) && Validator.matchLogin(login) && Validator.matchPassword(password)) {
                 administrator = daoFactory.getAdministratorDao().signIn(login, password);
             }
         } catch (DaoException e) {
-            System.out.println("from service");
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
         LOGGER.log(Level.DEBUG, "Administrator Service: end SignInCommand");
@@ -65,11 +64,14 @@ public class AdministratorServiceImpl implements AdministratorService {
     public Administrator findAdministratorByLogin(String login) throws ServiceException {
         LOGGER.log(Level.DEBUG, "AdministratorService: Start findAdministratorByLogin");
         try {
-            LOGGER.log(Level.DEBUG, "AdministratorService: Finish findAdministratorByLogin");
-            return daoFactory.getAdministratorDao().findAdministratorByLogin(login);
+            if (Validator.isNull(login) && Validator.isEmptyString(login) && Validator.matchLogin(login)) {
+                LOGGER.log(Level.DEBUG, "AdministratorService: Finish findAdministratorByLogin");
+                return daoFactory.getAdministratorDao().findAdministratorByLogin(login);
+            }
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+        return null;
     }
 
     @Override
@@ -80,7 +82,6 @@ public class AdministratorServiceImpl implements AdministratorService {
         try {
             if (Validator.isNull(login, password) && Validator.isEmptyString(login, password) && Validator.matchLogin(login) && Validator.matchPassword(password)) {
                 user = daoFactory.getAdministratorDao().addUser(login, password);
-                System.out.println(user);
                 if (user != null) {
                     administrator = daoFactory.getAdministratorDao().addAdministrator(user.getIdUser(), login);
                 }
@@ -97,22 +98,27 @@ public class AdministratorServiceImpl implements AdministratorService {
     public Administrator changePassword(int idAdmin, String password) throws ServiceException {
         LOGGER.log(Level.DEBUG, "AdministratorService: Start changePassword");
         try {
-            LOGGER.log(Level.DEBUG, "AdministratorService: Finish changePassword");
-            return daoFactory.getAdministratorDao().changePassword(idAdmin, password);
+            if (Validator.isNull(password) && Validator.isEmptyString(password) && Validator.matchPassword(password)) {
+                LOGGER.log(Level.DEBUG, "AdministratorService: Finish changePassword");
+                return daoFactory.getAdministratorDao().changePassword(idAdmin, password);
+            }
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-
+        return null;
     }
 
     @Override
     public Administrator findAdministratorByIdAndPassword(int idAdmin, String oldPassword) throws ServiceException {
         LOGGER.log(Level.DEBUG, "AdministratorService: Start findAdministratorByIdAndPassword");
         try {
-            LOGGER.log(Level.DEBUG, "AdministratorService: Finish findAdministratorByIdAndPassword");
-            return daoFactory.getAdministratorDao().findAdministratorByIdAndPassword(idAdmin, oldPassword);
+            if(Validator.isEmptyString(oldPassword)&&Validator.isNull(oldPassword)&&Validator.matchPassword(oldPassword)) {
+                LOGGER.log(Level.DEBUG, "AdministratorService: Finish findAdministratorByIdAndPassword");
+                return daoFactory.getAdministratorDao().findAdministratorByIdAndPassword(idAdmin, oldPassword);
+            }
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+        return null;
     }
 }

@@ -24,7 +24,6 @@ public class RemoveBasketProductCommand implements ICommand {
         int idOrder,idProduct,quantity;
         double deltaTotalCost;
         try {
-            System.out.println(request.getParameter("idOrder")+" "+request.getParameter("idProduct")+" "+request.getParameter("quantity"));
             idOrder = Integer.parseInt(request.getParameter("idOrder"));
             idProduct = Integer.parseInt(request.getParameter("idProduct"));
             quantity = Integer.parseInt(request.getParameter("quantity"));

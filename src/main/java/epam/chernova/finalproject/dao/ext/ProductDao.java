@@ -125,7 +125,6 @@ public class ProductDao implements IProductDao {
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
         }
-        System.out.println(product);
         return product;
 
     }

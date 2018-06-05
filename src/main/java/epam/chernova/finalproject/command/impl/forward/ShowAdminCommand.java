@@ -26,7 +26,6 @@ public class ShowAdminCommand implements ICommand {
             List<Administrator> administrators = serviceFactory.getAdministratorService().findAllAdministrators();
             request.setAttribute("admins", administrators);
 
-            System.out.println(request.getAttribute("admins"));
             request.getSession().setAttribute("pageCommand", PageNameRedirect.ADMINS.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
             rewrite(request);

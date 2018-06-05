@@ -19,7 +19,6 @@ public class SessionElements {
 
     public static String getPageCommand(HttpServletRequest request) {
         String pageCommand = (String) request.getSession().getAttribute("pageCommand");
-        System.out.println(pageCommand);
         if (pageCommand == null || pageCommand.isEmpty()) {
             pageCommand = PageNameRedirect.INDEX.getPath();
         }

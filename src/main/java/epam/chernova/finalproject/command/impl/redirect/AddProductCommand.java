@@ -22,7 +22,6 @@ public class AddProductCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Command:Start add product ");
-        Product product = null;
         ProductService productService = serviceFactory.getProductService();
         String type = request.getParameter("product_type");
         String nameEn = request.getParameter("nameEn");

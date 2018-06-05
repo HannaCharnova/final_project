@@ -21,4 +21,6 @@ public interface IOrderDao extends AbstractDao {
 
     void payOrder(int idOrder) throws DaoException;
 
+    void deleteEmptyOrder(int idClient) throws DaoException;
+
 }

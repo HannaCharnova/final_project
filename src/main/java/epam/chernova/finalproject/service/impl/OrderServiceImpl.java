@@ -97,4 +97,17 @@ public class OrderServiceImpl implements OrderService {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
+
+    @Override
+    public void deleteEmptyOrder(int idClient) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderService: Start deleteEmptyOrder");
+        try {
+            LOGGER.log(Level.DEBUG, "OrderService: Finish deleteEmptyOrder");
+            daoFactory.getOrderDao().deleteEmptyOrder(idClient);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+
 }

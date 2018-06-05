@@ -11,6 +11,8 @@ public interface OrderProductService {
 
     void removeOrderProduct(int idOrder, int idProduct) throws ServiceException;
 
+    void deleteOrderProduct(int idOrder) throws ServiceException;
+
     List<OrderProduct> findOrderProductsByClientId(int idClient) throws ServiceException;
 
     List<OrderProduct> findAllOrderProducts() throws ServiceException;

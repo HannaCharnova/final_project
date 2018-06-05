@@ -25,7 +25,6 @@ public class ShowClientCommand implements ICommand {
         try {
             List<Client> clients = serviceFactory.getClientService().findAllClients();
             request.setAttribute("clients", clients);
-            System.out.println(request.getAttribute("clients"));
             request.getSession().setAttribute("pageCommand", PageNameRedirect.CLIENTS.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
             rewrite(request);

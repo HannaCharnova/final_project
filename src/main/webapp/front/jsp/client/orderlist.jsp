@@ -56,7 +56,7 @@
  <span class="qa-message-who-pad">${total_cost} </span>
  <span class="qa-message-who-data">${order.totalCost}</span>
  </span><br>
-                                                <c:if test="${order.status eq 'true'}">
+                                                <c:if test="${order.status eq 'false'}">
                                                 <span class="qa-message-who-pad">${status_word}:${has_been_paid}</span>
                                                 </c:if>
                                             </div>

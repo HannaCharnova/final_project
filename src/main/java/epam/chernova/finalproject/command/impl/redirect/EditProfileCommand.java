@@ -30,16 +30,19 @@ public class EditProfileCommand implements ICommand {
         int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
         try {
             if (!clientEmail.equals(email)) {
-                System.out.println(serviceFactory.getClientService().findClientByEmail(email));
                 if (serviceFactory.getClientService().findClientByEmail(email) == null) {
                     client = serviceFactory.getClientService().editClient(idClient, surname, name, email,address);
-                    request.getSession().setAttribute("client", client);
+                    if(client!=null) {
+                        request.getSession().setAttribute("client", client);
+                    }
                 } else {
                     diagnoseCommonEmail(request);
                 }
             } else {
                 client = serviceFactory.getClientService().editClient(idClient, surname, name, email,address);
-                request.getSession().setAttribute("client", client);
+                if(client!=null) {
+                    request.getSession().setAttribute("client", client);
+                }
             }
             response.sendRedirect(SessionElements.getPageCommand(request));
         } catch (IOException |

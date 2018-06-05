@@ -21,4 +21,6 @@ public interface OrderService {
 
     void payOrder(int idOrder) throws ServiceException;
 
+    void deleteEmptyOrder(int idClient) throws ServiceException;
+
 }

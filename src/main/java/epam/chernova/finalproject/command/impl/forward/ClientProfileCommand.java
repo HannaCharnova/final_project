@@ -26,7 +26,6 @@ public class ClientProfileCommand implements ICommand {
             int idClient = ((Client) request.getSession().getAttribute("client")).getIdUser();
             Account account = serviceFactory.getAccountService().findAccountByClientId(idClient);
             request.setAttribute("account", account);
-            System.out.println((Account)request.getAttribute("account"));
             request.getSession().setAttribute("pageCommand", PageNameRedirect.PROFILE.getPath());
             request.getSession().setAttribute("locale", SessionElements.getLocale(request));
             rewrite(request);

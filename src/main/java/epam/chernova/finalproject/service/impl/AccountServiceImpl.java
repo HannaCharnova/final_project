@@ -6,6 +6,7 @@ import epam.chernova.finalproject.exception.DaoException;
 import epam.chernova.finalproject.exception.ServiceException;
 import epam.chernova.finalproject.factory.DaoFactory;
 import epam.chernova.finalproject.service.AccountService;
+import epam.chernova.finalproject.util.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -31,10 +32,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void payOrder(int idClient, double totalCost,double point) throws ServiceException {
+    public void payOrder(int idClient, double totalCost, double point) throws ServiceException {
         LOGGER.log(Level.DEBUG, "AccountService: Start payOrder");
         try {
-            daoFactory.getAccountDao().payOrder(idClient,totalCost-point);
+            daoFactory.getAccountDao().payOrder(idClient, totalCost - point);
             LOGGER.log(Level.DEBUG, "AccountService: Finish payOrder");
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
@@ -70,21 +71,25 @@ public class AccountServiceImpl implements AccountService {
     public Account findAccountByNumber(String accountNumber) throws ServiceException {
         LOGGER.log(Level.DEBUG, "AccountService: Start findAccountByNumber");
         try {
-            LOGGER.log(Level.DEBUG, "AccountService: Finish findAccountByNumber");
-            return daoFactory.getAccountDao().findAccountByNumber(accountNumber);
+            if (Validator.isNull(accountNumber) && Validator.isEmptyString(accountNumber) && Validator.matchAccountNumber(accountNumber)) {
+                LOGGER.log(Level.DEBUG, "AccountService: Finish findAccountByNumber");
+                return daoFactory.getAccountDao().findAccountByNumber(accountNumber);
+            }
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+        return null;
     }
 
     @Override
     public void addAccount(int idClient, String accountNumber) throws ServiceException {
         LOGGER.log(Level.DEBUG, "AccountService: Start addAccount");
         try {
-            double credit= Math.random()*1000;
-            System.out.println(credit);
-            daoFactory.getAccountDao().addAccount(idClient,accountNumber,credit);
-            LOGGER.log(Level.DEBUG, "AccountService: Finish addAccount");
+            if (Validator.isNull(accountNumber) && Validator.isEmptyString(accountNumber) && Validator.matchAccountNumber(accountNumber)) {
+                double credit = Math.random() * 1000;
+                daoFactory.getAccountDao().addAccount(idClient, accountNumber, credit);
+                LOGGER.log(Level.DEBUG, "AccountService: Finish addAccount");
+            }
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }

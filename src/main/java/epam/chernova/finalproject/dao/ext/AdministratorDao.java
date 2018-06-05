@@ -197,7 +197,6 @@ public class AdministratorDao implements IAdministratorDao {
                     user.setLogin(resultSet.getString("login"));
                     user.setPassword(resultSet.getString("password"));
                     user.setRole(resultSet.getBoolean("role"));
-                    System.out.println(user);
                 }
             } finally {
                 LOGGER.log(Level.DEBUG, "Administrator DAO: finish findUserByLogin");
@@ -299,7 +298,6 @@ public class AdministratorDao implements IAdministratorDao {
                 statement.setInt(1, idUser);
                 statement.setInt(2, 0);
                 if (statement.executeUpdate() != 0) {
-                    System.out.println(findAdministratorByLogin(login));
                     return findAdministratorByLogin(login);
                 }
             } finally {

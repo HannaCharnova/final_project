@@ -13,6 +13,9 @@ public interface IOrderProductDao extends AbstractDao {
 
     void removeOrderProduct(int idOrder, int idProduct) throws DaoException;
 
+
+    void deleteOrderProduct(int idOrder) throws DaoException;
+
     List<OrderProduct> findOrderProductsByClientId(int idClient) throws DaoException;
 
     List<OrderProduct> findAllOrderProducts() throws DaoException;

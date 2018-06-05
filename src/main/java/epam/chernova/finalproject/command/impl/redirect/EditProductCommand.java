@@ -21,7 +21,6 @@ public class EditProductCommand implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Command:Start EditProductCommand");
         int idProduct = Integer.parseInt(request.getParameter("idProduct"));
-        System.out.println(idProduct);
         String type = request.getParameter("product_type");
         String nameEn = request.getParameter("nameEn");
         String nameRu = request.getParameter("nameRu");

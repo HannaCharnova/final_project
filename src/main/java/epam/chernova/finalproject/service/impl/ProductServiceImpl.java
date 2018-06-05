@@ -56,18 +56,22 @@ public class ProductServiceImpl implements ProductService {
     public Product findProductByName(String nameEn, String nameRu) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: Start find product by name");
         try {
-            LOGGER.log(Level.DEBUG, "Product Service: Finish find product by name");
-            return daoFactory.getProductDao().findProductByName(nameEn, nameRu);
+            if (Validator.isEmptyString(nameEn,nameRu) && Validator.isNull(nameEn,nameRu) && Validator.matchProductName(nameEn,nameRu)) {
+
+                LOGGER.log(Level.DEBUG, "Product Service: Finish find product by name");
+                return daoFactory.getProductDao().findProductByName(nameEn, nameRu);
+            }
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+        return null;
     }
 
     @Override
     public void addProduct(String type, String nameEn, String nameRu, double cost, double weight, String imagePath) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product Service: start addProduct");
         try {
-            if (Validator.isNull(type, nameEn, nameRu, cost, weight, imagePath) && Validator.isEmptyString(type, nameEn, nameRu, imagePath) && Validator.matchProductName(nameEn,nameRu)) {
+            if (Validator.isNull(type, nameEn, nameRu, cost, weight, imagePath) && Validator.isEmptyString(type, nameEn, nameRu, imagePath) && Validator.matchProductName(nameEn,nameRu)&&Validator.matchProductWeightCost(weight,cost)) {
                 daoFactory.getProductDao().addProduct(type, nameEn, nameRu, cost, weight, imagePath);
                 LOGGER.log(Level.DEBUG, "Product Service: end addProduct");
             }
@@ -80,11 +84,15 @@ public class ProductServiceImpl implements ProductService {
     public Product findProductByNameAndId(String nameEn, String nameRu, int idProduct) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: Start findProductByNameAndId");
         try {
-            LOGGER.log(Level.DEBUG, "Product Service: Finish findProductByNameAndId");
-            return daoFactory.getProductDao().findProductByNameAndId(nameEn, nameRu,idProduct);
+            if (Validator.isNull(nameEn, nameRu) && Validator.isEmptyString(nameEn, nameRu) && Validator.matchProductName(nameEn,nameRu)) {
+
+                LOGGER.log(Level.DEBUG, "Product Service: Finish findProductByNameAndId");
+                return daoFactory.getProductDao().findProductByNameAndId(nameEn, nameRu, idProduct);
+            }
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
+        return null;
     }
 
     @Override

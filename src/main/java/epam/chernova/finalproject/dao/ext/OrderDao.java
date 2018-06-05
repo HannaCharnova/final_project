@@ -21,6 +21,7 @@ public class OrderDao implements IOrderDao {
     private static final String FIND_ORDER_BY_ORDER_ID = "SELECT * FROM cafe.order WHERE cafe.order.idorder =?";
     private static final String PAY_ORDER = "UPDATE cafe.order SET cafe.order.status = 0 WHERE cafe.order.idorder = ?";
     private static final String FIND_ALL_ORDERS = "SELECT * FROM cafe.order";
+    private static final String DELETE_EMPTY_ORDER = "DELETE FROM cafe.order WHERE cafe.order.client_user_iduser=? AND cafe.order.status=1";
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
@@ -213,4 +214,25 @@ public class OrderDao implements IOrderDao {
         }
         return order;
     }
+
+    @Override
+    public void deleteEmptyOrder(int idClient) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start deleteEmptyOrder");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            try {
+                statement = connection.prepareStatement(DELETE_EMPTY_ORDER);
+                statement.setInt(1, idClient);
+                statement.executeUpdate();
+            } finally {
+                LOGGER.log(Level.DEBUG, "Client DAO: finish deleteEmptyOrder");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        }
+    }
+
 }

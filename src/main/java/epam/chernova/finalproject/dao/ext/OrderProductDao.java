@@ -19,6 +19,7 @@ public class OrderProductDao implements IOrderProductDao {
     private static final String ADD_ORDER_PRODUCT = "INSERT INTO cafe.order_product (order_product.order_idorder,order_product.product_idproduct,order_product.quantity) VALUES (?,?,?)";
     private static final String FIND_ORDER_PRODUCT_BY_CLIENT_ID = "SELECT * FROM cafe.order_product JOIN cafe.order ON cafe.order.idorder = cafe.order_product.order_idorder WHERE cafe.order.client_user_iduser =?";
     private static final String REMOVE_ORDER_PRODUCT = "DELETE FROM cafe.order_product WHERE cafe.order_product.order_idorder=? AND cafe.order_product.product_idproduct=?";
+    private static final String DELETE_ORDER_PRODUCT = "DELETE FROM cafe.order_product WHERE cafe.order_product.order_idorder=?";
     private static final String FIND_ORDER_PRODUCT_BY_PRODUCT_ID = "SELECT * FROM cafe.order_product WHERE cafe.order_product.product_idproduct =?";
     private static final String FIND_ALL_ORDER_PRODUCT = "SELECT * FROM cafe.order_product";
     private static final String FIND_PRODUCT_IN_ACTIVE_ORDER = "SELECT * FROM cafe.order_product WHERE cafe.order_product.product_idproduct =? AND cafe.order_product.order_idorder=?";
@@ -73,6 +74,29 @@ public class OrderProductDao implements IOrderProductDao {
         } catch (SQLException | ConnectionPoolException e) {
             throw new DaoException("Exception while executing SQL query", e);
         }
+    }
+
+    @Override
+    public void deleteOrderProduct(int idOrder) throws DaoException {
+        LOGGER.log(Level.DEBUG, "OrderProduct DAO: start deleteOrderProduct");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            try {
+                statement = connection.prepareStatement(DELETE_ORDER_PRODUCT);
+                statement.setInt(1, idOrder);
+                if (statement.executeUpdate() != 0) {
+                    return;
+                }
+            } finally {
+                LOGGER.log(Level.DEBUG, "OrderProduct DAO: finish deleteOrderProduct");
+                close(resultSet, statement);
+                connectionPool.putBackConnection(connection);
+            }
+        } catch (SQLException | ConnectionPoolException e) {
+            throw new DaoException("Exception while executing SQL query", e);
+        }
+
     }
 
     @Override
